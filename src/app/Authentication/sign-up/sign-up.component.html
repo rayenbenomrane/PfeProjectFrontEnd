@@ -1,0 +1,176 @@
+
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
+  <div class="p-card p-p-4 p-shadow-4" style="width: 500px; margin: 20px;height: fit-content;">
+
+
+    <p-steps [model]="items" [activeIndex]="activeIndex" [readonly]="true" [style]="{ margin: '0 auto'}"></p-steps>
+
+
+
+
+    <p-card *ngIf="activeIndex === 0">
+      <ng-template pTemplate="title">
+        Coordonnées de contribuable
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        Entrer les Coordonnées de contribuable
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="firstname">Matricule Fiscale</label>
+            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numeroFiscal" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">MatriculeFiscale is required.</small>
+          </div>
+          <div class="p-fluid grid formgrid">
+            <div class="field col-12 md:col-4">
+              <label for="icon">Date De Matriculation</label>
+              <p-calendar [(ngModel)]="date" [showIcon]="true" inputId="icon"></p-calendar>
+              <small *ngIf="!date && (submitted)" class="p-error">Date De Matriculation is required.</small>
+          </div>
+          <div class="p-fluid grid formgrid">
+            <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (captchaSuccess)="handleSuccess($event)"
+              (captchaError)="handleError()"></ngx-recaptcha2>
+            <small *ngIf="valid" class="p-error">Recaptcha is required.</small>
+          </div>
+
+          </div>
+        </div>
+
+
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+          <button pButton type="button" label="Next" class="p-button-info"  (click)="nextStep()" ></button>
+        </div>
+      </ng-template>
+    </p-card>
+    <p-card *ngIf="activeIndex === 1" >
+      <ng-template pTemplate="title">
+        Personal Information
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        Enter your personal information
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="numeroFiscal" class="p-d-block p-mb-1">Numéro Fiscal:</label>
+          <input id="numeroFiscal" type="number" name="numeroFiscal" [(ngModel)]="formData.numeroFiscal" class="p-inputtext p-disabled" readonly>
+
+          </div>
+          <div class="p-field">
+            <label for="numeroDeQuittance" class="p-d-block p-mb-1">Numéro de Quittance:</label>
+            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numerodequittance" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">Numero de Quittance is required.</small>
+          </div>
+          <div class="p-fluid grid formgrid">
+            <div class="field col-12 md:col-4">
+              <label for="icon">Date De Quittance</label>
+              <p-calendar [(ngModel)]="date2" [showIcon]="true" inputId="icon"></p-calendar>
+              <small *ngIf="!date2 && (submitted)" class="p-error">Date De Matriculation is required.</small>
+          </div>
+          </div>
+
+        </div>
+
+
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+          <button pButton type="button" label="Previous" class="p-button-secondary"  (click)="prevStep()"></button>
+          <p-button label="Next" (onClick)="nextStep()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+    <p-card *ngIf="activeIndex === 2">
+      <ng-template pTemplate="title">
+        Personal Information
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        Enter your personal information
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="email" class="p-d-block p-mb-1">Email:</label>
+          <input id="email" type="email" name="email" [(ngModel)]="formData.email" class="p-inputtext" required>
+
+          </div>
+          <div class="p-field">
+            <label for="poste" class="p-d-block p-mb-1">Poste:</label>
+            <input id="poste" type="text" name="poste" [(ngModel)]="formData.poste" class="p-inputtext" required>
+          </div>
+          <div class="p-field">
+            <label for="nom" class="p-d-block p-mb-1">Nom:</label>
+            <input id="nom" type="text" name="nom" [(ngModel)]="formData.nom" class="p-inputtext" required>
+          </div>
+          <div class="p-field">
+            <label for="prenom" class="p-d-block p-mb-1">Prénom:</label>
+            <input id="prenom" type="text" name="prenom" [(ngModel)]="formData.prenom" class="p-inputtext" required>
+          </div>
+
+
+          <div class="p-field p-mt-2">
+            <legend class="p-text-bold p-mb-1">Type d'identifiant</legend>
+            <div class="p-field">
+                <div class="p-radio">
+                    <div *ngFor="let type of typeIdentifiants">
+                        <input type="radio" [id]="'identifiantType' + type" name="identifiantType" [value]="type" (change)="selectType(type)">
+                        <label [for]="'identifiantType' + type" class="p-mr-2">{{ type }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-field" *ngIf="selectedType">
+            <label for="identifiantInput" class="p-d-block p-mb-1">{{ selectedType }} Number</label>
+            <input id="identifiantInput" type="text" name="inputValue" [(ngModel)]="inputValue" class="p-inputtext">
+        </div>
+
+
+        </div>
+
+
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+          <button pButton type="button" label="Previous" class="p-button-secondary"  (click)="prevStep()"></button>
+          <p-button label="Next" (onClick)="nextStep()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+    <p-card *ngIf="activeIndex === 3">
+      <ng-template pTemplate="title">
+        Personal Information
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        Enter your personal information
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="firstname">Mot De Pass</label>
+            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numeroFiscal" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">MatriculeFiscale is required.</small>
+          </div>
+          <div class="p-field">
+            <label for="firstname">Confirmer Mot de Pass</label>
+            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numeroFiscal" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">MatriculeFiscale is required.</small>
+          </div>
+
+        </div>
+
+
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+          <button pButton type="button" label="Next" class="p-button-info"  (click)="nextStep()" ></button>
+        </div>
+      </ng-template>
+    </p-card>
+
+  </div>
+
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,51 @@
+<!-- admin-dashbord.component.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+</head>
+<body>
+  <div>
+    <h2>All Inscriptions</h2>
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Type Identifiant</th>
+          <th>Valeur Identifiant</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Enabled</th>
+          <th>Poste</th>
+
+          <!-- Add more headers as needed for other attributes -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inscription of inscription">
+          <td>{{ inscription.idInscription }}</td>
+          <td>{{ inscription.email }}</td>
+          <td>{{ inscription.typeIdentifiant }}</td>
+          <td>{{ inscription.valueIdentifiant }}</td>
+          <td>{{ inscription.nom }}</td>
+          <td>{{ inscription.prenom }}</td>
+          <td>{{ inscription.enabled }}</td>
+          <td>{{ inscription.NonLocked }}</td>
+          <td>{{ inscription.poste }}</td>
+
+          <td>
+            <button (click)="accepterUtilisateur(inscription)">Accepter inscription</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</body>
+</html>

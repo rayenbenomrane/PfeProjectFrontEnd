@@ -2,9 +2,9 @@
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
   <div class="p-card p-p-4 p-shadow-4" style="width: 500px; margin: 20px;height: fit-content;">
 
-
+    <div style="margin-top: 20px;">
     <p-steps [model]="items" [activeIndex]="activeIndex" [readonly]="true" [style]="{ margin: '0 auto'}"></p-steps>
-
+  </div>
 
 
 
@@ -28,12 +28,13 @@
               <p-calendar [(ngModel)]="date" [showIcon]="true" inputId="icon"></p-calendar>
               <small *ngIf="!date && (submitted)" class="p-error">Date De Matriculation is required.</small>
           </div>
+          <div style="margin-top: 20px;">
           <div class="p-fluid grid formgrid">
-            <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (captchaSuccess)="handleSuccess($event)"
+            <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (success)="handleSuccess($event)"
               (captchaError)="handleError()"></ngx-recaptcha2>
-            <small *ngIf="valid" class="p-error">Recaptcha is required.</small>
+            <small *ngIf="!valid" class="p-error">Recaptcha is required.</small>
           </div>
-
+        </div>
           </div>
         </div>
 
@@ -61,14 +62,14 @@
           </div>
           <div class="p-field">
             <label for="numeroDeQuittance" class="p-d-block p-mb-1">Numéro de Quittance:</label>
-            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numerodequittance" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <input #firstname="ngModel" id="numeroDeQuittance" type="number" required class="p-inputtext" [(ngModel)]="formData.numerodequittance" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
             <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">Numero de Quittance is required.</small>
           </div>
           <div class="p-fluid grid formgrid">
             <div class="field col-12 md:col-4">
               <label for="icon">Date De Quittance</label>
               <p-calendar [(ngModel)]="date2" [showIcon]="true" inputId="icon"></p-calendar>
-              <small *ngIf="!date2 && (submitted)" class="p-error">Date De Matriculation is required.</small>
+              <small *ngIf="!date2 && (submitted)" class="p-error">Date De Quittance is required.</small>
           </div>
           </div>
 
@@ -79,7 +80,7 @@
       <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-end">
           <button pButton type="button" label="Previous" class="p-button-secondary"  (click)="prevStep()"></button>
-          <p-button label="Next" (onClick)="nextStep()" icon="pi pi-angle-right" iconPos="right"></p-button>
+          <p-button label="Next" (onClick)="nextStep1()" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
       </ng-template>
     </p-card>

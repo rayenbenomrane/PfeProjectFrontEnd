@@ -1,5 +1,5 @@
 import { Contribuable } from './../../../Models/Contribuable';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthServiceService } from '../../service/auth-service.service';
@@ -24,9 +24,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent implements OnInit {
+
   siteKey: string;
   lesinscriptions: any = []
-  activeIndex = 2;
+  activeIndex = 0;
   valid: boolean = false;
   date!: Date | null;
   date2!: Date | null;
@@ -166,27 +167,59 @@ export class SignUpComponent implements OnInit {
     if (!this.date) {
       return false;
     }
-    if (this.valid) {
+    if (!this.valid) {
       return false;
     }
     return true;
   }
   handleSuccess(event: any) {
     this.valid = true;
-    console.log(this.valid);// Set the valid flag to true when the recaptcha is successfully validated
+    console.log(this.valid);
   }
 
-  // Function to handle recaptcha error
   handleError() {
-    this.valid = false; // Set the valid flag to false when there's an error with recaptcha validation
+    this.valid = false;
   }
 
   prevStep() {
     this.activeIndex--;
   }
 
-  submit() {
-    // Submit logic
+ 
+  nextStep1() {
+    const iddecalaration = this.formData.numerodequittance;
+    const dateDeQuittance = this.date2 ? formatDate(this.date2, 'yyyy-MM-dd', 'en-US') : null;
+    //console.log("contribuable", this.contribuable)
+    //console.log("iddeclarartion", iddecalaration)
+    //console.log("datequittance", dateDeQuittance)
+    const request = {
+      cd: this.contribuable,
+      iddecalaration: iddecalaration
+
+    }
+    if (this.validateForm()) {
+      this.authserve.checkDeclaration(request).subscribe(
+        (response) => {
+          console.log(response)
+          if (response && response.dateDeclaration) {
+            const apiDateOnly = response.dateDeclaration.split('T')[0];
+            console.log(apiDateOnly)
+            if (apiDateOnly === dateDeQuittance) {
+              this.activeIndex++;
+            } else {
+              console.log('Date does not match');
+            }
+          } else {
+
+            console.log('Date does not match or declaration not found');
+          }
+        },
+        (error) => {
+          console.error('Error:', error);
+
+        }
+      );
+    }
   }
 
 

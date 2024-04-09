@@ -1,3 +1,4 @@
+import { Contribuable } from './../../Models/Contribuable';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -21,6 +22,10 @@ export class AuthServiceService {
   }
   getAllInscription(): Observable<any> {
     return this.http.get(BASIC_URL + "/api/auth/Inscription")
+  }
+  checkDeclaration(request: any): Observable<any> {
+    const url = `${BASIC_URL}/api/auth/checkDeclaration`;
+    return this.http.post<any>(url, request);
   }
 
 }

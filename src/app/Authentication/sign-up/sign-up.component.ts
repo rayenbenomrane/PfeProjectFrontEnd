@@ -183,10 +183,12 @@ export class SignUpComponent implements OnInit {
 
   prevStep() {
     this.activeIndex--;
+    this.submitted = false;
   }
 
- 
+
   nextStep1() {
+    this.submitted = true;
     const iddecalaration = this.formData.numerodequittance;
     const dateDeQuittance = this.date2 ? formatDate(this.date2, 'yyyy-MM-dd', 'en-US') : null;
     //console.log("contribuable", this.contribuable)
@@ -197,7 +199,7 @@ export class SignUpComponent implements OnInit {
       iddecalaration: iddecalaration
 
     }
-    if (this.validateForm()) {
+    if (this.validateForm1()) {
       this.authserve.checkDeclaration(request).subscribe(
         (response) => {
           console.log(response)
@@ -206,6 +208,7 @@ export class SignUpComponent implements OnInit {
             console.log(apiDateOnly)
             if (apiDateOnly === dateDeQuittance) {
               this.activeIndex++;
+              this.submitted = false;
             } else {
               console.log('Date does not match');
             }
@@ -221,7 +224,68 @@ export class SignUpComponent implements OnInit {
       );
     }
   }
+  validateForm1(): boolean {
+    if (!this.formData.numerodequittance) {
+      return false;
+    }
+    if (!this.date2) {
+      return false;
+    }
+    if (!this.valid) {
+      return false;
+    }
+    return true;
+  }
+  validateForm2(): boolean {
+    if (!this.formData.email) {
+      return false;
+    }
+    if (!this.formData.nom) {
+      return false;
+    }
+    if (!this.formData.prenom) {
+      return false;
+    }
+    if (!this.formData.poste) {
+      return false;
+    }
+  if (!this.inputValue) {
+      return false;
+    }
+    if (!this.valid) {
+      return false;
+    }
+    return true;
+  }
+  nextStep2() {
 
+    const signupRequest = {
+      email: this.formData.email,
+      password: null,
+      nom: this.formData.nom,
+      prenom: this.formData.prenom,
+      numeroFiscal: this.formData.numeroFiscal,
+      poste: this.formData.poste,
+      typeIdentifiant: this.selectedType,
+      valueIdentifiant: this.inputValue,
+      contribuable: this.contribuable
+    };
+    console.log(signupRequest)
+    this.submitted = true;
+    if (this.validateForm2()) {
+
+      this.authserve.register(signupRequest).subscribe(response => {
+        console.log('User registered successfully:', response);
+
+      }, error => {
+        console.error('Error occurred during registration:', error);
+
+      });
+    } else {
+      console.log("cant be clicked");
+    }
+
+  }
 
 
 

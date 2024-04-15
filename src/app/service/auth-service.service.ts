@@ -27,5 +27,11 @@ export class AuthServiceService {
     const url = `${BASIC_URL}/api/auth/checkDeclaration`;
     return this.http.post<any>(url, request);
   }
+  verifyCode(code: string): Observable<any> {
+    return this.http.get<any>(`${BASIC_URL}/api/auth/verify?code=${code}`);
+  }
+  createpassword(signupRequest: any): Observable<any> {
+    return this.http.post(`${BASIC_URL}/api/auth/savepassword`, signupRequest);
+  }
 
 }

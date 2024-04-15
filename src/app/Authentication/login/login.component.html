@@ -1,23 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
+  <div class="p-card" style="width: auto; margin: 10px;height: auto;">
 
-  <form (ngSubmit)="onSubmit()">
-    <label>Email:</label>
-    <input type="email" name="email" [(ngModel)]="formData.email" required>
+    <div class="container">
+      <div class="forms-container">
 
-    <label>Password:</label>
-    <input type="password" name="password" [(ngModel)]="formData.password" required>
+        <div class="form-control signin-form">
+          <form (ngSubmit)="onSubmit()">
+            <h2>Signin</h2>
 
-    <button type="submit">Submit</button>
-  </form>
+            <div class="field">
+              <label for="username1" class="block">Username</label>
+              <input id="username1" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="formData.email" [ngModelOptions]="{standalone: true}"/>
+             </div>
 
 
+              <label for="password">Password:</label>
+              <p-password [(ngModel)]="formData.email" ></p-password>
 
-</body>
-</html>
+              <div style="margin-top: 10px;">
+              <p-button label="Submit"></p-button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="intros-container">
+        <div class="intro-control signin-intro">
+          <div class="intro-control__inner">
+            <div class="image-container">
+              <img src="assets/dgi.png" alt="DGI Logo">
+            </div>
+            <h2>Welcome back!</h2>
+            <p>
+              Ravi de vous retrouver sur notre plateforme fiscale ! Comptez sur nous pour rendre la déclaration et le paiement de vos impôts aussi simples que possible.
+            </p>
+            <button id="signup-btn" (click)="gotosignup()">No account yet? Signup.</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

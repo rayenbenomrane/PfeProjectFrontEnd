@@ -5,15 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from '../../service/storage.service';
 import { Route, Router } from '@angular/router';
-
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, CardModule, ButtonModule, DividerModule, InputTextModule, PasswordModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
   formData = {
     email: '',
     password: ''
@@ -52,6 +57,9 @@ export class LoginComponent {
         console.log("erreur de storage");
       }
     })
+  }
+  gotosignup() {
+    this.router.navigate(['/signup'])
   }
 
 }

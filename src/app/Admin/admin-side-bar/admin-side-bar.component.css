@@ -1,12 +1,10 @@
 .sidebar-content {
-  padding: 20px;
+  padding: 10px;
 }
 
-.sidebar{
-  z-index: 1;
+p-sidebar {
   position: relative;
 }
-
 
 .sidebar-menu {
   list-style-type: none;
@@ -31,7 +29,6 @@
 }
 
 .admin-section {
-  position: fixed;
   bottom: 20px;
   left: 20px;
 }

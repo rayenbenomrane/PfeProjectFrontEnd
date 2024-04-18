@@ -1,9 +1,12 @@
-.dashboard-container {
-
-  z-index: 1000; /* Adjust as needed */
+.dashboard-content {
+  width: 81%;
 }
 
-.dashboard-content {
-  overflow-y: auto;
-  z-index: 1001; /* Add scroll if content overflows */
+
+
+.fullcontainer{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 10px;
 }

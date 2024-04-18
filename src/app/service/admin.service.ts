@@ -21,14 +21,19 @@ export class AdminService {
       return authHeaders;
     }
   }
-  validerCompte(UserDto:any){
-    return this.http.post(BASIC_URL+"/api/admin/valider",UserDto,{
-      headers:this.createAuthorizationHeader()
+  validerCompte(UserDto: any) {
+    return this.http.post(BASIC_URL + "/api/admin/valider", UserDto, {
+      headers: this.createAuthorizationHeader()
     })
   }
 
   getAllInscription(): Observable<any> {
     return this.http.get(BASIC_URL + "/api/admin/Inscription", {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  getAllComptes(): Observable<any> {
+    return this.http.get(BASIC_URL + "/api/admin/lescompte", {
       headers: this.createAuthorizationHeader()
     })
   }

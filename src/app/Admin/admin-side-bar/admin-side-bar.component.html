@@ -1,5 +1,5 @@
 <div  class="sidebar"  style="color: #fdf0d5;">
-  <p-sidebar [visible]="true" [showCloseIcon]="false" [style]="{ 'background-color': '#003049','width':'16rem'}" [autoZIndex]="false">
+  <p-sidebar [visible]="true" [showCloseIcon]="false" [style]="{ 'background-color': '#003049','width':'16rem'}" [autoZIndex]="false" [modal]="false">
   <ng-template pTemplate="header"><h1 style="color: #fdf0d5;">Admin Dashbord</h1></ng-template>
   <ng-template pTemplate="content">
     <ul class="sidebar-menu">
@@ -8,6 +8,8 @@
     <li><a href="/inscriptions"><i class="pi pi-users"></i> Les Inscriptions</a></li>
     <hr>
     <li><a href="/contribuables"><i class="pi pi-building-columns"></i> Les Contribuables</a></li>
+    <hr>
+    <li><a href="/LesAdmins"><i class="pi pi-address-book"></i> Les Comptes</a></li>
     <hr>
     <li><a href="/LesAdmins"><i class="pi pi-address-book"></i> Les Admins</a></li>
 <hr>

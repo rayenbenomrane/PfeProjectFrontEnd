@@ -1,0 +1,75 @@
+<div class="full-w">
+  <div class="dashboard-content">
+      <app-admin-side-bar></app-admin-side-bar>
+<div class="p-col-10">
+  <h2>Les Comptes</h2>
+  <p-table [value]="lesComptes" dataKey="id">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 5rem" ></th>
+            <th pSortableColumn="email" >Email <p-sortIcon field="email"></p-sortIcon></th>
+           <th >Valeur Identifiant</th>
+            <th >Status</th>
+            <th colspan="2" style="text-align: center;">Action</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-compte let-expanded="expanded" >
+        <tr *ngIf="compte.userRole!='Admin'">
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="compte" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+            <td>{{ compte.email }}</td>
+            <td>{{ compte.inscription?.valeurIdentifiant }}</td>
+          <td>
+             <p-tag [value]="compte.inscription.nonLocked? 'true' : 'false'" [severity]="getSeverity(compte.inscription.nonLocked)"></p-tag>
+          </td>
+
+          <td style="text-align: center;">
+            <p-button icon="pi pi-lock-open" [rounded]="true" severity="success" *ngIf="compte.inscription.nonLocked === 'true'"></p-button>
+            <p-button icon="pi pi-lock" [rounded]="true" severity="danger" *ngIf="compte.inscription.nonLocked !== 'true'"></p-button>
+        </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-inscription>
+      <tr>
+        <td colspan="9">
+          <div class="p-3">
+            <table class="table">
+              <tbody>
+                <ng-container *ngIf="inscription.inscription?.contribuable">
+                  <tr>
+                    <th>Contribuable:</th>
+                    <td>{{ inscription.inscription.contribuable?.nomCommercial }}</td>
+                  </tr>
+                  <tr>
+                    <th>Matricule Fiscale:</th>
+                    <td>{{ inscription.inscription.contribuable?.matriculeFiscale }}</td>
+                  </tr>
+                  <tr>
+                    <th>Email:</th>
+                    <td>{{ inscription.inscription.contribuable?.email }}</td>
+                  </tr>
+                  <tr>
+                    <th>Activite de Contribuable:</th>
+                    <td>{{ inscription.inscription.contribuable.activite?.libelle }}</td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!inscription.inscription.contribuable">
+                  <tr>
+                    <td colspan="2">No contribuable for this inscription.</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+</p-table>
+
+</div>
+
+</div>
+</div>
+

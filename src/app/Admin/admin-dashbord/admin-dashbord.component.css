@@ -1,0 +1,9 @@
+.dashboard-container {
+
+  z-index: 1000; /* Adjust as needed */
+}
+
+.dashboard-content {
+  overflow-y: auto;
+  z-index: 1001; /* Add scroll if content overflows */
+}

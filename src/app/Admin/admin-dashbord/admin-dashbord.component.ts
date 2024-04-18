@@ -5,11 +5,11 @@ import { Table, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Tag, TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
-
+import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
 @Component({
   selector: 'app-admin-dashbord',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, TagModule, SidebarModule],
+  imports: [CommonModule, TableModule, ButtonModule, TagModule, SidebarModule,AdminSideBarComponent],
   templateUrl: './admin-dashbord.component.html',
   styleUrl: './admin-dashbord.component.css'
 })

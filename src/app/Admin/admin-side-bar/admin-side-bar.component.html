@@ -1,28 +1,31 @@
-<p-sidebar #sidebarRef [visible]="true" [blockScroll]="true" [modal]="true" [showCloseIcon]="false" >
-
-  <div class="sidebar-content ">
-    <ng-template pTemplate="headless">
-      <div class="flex flex-column h-full">
-          <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
-            <h3> admin dashbord</h3>
-          </div>
-      </div>
-          </ng-template>
-
-
+<div  class="sidebar"  style="color: #fdf0d5;">
+  <p-sidebar [visible]="true" [showCloseIcon]="false" [style]="{ 'background-color': '#003049'}">
+  <ng-template pTemplate="header"><h1 style="color: #fdf0d5;">Admin Dashbord</h1></ng-template>
+  <ng-template pTemplate="content">
     <ul class="sidebar-menu">
-      <li><a routerLink="/dashboard">Dashboard</a></li>
-      <li><a routerLink="/inscriptions">Les Inscriptions</a></li>
-      <li><a routerLink="/contribuables">Les Contribuables</a></li>
-      
+    <li><a href="/dashboard"><i class="pi pi-chart-bar"></i> Dashboard</a></li>
+    <hr>
+    <li><a href="/inscriptions"><i class="pi pi-users"></i> Les Inscriptions</a></li>
+    <hr>
+    <li><a href="/contribuables"><i class="pi pi-building-columns"></i> Les Contribuables</a></li>
+    <hr>
+    <li><a href="/LesAdmins"><i class="pi pi-address-book"></i> Les Admins</a></li>
+<hr>
+  </ul>
+</ng-template>
+  <ng-template pTemplate="footer">
+    <hr>
+    <ul class="sidebar-menu">
+
+      <li>
+        <div>
+          <a href="/admin">
+            <i class="pi pi-user"></i> Admin
+          </a>
+        </div>
+  </li>
     </ul>
-  </div>
-  <div class="admin-section">
-    <a routerLink="/admin">Admin</a>
-    <!-- Logout button -->
-    <button class="logout-button">Logout</button>
-  </div>
+    <p-button label="Logout" icon="pi pi-sign-out"  severity="danger"></p-button>
+  </ng-template>
 </p-sidebar>
-
-
-
+</div>

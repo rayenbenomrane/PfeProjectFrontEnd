@@ -12,6 +12,7 @@ import { SidebarModule } from 'primeng/sidebar';
   styleUrl: './admin-side-bar.component.css'
 })
 export class AdminSideBarComponent implements OnInit {
+[x: string]: any;
 
   ngOnInit() {
   }

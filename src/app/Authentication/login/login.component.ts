@@ -25,7 +25,7 @@ export class LoginComponent {
   };
   constructor(private authserve: AuthServiceService, private router: Router) { }
   ngOnInit(): void {
-
+console.log(this.formData)
   }
 
 

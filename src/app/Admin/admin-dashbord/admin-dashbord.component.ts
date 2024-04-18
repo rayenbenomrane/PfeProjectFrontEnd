@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { CommonModule } from '@angular/common';
+import { Table, TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { Tag, TagModule } from 'primeng/tag';
+import { SidebarModule } from 'primeng/sidebar';
 
 @Component({
   selector: 'app-admin-dashbord',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TableModule, ButtonModule, TagModule, SidebarModule],
   templateUrl: './admin-dashbord.component.html',
   styleUrl: './admin-dashbord.component.css'
 })
@@ -28,9 +32,12 @@ export class AdminDashbordComponent {
     })
   }
   accepterUtilisateur(inscription: any) {
-    inscription.NonLocked = true;
+
     this.admineService.validerCompte(inscription).subscribe(() => console.log("utilisateur valider!!!"))
 
 
+  }
+  getSeverity(enabled: boolean): string {
+    return enabled ? 'success' : 'danger';
   }
 }

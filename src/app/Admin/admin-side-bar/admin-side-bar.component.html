@@ -1,0 +1,28 @@
+<p-sidebar #sidebarRef [visible]="true" [blockScroll]="true" [modal]="true" [showCloseIcon]="false" >
+
+  <div class="sidebar-content ">
+    <ng-template pTemplate="headless">
+      <div class="flex flex-column h-full">
+          <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
+            <h3> admin dashbord</h3>
+          </div>
+      </div>
+          </ng-template>
+
+
+    <ul class="sidebar-menu">
+      <li><a routerLink="/dashboard">Dashboard</a></li>
+      <li><a routerLink="/inscriptions">Les Inscriptions</a></li>
+      <li><a routerLink="/contribuables">Les Contribuables</a></li>
+      
+    </ul>
+  </div>
+  <div class="admin-section">
+    <a routerLink="/admin">Admin</a>
+    <!-- Logout button -->
+    <button class="logout-button">Logout</button>
+  </div>
+</p-sidebar>
+
+
+

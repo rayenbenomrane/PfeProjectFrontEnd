@@ -167,9 +167,9 @@ export class SignUpComponent implements OnInit {
     if (!this.date) {
       return false;
     }
-    if (!this.valid) {
-      return false;
-    }
+     if (!this.valid) {
+       return false;
+     }
     return true;
   }
   handleSuccess(event: any) {
@@ -249,7 +249,7 @@ export class SignUpComponent implements OnInit {
     if (!this.formData.poste) {
       return false;
     }
-  if (!this.inputValue) {
+    if (!this.inputValue) {
       return false;
     }
     if (!this.valid) {

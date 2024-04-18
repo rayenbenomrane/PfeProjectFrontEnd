@@ -9,43 +9,82 @@
 
 </head>
 <body>
-  <div>
-    <h2>All Inscriptions</h2>
-    <table class="table-auto">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Email</th>
-          <th>Type Identifiant</th>
-          <th>Valeur Identifiant</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Enabled</th>
-          <th>Poste</th>
+ 
+  <div class="p-grid p-justify-center" >
+    <div class="p-col-10">
+      <h2>All Inscriptions</h2>
+      <p-table [value]="inscription" dataKey="id">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 5rem"></th>
+                <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                <th>Type Identifiant</th>
+                <th>Valeur Identifiant</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Enabled</th>
+                <th>Poste</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inscription let-expanded="expanded">
+            <tr>
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="inscription" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>{{ inscription.email }}</td>
+                <td>{{ inscription.typeIdentifiant }}</td>
+                <td>{{ inscription.valueIdentifiant }}</td>
+                <td>{{ inscription.nom }}</td>
+                <td>{{ inscription.prenom }}</td>
+                <td>
+                  <p-tag [value]="inscription.enabled ? 'true' : 'false'" [severity]="getSeverity(inscription.enabled)"></p-tag>
+              </td>
+                <td>{{ inscription.poste }}</td>
+                <td>
+                  <button pButton type="button" icon="pi pi-check" (click)="accepterUtilisateur(inscription)" label="Accepter"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-inscription>
+          <tr>
+              <td colspan="9">
+                  <div class="p-3">
+                      <table class="table">
+                          <tbody>
+                              <ng-container *ngIf="inscription.contribuable">
+                                  <tr>
+                                      <th>Contribuable:</th>
+                                      <td>{{ inscription.contribuable.nomCommercial }}</td>
+                                  </tr>
+                                  <tr>
+                                      <th> Matricule Fiscale:</th>
+                                      <td>{{ inscription.contribuable.matriculeFiscale }}</td>
+                                  </tr>
+                                  <tr>
+                                      <th>Email:</th>
+                                      <td>{{ inscription.contribuable.email }}</td>
+                                  </tr>
+                                  <tr>
+                                      <th>Activite de Contribuable:</th>
+                                      <td>{{ inscription.contribuable.activite.libelle }}</td>
+                                  </tr>
+                              </ng-container>
+                              <ng-container *ngIf="!inscription.contribuable">
+                                  <tr>
+                                      <td colspan="2">No contribuable for this inscription.</td>
+                                  </tr>
+                              </ng-container>
+                          </tbody>
+                      </table>
+                  </div>
+              </td>
+          </tr>
+      </ng-template>
+    </p-table>
 
-          <!-- Add more headers as needed for other attributes -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let inscription of inscription">
-          <td>{{ inscription.idInscription }}</td>
-          <td>{{ inscription.email }}</td>
-          <td>{{ inscription.typeIdentifiant }}</td>
-          <td>{{ inscription.valueIdentifiant }}</td>
-          <td>{{ inscription.nom }}</td>
-          <td>{{ inscription.prenom }}</td>
-          <td>{{ inscription.enabled }}</td>
-          <td>{{ inscription.NonLocked }}</td>
-          <td>{{ inscription.poste }}</td>
-
-          <td>
-            <button (click)="accepterUtilisateur(inscription)">Accepter inscription</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    </div>
   </div>
-
 
 </body>
 </html>

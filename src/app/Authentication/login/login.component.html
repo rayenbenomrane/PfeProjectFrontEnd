@@ -9,18 +9,19 @@
             <h2>Signin</h2>
 
             <div class="field">
-              <label for="username1" class="block">Username</label>
-              <input id="username1" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="formData.email" [ngModelOptions]="{standalone: true}"/>
-             </div>
-
-
-              <label for="password">Password:</label>
-              <p-password [(ngModel)]="formData.email" ></p-password>
-
-              <div style="margin-top: 10px;">
-              <p-button label="Submit"></p-button>
+                <label for="username1" class="block">Username:</label>
+                <input id="username1" type="text" aria-describedby="username1-help" pInputText [(ngModel)]="formData.email" name="email"/>
             </div>
-          </form>
+
+            <div class="field">
+                <label for="password">Password:</label>
+                <p-password name="password" [(ngModel)]="formData.password"></p-password>
+            </div>
+
+            <div style="margin-top: 10px;">
+                <button type="submit" pButton label="Submit"></button>
+            </div>
+        </form>
         </div>
       </div>
       <div class="intros-container">

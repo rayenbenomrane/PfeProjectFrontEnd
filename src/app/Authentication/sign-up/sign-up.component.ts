@@ -27,7 +27,7 @@ export class SignUpComponent implements OnInit {
 
   siteKey: string;
   lesinscriptions: any = []
-  activeIndex = 0;
+  activeIndex = 2;
   valid: boolean = false;
   date!: Date | null;
   date2!: Date | null;

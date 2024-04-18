@@ -19,7 +19,7 @@
             <button type="button" pButton pRipple [pRowToggler]="compte" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
             <td>{{ compte.email }}</td>
-            <td>{{ compte.inscription?.valeurIdentifiant }}</td>
+            <td>{{ compte.inscription?.valueIdentifiant }}</td>
           <td>
              <p-tag [value]="compte.inscription.nonLocked? 'true' : 'false'" [severity]="getSeverity(compte.inscription.nonLocked)"></p-tag>
           </td>

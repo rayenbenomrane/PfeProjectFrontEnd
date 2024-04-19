@@ -21,12 +21,12 @@
             <td>{{ compte.email }}</td>
             <td>{{ compte.inscription?.valueIdentifiant }}</td>
           <td>
-             <p-tag [value]="compte.inscription.nonLocked? 'true' : 'false'" [severity]="getSeverity(compte.inscription.nonLocked)"></p-tag>
+             <p-tag [value]="compte.inscription.nonLocked? 'nonLocked' : 'locked'" [severity]="getSeverity(compte.inscription.nonLocked)"></p-tag>
           </td>
 
           <td style="text-align: center;">
-            <p-button icon="pi pi-lock-open" [rounded]="true" severity="success" *ngIf="compte.inscription.nonLocked === 'true'"></p-button>
-            <p-button icon="pi pi-lock" [rounded]="true" severity="danger" *ngIf="compte.inscription.nonLocked !== 'true'"></p-button>
+            <p-button icon="pi pi-lock-open" [rounded]="true" severity="success" *ngIf="compte.inscription.nonLocked ==false" (click)="debloqueCompte(compte)"></p-button>
+            <p-button icon="pi pi-lock" [rounded]="true" severity="danger" *ngIf="compte.inscription.nonLocked == true" (click)="bloqueCompte(compte)"></p-button>
         </td>
         </tr>
     </ng-template>

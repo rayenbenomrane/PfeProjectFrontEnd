@@ -37,4 +37,15 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     })
   }
+  bloqueCompte(compteDto: any): Observable<any> {
+    return this.http.post<any>(BASIC_URL + '/api/admin/bloqueCompte', compteDto, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  debloqueCompte(compteDto: any): Observable<any> {
+    return this.http.post<any>(BASIC_URL + '/api/admin/debloqueCompte', compteDto, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
 }

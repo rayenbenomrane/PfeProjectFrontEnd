@@ -38,4 +38,22 @@ export class LesComptesComponent implements OnInit {
       console.log(this.lesComptes)
     })
   }
+  bloqueCompte(compte: any) {
+    this.adminService.bloqueCompte(compte).subscribe(response => {
+      console.log(response);
+      this.ngOnInit();
+    }, error => {
+      console.error(error);
+    });
+
+  }
+  debloqueCompte(compte: any) {
+    this.adminService.debloqueCompte(compte).subscribe(response => {
+      console.log(response);
+      this.ngOnInit();
+    }, error => {
+      console.error(error);
+    });
+
+  }
 }

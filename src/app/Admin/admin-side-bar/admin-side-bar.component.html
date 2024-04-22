@@ -5,7 +5,7 @@
     <ul class="sidebar-menu">
     <li><a href="/dashboard"><i class="pi pi-chart-bar"></i> Dashboard</a></li>
     <hr>
-    <li><a href="/dashbord"><i class="pi pi-users"></i> Les Inscriptions</a></li>
+    <li><a href="/inscription"><i class="pi pi-users"></i> Les Inscriptions</a></li>
     <hr>
     <li><a href="/lescontribuables"><i class="pi pi-building-columns"></i> Les Contribuables</a></li>
     <hr>
@@ -19,15 +19,38 @@
     <hr>
     <ul class="sidebar-menu">
 
-      <li>
+      <li (click)="showDialog()">
         <div>
-          <a href="/admin">
-            <i class="pi pi-user"></i> Admin
-          </a>
+          <i class="pi pi-user"></i> Admin
         </div>
-  </li>
+      </li>
     </ul>
-    <p-button label="Logout" icon="pi pi-sign-out"  severity="danger"></p-button>
+    <p-button label="Logout"  icon="pi pi-sign-out"  severity="danger"></p-button>
   </ng-template>
 </p-sidebar>
 </div>
+<p-dialog header="Modifier le Mot de Passe" [(visible)]="display" [modal]="true" [style]="{ 'max-width': '400px' }">
+  <ng-template pTemplate="content">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="username" class="p-d-block">New Password</label>
+        <p-password [(ngModel)]="newpassword"></p-password>
+      </div>
+      <div class="p-field">
+        <label for="password" class="p-d-block">Confirme Password</label>
+        <p-password [(ngModel)]="confirmpassword" [feedback]="false"></p-password>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="p-grid p-justify-between">
+      <div class="p-col">
+        <button pButton type="button" label="Cancel" class="p-button-text p-button-outlined p-button-sm" (click)="display = false"></button>
+      </div>
+      <div class="p-col">
+        <button pButton type="button" label="Valider" class="p-button-primary p-button-sm"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+

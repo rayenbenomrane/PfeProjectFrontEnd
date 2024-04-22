@@ -1,0 +1,36 @@
+<div class="full-w">
+  <div class="dashboard-content">
+    <app-admin-side-bar></app-admin-side-bar>
+    <div class="p-col-10">
+      <h2>Dashboard Overview</h2>
+      <div class="dashboard-cards">
+        <!-- Card for Inscriptions -->
+        <p-card [style]="{ width: '300px', margin: '10px' }">
+          <div class="card-header">Inscriptions</div>
+          <div class="card-content">
+            <i class="pi pi-user-plus" style="font-size: 2em;"></i>
+            <div>Total Inscriptions: {{ totalInscriptions }}</div>
+          </div>
+        </p-card>
+
+        <!-- Card for Contribuables -->
+        <p-card [style]="{ width: '300px', margin: '10px' }">
+          <div class="card-header">Contribuables</div>
+          <div class="card-content">
+            <i class="pi pi-users" style="font-size: 2em;"></i>
+            <div>Total Contribuables: {{ totalContribuables }}</div>
+          </div>
+        </p-card>
+
+        <!-- Card for Accounts -->
+        <p-card [style]="{ width: '300px', margin: '10px' }">
+          <div class="card-header">Accounts</div>
+          <div class="card-content">
+            <i class="pi pi-lock" style="font-size: 2em;"></i>
+            <div>Total Accounts: {{ totalAccounts }}</div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

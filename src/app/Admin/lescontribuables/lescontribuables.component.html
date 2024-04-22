@@ -1,0 +1,36 @@
+<div class="full-w">
+  <div class="dashboard-content">
+      <app-admin-side-bar></app-admin-side-bar>
+<div class="p-col-10">
+  <h2>Les Contribuables</h2>
+  <p-table [value]="lesContribuables" dataKey="id">
+    <ng-template pTemplate="header">
+        <tr>
+
+            <th pSortableColumn="email" >Email <p-sortIcon field="email"></p-sortIcon></th>
+           <th>Raison Social</th>
+           <th>Nom Commercial</th>
+            <th>Matricule Fiscale</th>
+            <th>Forme Juridique</th>
+            <th>Pays</th>
+            <th>Activité</th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-compte let-expanded="expanded" >
+        <tr *ngIf="compte.userRole!='Admin'">
+
+            <td>{{ compte.email }}</td>
+            <td>{{ compte.raisonSocial}}</td>
+            <td>{{ compte.nomCommercial }}</td>
+            <td>{{ compte.matriculeFiscale}}</td>
+            <td>{{ compte.formeJuridique.libelle }}</td>
+            <td>{{ compte.pays.libelle}}</td>
+            <td>{{ compte.activite.libelle }}</td>
+
+
+        </tr>
+    </ng-template>
+
+</p-table>
+</div>

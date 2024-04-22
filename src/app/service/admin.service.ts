@@ -48,4 +48,9 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     });
   }
+  getAllContribuables(): Observable<any> {
+    return this.http.get(BASIC_URL + "/api/admin/lesContribuables", {
+      headers: this.createAuthorizationHeader()
+    })
+  }
 }

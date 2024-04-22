@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { AdminService } from '../../service/admin.service';
+import { AdminService } from './../../service/admin.service';
+import { Component, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { Table, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -9,27 +10,35 @@ import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.componen
 @Component({
   selector: 'app-admin-dashbord',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, TagModule, SidebarModule,AdminSideBarComponent],
+  imports: [CommonModule, TableModule, ButtonModule, TagModule, SidebarModule, AdminSideBarComponent],
   templateUrl: './admin-dashbord.component.html',
   styleUrl: './admin-dashbord.component.css'
 })
-export class AdminDashbordComponent {
+export class AdminDashbordComponent implements OnInit {
 
 
 
 
 
   Inscription: any = [];
-  inscription: any;
+  inscription: any = [];
+  comptes: any = [];
   constructor(private admineService: AdminService) {
+
+  }
+  ngOnInit(): void {
+    this.getAllComptes();
     this.getAllInscription();
+
   }
   getAllInscription() {
     this.admineService.getAllInscription().subscribe((res) => {
+      console.log(res);
+      this.inscription = res.filter((inscription: { email: string }) =>
+        !this.comptes.find((compte: { email: string }) => compte.email === inscription.email)
+      );
+    });
 
-      this.inscription = res
-      console.log(this.inscription)
-    })
   }
   accepterUtilisateur(inscription: any) {
 
@@ -39,5 +48,14 @@ export class AdminDashbordComponent {
   }
   getSeverity(enabled: boolean): string {
     return enabled ? 'success' : 'danger';
+  }
+  getAllComptes() {
+    this.admineService.getAllComptes().subscribe((res) => {
+      console.log(res);
+      this.comptes = res.filter((compte: { userRole: string; }) => compte.userRole !== 'Admin');
+      console.log("lescomptes:", this.comptes);
+
+      this.getAllInscription();
+    });
   }
 }

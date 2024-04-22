@@ -7,6 +7,7 @@
   <div class="p-grid p-justify-center" >
     <div class="p-col-10">
       <h2>Les Inscriptions</h2>
+
       <p-table [value]="inscription" dataKey="id">
         <ng-template pTemplate="header">
             <tr>
@@ -21,7 +22,10 @@
                 <th>Action</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-inscription let-expanded="expanded">
+
+
+
+        <ng-template pTemplate="body" let-inscription let-expanded="expanded" >
             <tr>
                 <td>
                     <button type="button" pButton pRipple [pRowToggler]="inscription" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
@@ -36,10 +40,18 @@
               </td>
                 <td>{{ inscription.poste }}</td>
                 <td>
-                  <button pButton type="button" icon="pi pi-check" (click)="accepterUtilisateur(inscription)" label="Accepter"></button>
+                  <button  pButton type="button" icon="pi pi-check" (click)="accepterUtilisateur(inscription)" label="Accepter"></button>
                 </td>
+
             </tr>
+
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9" style="text-align: center;">Aucune inscriptions</td>
+          </tr>
+        </ng-template>
+
         <ng-template pTemplate="rowexpansion" let-inscription>
           <tr>
               <td colspan="9">

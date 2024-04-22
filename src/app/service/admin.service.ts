@@ -53,4 +53,9 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     })
   }
+  changePassword(UserDto: any) {
+    return this.http.post(BASIC_URL + "/api/admin/changepassword", UserDto, {
+      headers: this.createAuthorizationHeader()
+    })
+  }
 }

@@ -29,9 +29,13 @@
   </ng-template>
 </p-sidebar>
 </div>
-<p-dialog header="Modifier le Mot de Passe" [(visible)]="display" [modal]="true" [style]="{ 'max-width': '400px' }">
+<p-dialog header="Modifier le Mot de Passe" [(visible)]="display" [modal]="true" [style]="{ 'max-width': '400px', 'background-color': '#8ecae6' }">
   <ng-template pTemplate="content">
     <div class="p-fluid">
+      <div class="p-field">
+        <label for="username" class="p-d-block">ancien Password</label>
+        <p-password [(ngModel)]="ancienpassword"></p-password>
+      </div>
       <div class="p-field">
         <label for="username" class="p-d-block">New Password</label>
         <p-password [(ngModel)]="newpassword"></p-password>
@@ -48,9 +52,8 @@
         <button pButton type="button" label="Cancel" class="p-button-text p-button-outlined p-button-sm" (click)="display = false"></button>
       </div>
       <div class="p-col">
-        <button pButton type="button" label="Valider" class="p-button-primary p-button-sm"></button>
+        <button pButton (click)="valider()" type="button" label="Valider" class="p-button-primary p-button-sm"></button>
       </div>
     </div>
   </ng-template>
 </p-dialog>
-

@@ -25,7 +25,7 @@ export class LoginComponent {
   };
   constructor(private authserve: AuthServiceService, private router: Router) { }
   ngOnInit(): void {
-console.log(this.formData)
+    console.log(this.formData)
   }
 
 
@@ -44,7 +44,7 @@ console.log(this.formData)
         // Redirect based on user role
         if (user.role === 'Admin') {
           // Redirect to admin dashboard
-          this.router.navigate(['/dashbord']);
+          this.router.navigate(['/dashboard']);
         } else if (user.role === 'Client') {
           // Redirect to home page
           this.router.navigate(['/home']);

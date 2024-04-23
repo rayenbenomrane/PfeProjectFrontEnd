@@ -72,37 +72,37 @@ export class SignUpComponent implements OnInit {
   }
 
 
-  onSubmit() {
-    this.authserve.getContribuableByMatriculeFiscale(Number(this.formData.numeroFiscal)).subscribe((data) => {
-      this.contribuable = data;
+  /* onSubmit() {
+     this.authserve.getContribuableByMatriculeFiscale(Number(this.formData.numeroFiscal)).subscribe((data) => {
+       this.contribuable = data;
 
-      const signupRequest = {
-        email: this.formData.email,
-        password: this.formData.password,
-        nom: this.formData.nom,
-        prenom: this.formData.prenom,
-        numeroFiscal: this.formData.numeroFiscal,
-        poste: this.formData.poste,
-        typeIdentifiant: this.selectedType,
-        valueIdentifiant: this.inputValue,
-        contribuable: this.contribuable
-      };
+       const signupRequest = {
+         email: this.formData.email,
+         password: this.formData.password,
+         nom: this.formData.nom,
+         prenom: this.formData.prenom,
+         numeroFiscal: this.formData.numeroFiscal,
+         poste: this.formData.poste,
+         typeIdentifiant: this.selectedType,
+         valueIdentifiant: this.inputValue,
+         contribuable: this.contribuable
+       };
 
-      this.authserve.register(signupRequest).subscribe(response => {
-        console.log('User registered successfully:', response);
+       this.authserve.register(signupRequest).subscribe(response => {
+         console.log('User registered successfully:', response);
 
-      }, error => {
-        console.error('Error occurred during registration:', error);
+       }, error => {
+         console.error('Error occurred during registration:', error);
 
-      });
-    }, (error: any) => {
-      console.error('Error occurred while fetching contribuable:', error);
+       });
+     }, (error: any) => {
+       console.error('Error occurred while fetching contribuable:', error);
 
-    });
-  }
+     });
+   }*/
 
 
-
+  //first step
   nextStep() {
 
     this.submitted = true;
@@ -186,7 +186,7 @@ export class SignUpComponent implements OnInit {
     this.submitted = false;
   }
 
-
+  //step deux
   nextStep1() {
     this.submitted = true;
     const iddecalaration = this.formData.numerodequittance;
@@ -257,8 +257,16 @@ export class SignUpComponent implements OnInit {
     }
     return true;
   }
+  //step trois
   nextStep2() {
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const email = emailInput.value.trim();
 
+    // Check if the email is empty or invalid
+    if (!email || !emailInput.validity.valid) {
+      console.log('Email is invalid');
+      return;
+    }
     const signupRequest = {
       email: this.formData.email,
       password: null,
@@ -272,6 +280,7 @@ export class SignUpComponent implements OnInit {
     };
     console.log(signupRequest)
     this.submitted = true;
+
     if (this.validateForm2()) {
 
       this.authserve.register(signupRequest).subscribe(response => {
@@ -281,6 +290,7 @@ export class SignUpComponent implements OnInit {
         console.error('Error occurred during registration:', error);
 
       });
+      console.log("acces ala fonction")
     } else {
       console.log("cant be clicked");
     }

@@ -9,16 +9,18 @@ import { LoginComponent } from './Authentication/login/login.component';
 import { SignUpComponent } from './Authentication/sign-up/sign-up.component';
 import { Routes } from '@angular/router';
 import { ErrorPageComponent } from './ErrorPages/error-page/error-page.component';
+import { HomePageComponent } from './Client/home-page/home-page.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
   , { path: "login", component: LoginComponent }
-  , { path: "inscription", component: AdminDashbordComponent }
+  , { path: "admin/inscription", component: AdminDashbordComponent }
   , { path: "createpassword/:code", component: CreatePasswordComponent }
-  , { path: "lescomptes", component: LesComptesComponent },
-  { path: "lescontribuables", component: LescontribuablesComponent }
-  , { path: "lesadmins", component: TableAdminsComponent },
-  { path: "dashboard", component: AdminHomePageComponent },
-  { path: "error", component: ErrorPageComponent }
+  , { path: "admin/lescomptes", component: LesComptesComponent },
+  { path: "admin/lescontribuables", component: LescontribuablesComponent }
+  , { path: "admin/lesadmins", component: TableAdminsComponent },
+  { path: "admin/dashboard", component: AdminHomePageComponent },
+  { path: "error", component: ErrorPageComponent },
+  { path: "client/homepage", component: HomePageComponent }
 
 ];

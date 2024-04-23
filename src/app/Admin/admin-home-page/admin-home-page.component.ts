@@ -37,6 +37,7 @@ export class AdminHomePageComponent implements OnInit {
 
   ngOnInit(): void {
     if (!StorageService.isAdminLoggedIn()) {
+      console.log(StorageService.isAdminLoggedIn())
       this.router.navigate(['/error']);
     } else {
       this.getAllContribuable();

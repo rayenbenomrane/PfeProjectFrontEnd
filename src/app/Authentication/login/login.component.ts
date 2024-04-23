@@ -44,10 +44,10 @@ export class LoginComponent {
         // Redirect based on user role
         if (user.role === 'Admin') {
           // Redirect to admin dashboard
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/admin/dashboard']);
         } else if (user.role === 'Client') {
           // Redirect to home page
-          this.router.navigate(['/home']);
+          this.router.navigate(['/client/homepage']);
         } else {
           console.log("Unknown user role");
           // Handle unknown user role, maybe redirect to an error page

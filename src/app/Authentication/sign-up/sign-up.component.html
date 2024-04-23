@@ -95,9 +95,10 @@
         <div class="p-fluid">
           <div class="p-field">
             <label for="email" class="p-d-block p-mb-1">Email:</label>
-          <input   #firstname="ngModel" id="email" type="email" name="email" [(ngModel)]="formData.email" class="p-inputtext" required [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-          <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">Email is required.</small>
-
+            <input #emailInput id="email" type="email" name="email" [(ngModel)]="formData.email" class="p-inputtext"
+                   required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Please enter a Gmail address"
+                   [class.ng-dirty]="emailInput.value" [class.ng-invalid]="emailInput.value && emailInput.oninvalid">
+            <small *ngIf="emailInput.value && emailInput.oninvalid" class="p-error">Please enter a valid Gmail address.</small>
           </div>
           <div class="p-field">
             <label for="poste" class="p-d-block p-mb-1">Poste:</label>
@@ -132,7 +133,7 @@
         </div>
         <div class="p-field" *ngIf="selectedType">
             <label for="identifiantInput" class="p-d-block p-mb-1">{{ selectedType }} Number</label>
-            <input #firstname="ngModel" id="identifiantInput" type="text" name="inputValue" [(ngModel)]="inputValue" class="p-inputtext" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <input #firstname="ngModel" id="identifiantInput" type="number" name="inputValue" [(ngModel)]="inputValue" class="p-inputtext" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
             <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">numero  is required.</small>
 
         </div>

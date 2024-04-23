@@ -7,6 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../service/admin.service';
 import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class AdminSideBarComponent implements OnInit {
   confirmpassword!: string
   ancienpassword!: string
   userid!: number
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private router: Router) {
 
   }
   ngOnInit() {
@@ -74,6 +75,13 @@ export class AdminSideBarComponent implements OnInit {
         alert('Failed to change password. Please try again.');
       }
     );
+  }
+  logout(): void {
+
+    StorageService.clearFromLocalStorage();
+
+
+    this.router.navigate(['/login']);
   }
 
 

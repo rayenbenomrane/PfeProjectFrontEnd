@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="card-container">
+    <p-card [style]="{ width: 'auto' }">
+      <ng-template pTemplate="header">
+        <div class="header">
+          <div> <i class="pi pi-building-columns" style="font-size: 2rem"></i> </div>
+          <div><h2><b>NumeroFiscale</b></h2>{{ this.contribuable.matriculeFiscale }}</div>
+          <div><h2><b>Raison Social</b></h2>{{ this.contribuable.raisonSocial }}</div>
+        </div>
+        <hr>
+      </ng-template>
+
+      <div class="content">
+
+        <div><b> <i class="pi pi-envelope
+          " style="font-size: 1rem"></i>  Email:</b> {{ this.contribuable.email }}</div>
+        <div><b> <i class="pi pi-map-marker
+          " style="font-size: 1rem"></i>  Adresse:</b> {{ this.contribuable.adress }}</div>
+        <div><b><i class="pi pi-calendar"></i>  Date de Matriculation:</b> {{ this.contribuable.dateDeMatriculation }}</div>
+        <div><b><i class="pi pi-user"></i>  Directeur:</b> {{ this.contribuable.directeur }}</div>
+        <div><b><i class="pi pi-briefcase"></i> Activité:</b> {{ this.contribuable.activite.libelle }}</div>
+        <div><b><i class="pi pi-building"></i>  Forme Juridique:</b> {{ this.contribuable.formeJuridique.libelle }}</div>
+        <div><b><i class="pi pi-flag"></i>  Pays du Directeur:</b> {{ this.contribuable.pays.libelle }}</div>
+      </div>
+    </p-card>
+  </div>
+</div>

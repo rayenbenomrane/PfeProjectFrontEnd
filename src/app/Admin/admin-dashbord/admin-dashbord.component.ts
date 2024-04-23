@@ -29,10 +29,11 @@ export class AdminDashbordComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.getAllComptes();
-    this.getAllInscription();
     if (!StorageService.isAdminLoggedIn()) {
       this.router.navigate(['/error'])
+    }else{
+    this.getAllComptes();
+    this.getAllInscription();
     }
 
   }

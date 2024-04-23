@@ -8,6 +8,7 @@ import { CreatePasswordComponent } from './Authentication/create-password/create
 import { LoginComponent } from './Authentication/login/login.component';
 import { SignUpComponent } from './Authentication/sign-up/sign-up.component';
 import { Routes } from '@angular/router';
+import { ErrorPageComponent } from './ErrorPages/error-page/error-page.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -17,6 +18,7 @@ export const routes: Routes = [
   , { path: "lescomptes", component: LesComptesComponent },
   { path: "lescontribuables", component: LescontribuablesComponent }
   , { path: "lesadmins", component: TableAdminsComponent },
-  { path: "dashboard", component: AdminHomePageComponent }
+  { path: "dashboard", component: AdminHomePageComponent },
+  { path: "error", component: ErrorPageComponent }
 
 ];

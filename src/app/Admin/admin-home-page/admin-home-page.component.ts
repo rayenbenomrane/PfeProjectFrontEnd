@@ -3,6 +3,8 @@ import { AdminService } from './../../service/admin.service';
 import { Component, OnInit } from '@angular/core';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
 import { CardModule } from 'primeng/card';
+import { Router } from '@angular/router';
+import { StorageService } from '../../service/storage.service';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -19,7 +21,7 @@ export class AdminHomePageComponent implements OnInit {
   totalInscriptions: any;
   totalContribuables: any;
   totalAccounts: any;
-  constructor(private AdminService: AdminService) {
+  constructor(private AdminService: AdminService, private router: Router) {
 
   }
   getAllInscription() {
@@ -34,10 +36,16 @@ export class AdminHomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllContribuable();
-    this.getAllInscription();
-    this.getAllComptes()
+    if (!StorageService.isAdminLoggedIn()) {
+      this.router.navigate(['/error']);
+    } else {
+      this.getAllContribuable();
+      this.getAllInscription();
+      this.getAllComptes();
+    }
   }
+
+
   getAllContribuable() {
     this.AdminService.getAllContribuables().subscribe((res) => {
 

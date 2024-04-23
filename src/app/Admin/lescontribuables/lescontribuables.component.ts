@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
+import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lescontribuables',
@@ -17,12 +19,16 @@ import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.componen
 export class LescontribuablesComponent implements OnInit {
   lesContribuables: any = []
 
-  constructor(private AdminService: AdminService) {
+  constructor(private AdminService: AdminService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.getAllContribuable();
+    if (!StorageService.isAdminLoggedIn()) {
+      this.router.navigate(['/error'])
+    }else{ this.getAllContribuable();}
+
+
   }
   getAllContribuable() {
     this.AdminService.getAllContribuables().subscribe((res) => {

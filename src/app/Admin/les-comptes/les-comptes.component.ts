@@ -7,6 +7,8 @@ import { Tag, TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,10 +27,19 @@ export class LesComptesComponent implements OnInit {
     return enabled ? 'success' : 'danger';
   }
   ngOnInit(): void {
-    this.getAllCompte();
+    if (!StorageService.isAdminLoggedIn()) {
+      this.router.navigate(['/error'])
+    } else {
+      this.getAllCompte();
+    }
+
+
+
+
+
   }
   lesComptes: any = []
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private router: Router) {
 
   }
   getAllCompte() {

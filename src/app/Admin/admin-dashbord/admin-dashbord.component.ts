@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { Tag, TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
+import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-dashbord',
   standalone: true,
@@ -23,12 +25,15 @@ export class AdminDashbordComponent implements OnInit {
   Inscription: any = [];
   inscription: any = [];
   comptes: any = [];
-  constructor(private admineService: AdminService) {
+  constructor(private admineService: AdminService, private router: Router) {
 
   }
   ngOnInit(): void {
     this.getAllComptes();
     this.getAllInscription();
+    if (!StorageService.isAdminLoggedIn()) {
+      this.router.navigate(['/error'])
+    }
 
   }
   getAllInscription() {

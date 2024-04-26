@@ -1,4 +1,6 @@
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
+<p-toast key="step1"></p-toast>
+<div
+  style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
   <div class="p-card" style="width: auto; margin: 10px;height: auto;">
 
     <div class="container">
@@ -9,19 +11,21 @@
             <h2>Signin</h2>
 
             <div class="field">
-                <label for="username1" class="block">Username:</label>
-                <input id="username1" type="text" aria-describedby="username1-help" pInputText [(ngModel)]="formData.email" name="email"/>
+              <label for="username1" class="block">Username:</label>
+              <input id="username1" type="text" aria-describedby="username1-help" pInputText
+                [(ngModel)]="formData.email" name="email" />
             </div>
 
             <div class="field">
-                <label for="password">Password:</label>
-                <p-password name="password" [(ngModel)]="formData.password"></p-password>
+              <label for="password">Password:</label>
+              <p-password name="password" [feedback]="false" [(ngModel)]="formData.password"
+                [toggleMask]="true"></p-password>
             </div>
 
             <div style="margin-top: 10px;">
-                <button type="submit" pButton label="Submit"></button>
+              <button type="submit" pButton label="Submit"></button>
             </div>
-        </form>
+          </form>
         </div>
       </div>
       <div class="intros-container">
@@ -32,7 +36,8 @@
             </div>
             <h2>Welcome back!</h2>
             <p>
-              Ravi de vous retrouver sur notre plateforme fiscale ! Comptez sur nous pour rendre la déclaration et le paiement de vos impôts aussi simples que possible.
+              Ravi de vous retrouver sur notre plateforme fiscale ! Comptez sur nous pour rendre la déclaration et le
+              paiement de vos impôts aussi simples que possible.
             </p>
             <button id="signup-btn" (click)="gotosignup()">No account yet? Signup.</button>
           </div>

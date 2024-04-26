@@ -1,11 +1,10 @@
-import { Contribuable } from './../../../Models/Contribuable';
 import { CommonModule, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TypeIdentifiant } from '../../enums/TypeIdentifiant.enum';
-
+import { ToastModule } from 'primeng/toast';
 import { StepsModule } from 'primeng/steps';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ButtonModule } from 'primeng/button';
@@ -14,12 +13,13 @@ import { CalendarModule } from 'primeng/calendar';
 import { NgxCaptchaModule } from 'ngx-captcha';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule, StepsModule,
     FieldsetModule,
-    ButtonModule, CardModule, CalendarModule, ReactiveFormsModule, NgxCaptchaModule],
+    ButtonModule, CardModule, CalendarModule, ReactiveFormsModule, NgxCaptchaModule, ToastModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
@@ -37,11 +37,10 @@ export class SignUpComponent implements OnInit {
   selectedType: TypeIdentifiant | null = null;
   inputValue: string = '';
   items = [
-    { label: ' contribuable ' },
-    { label: 'Step 2' },
-    { label: 'Step 3' },
-    { label: 'Step 4' }
-
+    { label: 'Contribuable' },
+    { label: 'Vérification Quittance' },
+    { label: 'Info Personnelles' },
+    { label: 'Création du Mot de Passe' }
   ];
 
   selectType(type: string | TypeIdentifiant) {
@@ -65,7 +64,7 @@ export class SignUpComponent implements OnInit {
 
 
   };
-  constructor(private authserve: AuthServiceService) { this.siteKey = '6Lf62rApAAAAANTrndxnTO0Npv3pBj5uJgQY2nba' }
+  constructor(private authserve: AuthServiceService, private messageService: MessageService) { this.siteKey = '6Lf62rApAAAAANTrndxnTO0Npv3pBj5uJgQY2nba' }
   ngOnInit(): void {
 
 
@@ -121,7 +120,8 @@ export class SignUpComponent implements OnInit {
             });
 
             if (contribuableExists) {
-              alert("Contribuable has already done the sign up");
+              // alert("Contribuable has already done the sign up");
+              this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: 'contribuable a deja fait linscription' });
               return; // Exit the function early if the contribuable exists
             }
 
@@ -140,19 +140,25 @@ export class SignUpComponent implements OnInit {
 
             // Compare the dates if currentDate is not null
             if (currentDateOnly && contribuableDateOnly.getTime() === currentDateOnly.getTime()) {
-              alert("Contribuable found");
-              this.activeIndex++;
-              this.submitted = false; // Proceed to the next step if the contribuable is found
+              //alert("Contribuable found");
+              this.messageService.add({ key: 'step1', severity: 'success', summary: 'Success', detail: 'contribuable trouvé !!' });
+              //this.activeIndex++;
+              setTimeout(() => {
+                this.submitted = false;
+                this.activeIndex++;
+              }, 2000); // Proceed to the next step if the contribuable is found
             } else {
               console.log(this.contribuable);
               console.log(this.contribuable.dateDeMatriculation);
               console.log(this.date);
-              alert("Contribuable not found");
+              //alert("Contribuable not found");
+              this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: 'contribuable introuvable' });
             }
           },
           (error) => {
-            console.error("Error fetching contribuable:", error);
-            alert("An error occurred while fetching the contribuable");
+            //console.error("Error fetching contribuable:", error);
+            //alert("An error occurred while fetching the contribuable");
+            this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: 'contribuable introuvable' });
           }
         );
       });
@@ -207,18 +213,24 @@ export class SignUpComponent implements OnInit {
             const apiDateOnly = response.dateDeclaration.split('T')[0];
             console.log(apiDateOnly)
             if (apiDateOnly === dateDeQuittance) {
-              this.activeIndex++;
-              this.submitted = false;
+              this.messageService.add({ key: 'step2', severity: 'success', summary: 'Success', detail: 'Verification validé' });
+              setTimeout(() => {
+                this.submitted = false;
+                this.activeIndex++;
+              }, 2000);
             } else {
-              console.log('Date does not match');
+              //console.log('Date does not match');
+              this.messageService.add({ key: 'step2', severity: 'error', summary: 'Error', detail: 'Verification non validé' });
             }
           } else {
 
-            console.log('Date does not match or declaration not found');
+            // console.log('Date does not match or declaration not found');
+            this.messageService.add({ key: 'step2', severity: 'error', summary: 'Error', detail: 'Verification non validé' });
           }
         },
         (error) => {
           console.error('Error:', error);
+          this.messageService.add({ key: 'step2', severity: 'error', summary: 'Error', detail: 'Something went wrong' });
 
         }
       );
@@ -265,6 +277,7 @@ export class SignUpComponent implements OnInit {
     // Check if the email is empty or invalid
     if (!email || !emailInput.validity.valid) {
       console.log('Email is invalid');
+      this.messageService.add({ key: 'step3', severity: 'error', summary: 'Error', detail: 'Votre email est invalid' });
       return;
     }
     const signupRequest = {
@@ -285,14 +298,19 @@ export class SignUpComponent implements OnInit {
 
       this.authserve.register(signupRequest).subscribe(response => {
         console.log('User registered successfully:', response);
-
+        this.messageService.add({ key: 'step3', severity: 'success', summary: 'registrer', detail: 'Votre inscription est validé !' });
+        setTimeout(() => {
+          this.submitted = false;
+          this.activeIndex++;
+        }, 2000);
       }, error => {
         console.error('Error occurred during registration:', error);
-
+        this.messageService.add({ key: 'step3', severity: 'error', summary: 'Error', detail: 'Something went wrong' });
       });
-      console.log("acces ala fonction")
+
     } else {
       console.log("cant be clicked");
+      this.messageService.add({ key: 'step3', severity: 'error', summary: 'Error', detail: 'votre formulaire est invalide' });
     }
 
   }

@@ -1,6 +1,6 @@
 import { AuthServiceService } from './../../service/auth-service.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -8,11 +8,13 @@ import { CommonModule, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-password',
   standalone: true,
-  imports: [ButtonModule, CardModule, FieldsetModule, CommonModule, FormsModule, HttpClientModule, PasswordModule],
+  imports: [ButtonModule, CardModule, FieldsetModule, CommonModule, FormsModule, HttpClientModule, PasswordModule, ToastModule],
   templateUrl: './create-password.component.html',
   styleUrl: './create-password.component.css'
 })
@@ -25,7 +27,7 @@ export class CreatePasswordComponent implements OnInit {
   }
   value: any;
 
-  constructor(private route: ActivatedRoute, private authserv: AuthServiceService) { }
+  constructor(private route: ActivatedRoute, private authserv: AuthServiceService, private messageService: MessageService,private router:Router) { }
 
   ngOnInit(): void {
     // Retrieve the 'code' parameter from the URL
@@ -55,6 +57,8 @@ export class CreatePasswordComponent implements OnInit {
     if (this.formatDate.password !== this.formatDate.password1) {
 
       console.error('Passwords do not match');
+      this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: 'verifier vos mot de pass' });
+
       return;
     }
 
@@ -65,6 +69,8 @@ export class CreatePasswordComponent implements OnInit {
     if (!passwordRegex.test(this.formatDate.password)) {
 
       console.error('Password does not meet requirements');
+      this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: 'password est faible' });
+
       return;
     }
     const passwordDto = {
@@ -75,10 +81,16 @@ export class CreatePasswordComponent implements OnInit {
     this.authserv.createpassword(passwordDto).subscribe(
       (response) => {
         console.log('Password saved successfully:', response);
-
+        this.messageService.add({ key: 'step1', severity: 'success', summary: 'Valide', detail: 'Mot de pass Configuré' });
+        
+        setTimeout(() => {
+          this.router.navigate(['/login'])
+        }, 1000);
       },
       (error) => {
-        console.error('Error saving password:', error);
+       // console.error('Error saving password:', error);
+        this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+
 
       }
     );

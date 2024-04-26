@@ -1,14 +1,15 @@
-
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
-  <div class="p-card p-p-4 p-shadow-4" style="width: 500px; margin: 10px;height:auto;">
+<div
+  style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #023047;margin: -8px;">
+  <div class="p-card p-p-4 p-shadow-4" style="width: 900px; margin: 10px;height:auto;">
 
     <div style="margin-top: 15px;">
-    <p-steps [model]="items" [activeIndex]="activeIndex" [readonly]="true" [style]="{ margin: '0 auto'}"></p-steps>
-  </div>
+      <p-steps [model]="items" [activeIndex]="activeIndex" [readonly]="true" [style]="{ margin: '0 auto'}"></p-steps>
+    </div>
 
 
 
     <p-card *ngIf="activeIndex === 0">
+      <p-toast key="step1"></p-toast>
       <ng-template pTemplate="title">
         Coordonnées de contribuable
       </ng-template>
@@ -19,22 +20,25 @@
         <div class="p-fluid">
           <div class="p-field">
             <label for="firstname">Matricule Fiscale</label>
-            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numeroFiscal" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">MatriculeFiscale is required.</small>
+            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext"
+              [(ngModel)]="formData.numeroFiscal"
+              [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)"
+              class="p-error">MatriculeFiscale is required.</small>
           </div>
           <div class="p-fluid grid formgrid">
             <div class="field col-12 md:col-4">
-              <label for="icon">Date De Matriculation</label>
+              <label for="icon">Date d'Immatriculation</label>
               <p-calendar [(ngModel)]="date" [showIcon]="true" inputId="icon"></p-calendar>
               <small *ngIf="!date && (submitted)" class="p-error">Date De Matriculation is required.</small>
-          </div>
-          <div style="margin-top: 20px;">
-          <div class="p-fluid grid formgrid">
-            <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (success)="handleSuccess($event)"
-              (captchaError)="handleError()"></ngx-recaptcha2>
-            <small *ngIf="!valid" class="p-error">Recaptcha is required.</small>
-          </div>
-        </div>
+            </div>
+            <div style="margin-top: 20px;">
+              <div class="p-fluid grid formgrid">
+                <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (success)="handleSuccess($event)"
+                  (captchaError)="handleError()"></ngx-recaptcha2>
+                <small *ngIf="!valid" class="p-error">Recaptcha is required.</small>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -42,35 +46,38 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-end">
-          <button pButton type="button" label="Next" class="p-button-info"  (click)="nextStep()" ></button>
+          <button pButton type="button" label="Next" class="p-button-info" (click)="nextStep()"></button>
         </div>
       </ng-template>
     </p-card>
-    <p-card *ngIf="activeIndex === 1" >
+    <p-card *ngIf="activeIndex === 1">
+      <p-toast key="step2"></p-toast>
       <ng-template pTemplate="title">
-        Personal Information
+        Verification du Contribuable
       </ng-template>
-      <ng-template pTemplate="subtitle">
-        Enter your personal information
-      </ng-template>
+
       <ng-template pTemplate="content">
         <div class="p-fluid">
           <div class="p-field">
             <label for="numeroFiscal" class="p-d-block p-mb-1">Numéro Fiscal:</label>
-          <input id="numeroFiscal" type="number" name="numeroFiscal" [(ngModel)]="formData.numeroFiscal" class="p-inputtext p-disabled" readonly>
+            <input id="numeroFiscal" type="number" name="numeroFiscal" [(ngModel)]="formData.numeroFiscal"
+              class="p-inputtext p-disabled" readonly>
 
           </div>
           <div class="p-field">
             <label for="numeroDeQuittance" class="p-d-block p-mb-1">Numéro de Quittance:</label>
-            <input #firstname="ngModel" id="numeroDeQuittance" type="number" required class="p-inputtext" [(ngModel)]="formData.numerodequittance" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">Numero de Quittance is required.</small>
+            <input #firstname="ngModel" id="numeroDeQuittance" type="number" required class="p-inputtext"
+              [(ngModel)]="formData.numerodequittance"
+              [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)"
+              class="p-error">Numero de Quittance is required.</small>
           </div>
           <div class="p-fluid grid formgrid">
             <div class="field col-12 md:col-4">
               <label for="icon">Date De Quittance</label>
               <p-calendar [(ngModel)]="date2" [showIcon]="true" inputId="icon"></p-calendar>
               <small *ngIf="!date2 && (submitted)" class="p-error">Date De Quittance is required.</small>
-          </div>
+            </div>
           </div>
 
         </div>
@@ -79,12 +86,13 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-end">
-          <button pButton type="button" label="Previous" class="p-button-secondary"  (click)="prevStep()"></button>
+          <button pButton type="button" label="Previous" class="p-button-secondary" (click)="prevStep()"></button>
           <p-button label="Next" (onClick)="nextStep1()" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
       </ng-template>
     </p-card>
     <p-card *ngIf="activeIndex === 2">
+      <p-toast key="step3"></p-toast>
       <ng-template pTemplate="title">
         Personal Information
       </ng-template>
@@ -96,26 +104,36 @@
           <div class="p-field">
             <label for="email" class="p-d-block p-mb-1">Email:</label>
             <input #emailInput id="email" type="email" name="email" [(ngModel)]="formData.email" class="p-inputtext"
-                   required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Please enter a Gmail address"
-                   [class.ng-dirty]="emailInput.value" [class.ng-invalid]="emailInput.value && emailInput.oninvalid">
-            <small *ngIf="emailInput.value && emailInput.oninvalid" class="p-error">Please enter a valid Gmail address.</small>
+              required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Please enter a Gmail address"
+              [class.ng-dirty]="emailInput.value" [class.ng-invalid]="emailInput.value && emailInput.oninvalid">
+            <small *ngIf="emailInput.value && emailInput.oninvalid" class="p-error">Please enter a valid Gmail
+              address.</small>
           </div>
           <div class="p-field">
             <label for="poste" class="p-d-block p-mb-1">Poste:</label>
-            <input  #firstname="ngModel" id="poste" type="text" name="poste" [(ngModel)]="formData.poste" class="p-inputtext" required [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">poste is required.</small>
+            <input #firstname="ngModel" id="poste" type="text" name="poste" [(ngModel)]="formData.poste"
+              class="p-inputtext" required
+              [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)"
+              class="p-error">poste is required.</small>
 
           </div>
           <div class="p-field">
             <label for="nom" class="p-d-block p-mb-1">Nom:</label>
-            <input  #firstname="ngModel" id="nom" type="text" name="nom" [(ngModel)]="formData.nom" class="p-inputtext" required [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">nom is required.</small>
+            <input #firstname="ngModel" id="nom" type="text" name="nom" [(ngModel)]="formData.nom" class="p-inputtext"
+              required
+              [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)"
+              class="p-error">nom is required.</small>
 
           </div>
           <div class="p-field">
             <label for="prenom" class="p-d-block p-mb-1">Prénom:</label>
-            <input #firstname="ngModel" id="prenom" type="text" name="prenom" [(ngModel)]="formData.prenom" class="p-inputtext" required [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">prenom is required.</small>
+            <input #firstname="ngModel" id="prenom" type="text" name="prenom" [(ngModel)]="formData.prenom"
+              class="p-inputtext" required
+              [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)"
+              class="p-error">prenom is required.</small>
 
           </div>
 
@@ -123,20 +141,24 @@
           <div class="p-field p-mt-2">
             <legend class="p-text-bold p-mb-1">Type d'identifiant</legend>
             <div class="p-field">
-                <div class="p-radio p-d-flex">
-                    <div *ngFor="let type of typeIdentifiants" class="p-mr-3">
-                        <input type="radio" [id]="'identifiantType' + type" name="identifiantType" [value]="type" (change)="selectType(type)">
-                        <label [for]="'identifiantType' + type" class="p-mr-2">{{ type }}</label>
-                    </div>
+              <div class="p-radio p-d-flex">
+                <div *ngFor="let type of typeIdentifiants" class="p-mr-3">
+                  <input type="radio" [id]="'identifiantType' + type" name="identifiantType" [value]="type"
+                    (change)="selectType(type)">
+                  <label [for]="'identifiantType' + type" class="p-mr-2">{{ type }}</label>
                 </div>
+              </div>
             </div>
-        </div>
-        <div class="p-field" *ngIf="selectedType">
+          </div>
+          <div class="p-field" *ngIf="selectedType">
             <label for="identifiantInput" class="p-d-block p-mb-1">{{ selectedType }} Number</label>
-            <input #firstname="ngModel" id="identifiantInput" type="number" name="inputValue" [(ngModel)]="inputValue" class="p-inputtext" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">numero  is required.</small>
+            <input #firstname="ngModel" id="identifiantInput" type="number" name="inputValue" [(ngModel)]="inputValue"
+              class="p-inputtext"
+              [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)"
+              class="p-error">numero is required.</small>
 
-        </div>
+          </div>
 
 
         </div>
@@ -145,38 +167,30 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-end">
-          <button pButton type="button" label="Previous" class="p-button-secondary"  (click)="prevStep()"></button>
+          <button pButton type="button" label="Previous" class="p-button-secondary" (click)="prevStep()"></button>
           <p-button label="Next" (onClick)="nextStep2()" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
       </ng-template>
     </p-card>
     <p-card *ngIf="activeIndex === 3">
-      <ng-template pTemplate="title">
-        Personal Information
-      </ng-template>
-      <ng-template pTemplate="subtitle">
-        Enter your personal information
-      </ng-template>
       <ng-template pTemplate="content">
-        <div class="p-fluid">
-          <div class="p-field">
-            <label for="firstname">Mot De Pass</label>
-            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numeroFiscal" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">MatriculeFiscale is required.</small>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <div
+            style="width: 60px; height: 60px; border-radius: 50%; background-color: green; display: flex; justify-content: center; align-items: center;">
+            <i class="pi pi-check" style="color: white; font-size: 30px;"></i>
           </div>
-          <div class="p-field">
-            <label for="firstname">Confirmer Mot de Pass</label>
-            <input #firstname="ngModel" id="MatriculeFiscale" type="number" required class="p-inputtext" [(ngModel)]="formData.numeroFiscal" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
-            <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">MatriculeFiscale is required.</small>
+          <div style="margin-top: 10px;">
+            Un email de confirmation a été envoyé à <span
+              style="font-weight: bold; font-size: 1.2em;">{{formData.email}}</span><br>
+            Veuillez consulter votre boîte de réception pour confirmer votre email et créer votre mot de passe.
           </div>
-
         </div>
-
 
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-end">
-          <button pButton type="button" label="Next" class="p-button-info"  (click)="nextStep()" ></button>
+          <button pButton type="button" label="Previous" class="p-button-secondary" (click)="prevStep()"></button>
+
         </div>
       </ng-template>
     </p-card>

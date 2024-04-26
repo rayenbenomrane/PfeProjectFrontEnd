@@ -11,19 +11,24 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { NgxCaptchaModule } from 'ngx-captcha';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule, StepsModule,
     FieldsetModule,
-    ButtonModule, CardModule, CalendarModule, ReactiveFormsModule, NgxCaptchaModule, ToastModule],
+    ButtonModule, CardModule, CalendarModule, ReactiveFormsModule, NgxCaptchaModule, ToastModule, ConfirmDialogModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent implements OnInit {
+  constructor(private authserve: AuthServiceService, private messageService: MessageService, private confirmationService: ConfirmationService) { this.siteKey = '6Lf62rApAAAAANTrndxnTO0Npv3pBj5uJgQY2nba' }
+  ngOnInit(): void {
+
+
+  }
 
   siteKey: string;
   lesinscriptions: any = []
@@ -64,11 +69,6 @@ export class SignUpComponent implements OnInit {
 
 
   };
-  constructor(private authserve: AuthServiceService, private messageService: MessageService) { this.siteKey = '6Lf62rApAAAAANTrndxnTO0Npv3pBj5uJgQY2nba' }
-  ngOnInit(): void {
-
-
-  }
 
 
   /* onSubmit() {
@@ -268,6 +268,24 @@ export class SignUpComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  confirm() {
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const email = emailInput.value.trim();
+    if (!email || !emailInput.validity.valid) {
+      console.log('Email is invalid');
+      this.messageService.add({ key: 'step3', severity: 'error', summary: 'Error', detail: 'Votre email est invalid' });
+      return;
+    }
+    if (this.validateForm2()) {
+      this.confirmationService.confirm({
+        message: 'Etes vous sur de confirmation de formulaire ?',
+        accept: () => {
+          this.nextStep2()
+        }
+      });
+    }
+
   }
   //step trois
   nextStep2() {

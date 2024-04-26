@@ -49,7 +49,7 @@ export class LoginComponent {
           }, 1500);
 
         } else if (user.role === 'Client') {
-          this.messageService.add({ key: 'step1', severity: 'error', summary: 'Connecte', detail: this.errorMessage });
+          this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: this.errorMessage });
           setTimeout(() => {
             this.router.navigate(['/client/homepage']);
           }, 1500);

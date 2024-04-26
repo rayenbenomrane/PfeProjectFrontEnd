@@ -93,6 +93,8 @@
     </p-card>
     <p-card *ngIf="activeIndex === 2">
       <p-toast key="step3"></p-toast>
+      <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"
+        rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
       <ng-template pTemplate="title">
         Personal Information
       </ng-template>
@@ -168,7 +170,7 @@
       <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-end">
           <button pButton type="button" label="Previous" class="p-button-secondary" (click)="prevStep()"></button>
-          <p-button label="Next" (onClick)="nextStep2()" icon="pi pi-angle-right" iconPos="right"></p-button>
+          <p-button label="Next" (onClick)="confirm()" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
       </ng-template>
     </p-card>

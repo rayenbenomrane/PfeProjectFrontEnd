@@ -23,4 +23,8 @@ export class ClientService {
     const url = `${BASIC_URL}/api/client/contribuable/${id}`;
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
   }
+  savereclamation(reclamation: any) {
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.post(`${BASIC_URL}/api/client/savereclamation`, reclamation, { headers });
+  }
 }

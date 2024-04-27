@@ -3,18 +3,21 @@ import { ClientService } from '../../service/client.service';
 import { StorageService } from '../../service/storage.service';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
+import { MenubarModule } from 'primeng/menubar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, CardModule],
+  imports: [CommonModule, CardModule, MenubarModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent implements OnInit {
+
   userid!: number
   contribuable: any
-  constructor(private clientservice: ClientService) {
+  constructor(private clientservice: ClientService, private router: Router) {
 
   }
 
@@ -44,6 +47,19 @@ export class HomePageComponent implements OnInit {
       // Handle case where user object does not exist in local storage
       console.error('User object not found in local storage');
     }
+  }
+  logout(): void {
+
+    StorageService.clearFromLocalStorage();
+
+
+
+  }
+  contribuablePage() {
+    const contribuableId = this.contribuable.idContribuable;
+
+    
+    localStorage.setItem('contribuableId', contribuableId);
   }
 
 }

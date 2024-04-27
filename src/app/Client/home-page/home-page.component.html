@@ -1,27 +1,55 @@
-<div class="container">
-  <div class="card-container">
-    <p-card [style]="{ width: 'auto' }">
-      <ng-template pTemplate="header">
-        <div class="header">
-          <div> <i class="pi pi-building-columns" style="font-size: 2rem"></i> </div>
-          <div><h2><b>NumeroFiscale</b></h2>{{ this.contribuable.matriculeFiscale }}</div>
-          <div><h2><b>Raison Social</b></h2>{{ this.contribuable.raisonSocial }}</div>
-        </div>
-        <hr>
-      </ng-template>
+<!DOCTYPE html>
+<html lang="en">
 
-      <div class="content">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 
-        <div><b> <i class="pi pi-envelope
-          " style="font-size: 1rem"></i>  Email:</b> {{ this.contribuable.email }}</div>
-        <div><b> <i class="pi pi-map-marker
-          " style="font-size: 1rem"></i>  Adresse:</b> {{ this.contribuable.adress }}</div>
-        <div><b><i class="pi pi-calendar"></i>  Date de Matriculation:</b> {{ this.contribuable.dateDeMatriculation }}</div>
-        <div><b><i class="pi pi-user"></i>  Directeur:</b> {{ this.contribuable.directeur }}</div>
-        <div><b><i class="pi pi-briefcase"></i> Activité:</b> {{ this.contribuable.activite.libelle }}</div>
-        <div><b><i class="pi pi-building"></i>  Forme Juridique:</b> {{ this.contribuable.formeJuridique.libelle }}</div>
-        <div><b><i class="pi pi-flag"></i>  Pays du Directeur:</b> {{ this.contribuable.pays.libelle }}</div>
-      </div>
-    </p-card>
+<body>
+  <div class="topnav">
+    <a href="/acceuil">Home</a>
+
+    <a href="/login" class="split" (click)="logout()"><i class="pi pi-sign-out"></i> Logout</a>
   </div>
-</div>
+  <div class="container">
+
+    <div class="card-container">
+      <a (click)="contribuablePage()">
+      <p-card [style]="{ width: 'auto' }">
+        <ng-template pTemplate="header">
+          <div class="header">
+            <div> <i class="pi pi-building-columns" style="font-size: 2rem"></i> </div>
+            <div>
+              <h2><b>NumeroFiscale</b></h2>{{ this.contribuable.matriculeFiscale }}
+            </div>
+            <div>
+              <h2><b>Raison Social</b></h2>{{ this.contribuable.raisonSocial }}
+            </div>
+          </div>
+          <hr>
+        </ng-template>
+
+        <div class="content">
+
+          <div><b> <i class="pi pi-envelope
+            " style="font-size: 1rem"></i> Email:</b> {{ this.contribuable.email }}</div>
+          <div><b> <i class="pi pi-map-marker
+            " style="font-size: 1rem"></i> Adresse:</b> {{ this.contribuable.adress }}</div>
+          <div><b><i class="pi pi-calendar"></i> Date de Matriculation:</b> {{ this.contribuable.dateDeMatriculation }}
+          </div>
+          <div><b><i class="pi pi-user"></i> Directeur:</b> {{ this.contribuable.directeur }}</div>
+          <div><b><i class="pi pi-briefcase"></i> Activité:</b> {{ this.contribuable.activite.libelle }}</div>
+          <div><b><i class="pi pi-building"></i> Forme Juridique:</b> {{ this.contribuable.formeJuridique.libelle }}
+          </div>
+          <div><b><i class="pi pi-flag"></i> Pays du Directeur:</b> {{ this.contribuable.pays.libelle }}</div>
+        </div>
+      </p-card>
+    </a>
+    </div>
+  </div>
+
+</body>
+
+</html>

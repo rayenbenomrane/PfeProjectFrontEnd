@@ -10,6 +10,8 @@ import { SignUpComponent } from './Authentication/sign-up/sign-up.component';
 import { Routes } from '@angular/router';
 import { ErrorPageComponent } from './ErrorPages/error-page/error-page.component';
 import { HomePageComponent } from './Client/home-page/home-page.component';
+import { ReclamationClientComponent } from './Client/reclamation-client/reclamation-client.component';
+import { LayoutclientComponent } from './Client/layoutclient/layoutclient.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -21,6 +23,8 @@ export const routes: Routes = [
   , { path: "admin/lesadmins", component: TableAdminsComponent },
   { path: "admin/dashboard", component: AdminHomePageComponent },
   { path: "error", component: ErrorPageComponent },
-  { path: "client/homepage", component: HomePageComponent }
+  { path: "client/homepage", component: HomePageComponent },
+  { path: "client/reclamation", component: ReclamationClientComponent },
+  
 
 ];

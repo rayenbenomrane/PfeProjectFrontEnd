@@ -1,0 +1,23 @@
+<div style="display: block;">
+  <div style="display: block;">
+    <div style=" width: auto;">
+      <label for="reclamationTitle">Titre de la réclamation</label><br>
+      <input type="text" pInputText placeholder="Entrez le titre de la réclamation" style="width: 300px;"
+        [(ngModel)]="reclamationTitle" />
+    </div>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <div style="display:block; width: auto;">
+      <label for="reclamationDescription">Description de la réclamation</label><br>
+      <textarea pKeyFilter="int" rows="5" cols="30" pInputTextarea
+        placeholder="Entrez une description de la réclamation" [(ngModel)]="reclamationDescription"></textarea>
+    </div>
+
+  </div>
+  <div style="margin-top: 20px;display: block;">
+    <button pButton pRipple label="Submit" class="p-button-success" (click)="submitForm()"></button>
+    <div *ngIf="showRequiredError" style="color: red;margin-top: 20px;">Les Deux Champs sont requis.</div>
+  </div>
+
+</div>

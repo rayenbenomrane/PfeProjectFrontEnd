@@ -56,10 +56,10 @@ export class HomePageComponent implements OnInit {
 
   }
   contribuablePage() {
-    const contribuableId = this.contribuable.idContribuable;
+    const contribuableMatricule = this.contribuable.matriculeFiscale;
 
-    
-    localStorage.setItem('contribuableId', contribuableId);
+
+    localStorage.setItem('contribuableMatricule', contribuableMatricule);
   }
 
 }

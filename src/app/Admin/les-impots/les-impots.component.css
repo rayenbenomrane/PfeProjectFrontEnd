@@ -1,0 +1,32 @@
+.dashboard-content {
+  width: 81%;
+}
+
+
+
+.full-w{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 10px;
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-container h2 {
+  margin-right: 10px; /* Adjust the spacing between the title and the button */
+}
+.title-container button
+{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}

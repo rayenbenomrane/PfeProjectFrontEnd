@@ -58,4 +58,19 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     })
   }
+  saveImpot(impotDto: any) {
+    return this.http.post(BASIC_URL + "/api/admin/typeImpot", impotDto, {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  getAllPeriodes(): Observable<any> {
+    return this.http.get(BASIC_URL + "/api/admin/lesperiodes", {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  getAllimpots(): Observable<any> {
+    return this.http.get(BASIC_URL + "/api/admin/lesimpots", {
+      headers: this.createAuthorizationHeader()
+    })
+  }
 }

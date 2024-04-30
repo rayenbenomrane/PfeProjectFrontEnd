@@ -1,36 +1,42 @@
-<div  class="sidebar"  style="color: #fdf0d5;">
-  <p-sidebar [visible]="true" [showCloseIcon]="false" [style]="{ 'background-color': '#003049','width':'16rem'}" [autoZIndex]="false" [modal]="false">
-  <ng-template pTemplate="header"><h1 style="color: #fdf0d5;">Admin Dashbord</h1></ng-template>
-  <ng-template pTemplate="content">
-    <ul class="sidebar-menu">
-    <li><a href="/admin/dashboard"><i class="pi pi-chart-bar"></i> Dashboard</a></li>
-    <hr>
-    <li><a href="/admin/inscription"><i class="pi pi-users"></i> Les Inscriptions</a></li>
-    <hr>
-    <li><a href="/admin/lescontribuables"><i class="pi pi-building-columns"></i> Les Contribuables</a></li>
-    <hr>
-    <li><a href="/admin/lescomptes"><i class="pi pi-address-book"></i> Les Comptes</a></li>
-    <hr>
-    <li><a href="/admin/lesadmins"><i class="pi pi-address-book"></i> Les Admins</a></li>
-<hr>
-  </ul>
-</ng-template>
-  <ng-template pTemplate="footer">
-    <hr>
-    <ul class="sidebar-menu">
+<div class="sidebar" style="color: #fdf0d5;">
+  <p-sidebar [visible]="true" [showCloseIcon]="false" [style]="{ 'background-color': '#003049','width':'16rem'}"
+    [autoZIndex]="false" [modal]="false">
+    <ng-template pTemplate="header">
+      <h1 style="color: #fdf0d5;">Admin Dashbord</h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <ul class="sidebar-menu">
+        <li><a href="/admin/dashboard"><i class="pi pi-chart-bar"></i> Dashboard</a></li>
+        <hr>
+        <li><a href="/admin/inscription"><i class="pi pi-users"></i> Les Inscriptions</a></li>
+        <hr>
+        <li><a href="/admin/lescontribuables"><i class="pi pi-building-columns"></i> Les Contribuables</a></li>
+        <hr>
+        <li><a href="/admin/lescomptes"><i class="pi pi-address-book"></i> Les Comptes</a></li>
+        <hr>
+        <li><a href="/admin/lesadmins"><i class="pi pi-sitemap"></i> Les Admins</a></li>
+        <hr>
+        <li><a href="/admin/lesimpots"><i class="pi pi-file-plus"></i> Les Impots </a></li>
+        <hr>
+      </ul>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <hr>
+      <ul class="sidebar-menu">
 
-      <li (click)="showDialog()">
-        <div>
-          <i class="pi
+        <li (click)="showDialog()">
+          <div>
+            <i class="pi
           pi-user-edit"></i> Admin
-        </div>
-      </li>
-    </ul>
-    <p-button label="Logout"  icon="pi pi-sign-out" (onClick)="logout()" severity="danger"></p-button>
-  </ng-template>
-</p-sidebar>
+          </div>
+        </li>
+      </ul>
+      <p-button label="Logout" icon="pi pi-sign-out" (onClick)="logout()" severity="danger"></p-button>
+    </ng-template>
+  </p-sidebar>
 </div>
-<p-dialog header="Modifier le Mot de Passe" [(visible)]="display" [modal]="true" [style]="{ 'max-width': '400px', 'background-color': '#8ecae6' }">
+<p-dialog header="Modifier le Mot de Passe" [(visible)]="display" [modal]="true"
+  [style]="{ 'max-width': '400px', 'background-color': '#8ecae6' }">
   <ng-template pTemplate="content">
     <div class="p-fluid">
       <div class="p-field">
@@ -50,7 +56,8 @@
   <ng-template pTemplate="footer">
     <div class="p-grid p-justify-between">
       <div class="p-col">
-        <button pButton type="button" label="Cancel" class="p-button-text p-button-outlined p-button-sm" (click)="display = false"></button>
+        <button pButton type="button" label="Cancel" class="p-button-text p-button-outlined p-button-sm"
+          (click)="display = false"></button>
       </div>
       <div class="p-col">
         <button pButton (click)="valider()" type="button" label="Valider" class="p-button-primary p-button-sm"></button>

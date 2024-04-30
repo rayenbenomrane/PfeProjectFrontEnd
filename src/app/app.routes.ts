@@ -1,3 +1,4 @@
+import { LesImpotsComponent } from './Admin/les-impots/les-impots.component';
 import { AdminDashbordComponent } from './Admin/admin-dashbord/admin-dashbord.component';
 import { AdminHomePageComponent } from './Admin/admin-home-page/admin-home-page.component';
 import { AdminSideBarComponent } from './Admin/admin-side-bar/admin-side-bar.component';
@@ -11,7 +12,8 @@ import { Routes } from '@angular/router';
 import { ErrorPageComponent } from './ErrorPages/error-page/error-page.component';
 import { HomePageComponent } from './Client/home-page/home-page.component';
 import { ReclamationClientComponent } from './Client/reclamation-client/reclamation-client.component';
-import { LayoutclientComponent } from './Client/layoutclient/layoutclient.component';
+
+import { AjoutImpotComponent } from './Admin/ajout-impot/ajout-impot.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -25,6 +27,8 @@ export const routes: Routes = [
   { path: "error", component: ErrorPageComponent },
   { path: "client/homepage", component: HomePageComponent },
   { path: "client/reclamation", component: ReclamationClientComponent },
-  
+  { path: "admin/ajoutlesimpots", component: AjoutImpotComponent },
+  { path: "admin/lesimpots", component: LesImpotsComponent }
+
 
 ];

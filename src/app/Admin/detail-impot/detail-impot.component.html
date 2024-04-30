@@ -1,0 +1,34 @@
+<div class="full-w">
+  <div class="dashboard-content">
+    <app-admin-side-bar></app-admin-side-bar>
+    <div class="p-col-10">
+      <div class="title-container">
+        <h2>les details {{libelle}}</h2>
+        <button pButton type="button" icon="pi pi-plus" label="Ajout Detail"></button>
+      </div>
+
+      <p-table [value]="detail">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Libelle</th>
+            <th>Type de Détail Impot</th>
+            <th>Nature de Rebrique</th>
+            <th>Ordre</th>
+            <th>Obligatoire</th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-detail>
+          <tr>
+            <td>{{ detail.libelle }}</td>
+            <td>{{ detail.typeDetail }}</td>
+            <td>{{ detail.naturerebrique }}</td>
+            <td>{{ detail.ordre }}</td>
+            <td>{{ detail.obligatoire }}</td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

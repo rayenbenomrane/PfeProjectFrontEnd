@@ -9,13 +9,13 @@ import { ToastModule } from 'primeng/toast';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
 import { AdminService } from '../../service/admin.service';
 import { TableModule } from 'primeng/table';
-import { Route, Router } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-les-impots',
   standalone: true,
-  imports: [CardModule, TableModule, CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, ToastModule, AdminSideBarComponent],
+  imports: [CardModule, RouterModule, TableModule, CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, ToastModule, AdminSideBarComponent],
   templateUrl: './les-impots.component.html',
   styleUrl: './les-impots.component.css'
 })

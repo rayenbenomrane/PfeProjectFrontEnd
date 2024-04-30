@@ -73,4 +73,13 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     })
   }
+  savedetailImpot(detailimpotDto: any) {
+    return this.http.post(BASIC_URL + "/api/admin/detail", detailimpotDto, {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  getImpotDetails(libelle: string): Observable<any> {
+    const url = BASIC_URL + `/api/admin/detailimpot?libelle=${libelle}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
 }

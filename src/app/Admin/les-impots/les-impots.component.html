@@ -16,7 +16,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-impot>
-          <tr>
+          <tr [routerLink]="['/admin/detail-impot', impot.libelle]">
             <td>{{ impot.libelle }}</td>
             <td>{{ impot.periodicite.periode }}</td>
           </tr>

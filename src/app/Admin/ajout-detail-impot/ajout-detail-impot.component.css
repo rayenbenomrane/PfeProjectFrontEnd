@@ -1,0 +1,17 @@
+.dashboard-content {
+  width: 81%;
+}
+
+
+
+.full-w{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 10px;
+}
+.center-card {
+  display: flex;
+  justify-content: center;
+  padding-top: 200px;
+}

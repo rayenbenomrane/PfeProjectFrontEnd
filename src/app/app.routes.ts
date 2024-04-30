@@ -26,11 +26,13 @@ export const routes: Routes = [
   , { path: "admin/lesadmins", component: TableAdminsComponent },
   { path: "admin/dashboard", component: AdminHomePageComponent },
   { path: "error", component: ErrorPageComponent },
-  { path: "client/homepage", component: HomePageComponent },
-  { path: "client/reclamation", component: ReclamationClientComponent },
   { path: "admin/ajoutlesimpots", component: AjoutImpotComponent },
   { path: "admin/lesimpots", component: LesImpotsComponent },
-  { path: "admin/detail-impot/:libelle", component: DetailImpotComponent }
+  { path: "admin/detail-impot/:libelle", component: DetailImpotComponent },
+  { path: "admin/ajoutdetail", component: DetailImpotComponent },
+  { path: "client/homepage", component: HomePageComponent },
+  { path: "client/reclamation", component: ReclamationClientComponent },
+
 
 
 ];

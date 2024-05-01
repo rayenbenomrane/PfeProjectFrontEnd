@@ -13,5 +13,31 @@
 .center-card {
   display: flex;
   justify-content: center;
-  padding-top: 200px;
+  padding-top:50px;
+}
+.section-container {
+  margin-bottom: 20px;
+}
+
+.section-heading {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.field-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.field-checkbox p-radioButton {
+  margin-right: 5px;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-container label {
+  margin-bottom: 5px;
 }

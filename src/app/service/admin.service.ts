@@ -82,4 +82,8 @@ export class AdminService {
     const url = BASIC_URL + `/api/admin/detailimpot?libelle=${libelle}`;
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
   }
+  gettypeimpot(libelle: string): Observable<any> {
+    const url = BASIC_URL + `/api/admin/typeimpot?libelle=${libelle}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
 }

@@ -1,3 +1,4 @@
 export enum NatureRebrique {
-  REVENUS, PERTE
+  REVENUS = "REVENUS",
+  PERTE = "PERTE"
 }

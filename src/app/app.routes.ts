@@ -15,6 +15,7 @@ import { ReclamationClientComponent } from './Client/reclamation-client/reclamat
 
 import { AjoutImpotComponent } from './Admin/ajout-impot/ajout-impot.component';
 import { DetailImpotComponent } from './Admin/detail-impot/detail-impot.component';
+import { AjoutDetailImpotComponent } from './Admin/ajout-detail-impot/ajout-detail-impot.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -29,7 +30,7 @@ export const routes: Routes = [
   { path: "admin/ajoutlesimpots", component: AjoutImpotComponent },
   { path: "admin/lesimpots", component: LesImpotsComponent },
   { path: "admin/detail-impot/:libelle", component: DetailImpotComponent },
-  { path: "admin/ajoutdetail", component: DetailImpotComponent },
+  { path: "admin/ajoutdetail/:libelle", component: AjoutDetailImpotComponent },
   { path: "client/homepage", component: HomePageComponent },
   { path: "client/reclamation", component: ReclamationClientComponent },
 

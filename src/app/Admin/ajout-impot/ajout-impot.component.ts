@@ -30,7 +30,7 @@ export class AjoutImpotComponent implements OnInit {
   titreImpot: string = ''
   lesPeriodes: any = []
   periode1: any
-
+  valide: any
 
   allPeriodes() {
     this.AdminService.getAllPeriodes().subscribe((data) => { this.lesPeriodes = data })
@@ -67,16 +67,21 @@ export class AjoutImpotComponent implements OnInit {
         libelle: this.titreImpot,
         periodicite: this.periode1
       };
+      this.AdminService.gettypeimpot(impotDto.libelle).subscribe((data) => this.valide = data)
+      if (typeof this.valide !== 'undefined') {
+        this.AdminService.saveImpot(impotDto).subscribe(() => {
+          this.messageService.add({ key: 'step1', severity: 'success', summary: 'Validé', detail: "Impot Ajouté Avec Success" });
 
-      this.AdminService.saveImpot(impotDto).subscribe(() => {
-        this.messageService.add({ key: 'step1', severity: 'success', summary: 'Validé', detail: "Impot Ajouté Avec Success" });
-
-        setTimeout(() => {
-          this.router.navigate(['/admin/lesimpots']);
-        }, 1500);
+          setTimeout(() => {
+            this.router.navigate(['/admin/lesimpots']);
+          }, 1500);
 
 
-      });
+        });
+
+      } else {
+        this.messageService.add({ key: 'step1', severity: 'error', summary: 'Invalid', detail: "Impot deja trouvé" });
+      }
 
 
     }

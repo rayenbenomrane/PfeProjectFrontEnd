@@ -30,3 +30,7 @@
   justify-content: flex-end;
   margin-bottom: 10px;
 }
+tr:hover
+{
+background-color: #afa8a8;
+}

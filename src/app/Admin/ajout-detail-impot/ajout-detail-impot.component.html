@@ -5,7 +5,48 @@
       <p-toast key="step1"></p-toast>
       <p-card [style]="{ width: 'auto', margin: '10px' }">
 
+        <div class="input-container">
+          <label for="detailLibelle" class="section-heading">Libelle du Detail D'impot:</label>
+          <input type="text" id="detailLibelle" pInputText [(ngModel)]="value" placeholder="Libelle du Detail" />
+
+        </div>
+        <div class="input-container">
+          <label for="integeronly" class="section-heading">ordre du Detail D'impot:</label>
+          <p-inputNumber inputId="integeronly" [(ngModel)]="value1" placeholder="numero d'ordre"></p-inputNumber>
+        </div>
+        <!-- Type de champs de detail d'impot -->
+        <div class="section-container">
+          <div class="section-heading">Type de champs de detail d'impot:</div>
+          <div *ngFor="let key of typeDetailKeys" class="field-checkbox">
+            <p-radioButton [inputId]="key" name="category" [value]="key" [(ngModel)]="selectedType"></p-radioButton>
+            <label [for]="key" class="ml-2">{{ key }}</label>
+          </div>
+        </div>
+
+        <!-- Nature de rebrique du Detail dImpot -->
+        <div class="section-container">
+          <div class="section-heading">Nature de rebrique du Detail d'Impot:</div>
+          <div *ngFor="let key1 of NatureRebriqueKeys" class="field-checkbox">
+            <p-radioButton [inputId]="key1" name="category1" [value]="key1" [(ngModel)]="selectedType1"></p-radioButton>
+            <label [for]="key1" class="ml-2">{{ key1 }}</label>
+          </div>
+        </div>
+
+        <!-- L'obligation du Champs de Detail -->
+        <div class="section-container">
+          <div class="section-heading">L'obligation du Champs de Detail:</div>
+          <div class="field-radio">
+            <p-radioButton type="radio" id="obligatoireRadio" name="obligationRadio" value=true
+              [(ngModel)]="trueValue"></p-radioButton>
+            <label for="obligatoireRadio" class="ml-2">obligatoire</label>
+            <p-radioButton type="radio" id="nonObligatoireRadio" name="obligationRadio" value=false
+              [(ngModel)]="trueValue"></p-radioButton>
+            <label for="nonObligatoireRadio" class="ml-2">non obligatoire</label>
+          </div>
+        </div>
+        <p-button label="Submit" (onClick)="submit()"></p-button>
       </p-card>
+
     </div>
   </div>
 </div>

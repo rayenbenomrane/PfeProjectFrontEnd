@@ -1,3 +1,6 @@
 export enum TypeDetail {
-  Int, String, Boolean, Float
+  Int = 'Int',
+  String = 'String',
+  Boolean = 'Boolean',
+  Float = 'Float'
 }

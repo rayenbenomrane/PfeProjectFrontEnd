@@ -27,4 +27,13 @@ export class ClientService {
     const headers: HttpHeaders = this.createAuthorizationHeader();
     return this.http.post(`${BASIC_URL}/api/client/savereclamation`, reclamation, { headers });
   }
+  saveDeclaration(declarationdto: any) {
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.post(`${BASIC_URL}/api/client/declaration`, declarationdto, { headers });
+  }
+  getObligationById(id: number) {
+    const url = `${BASIC_URL}/api/client/obligationcontribuable/${id}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
+
 }

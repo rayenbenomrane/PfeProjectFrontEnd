@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.card {
+  width: 500px; /* Adjust width as needed */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.dropdown-container {
+  width: 100%; /* Ensure dropdowns take full width */
+}
+
+.calendar-button-container {
+  display: flex;
+}
+
+.calendar-group {
+  flex: 1; /* Calendar takes up remaining space */
+}
+
+.button-group {
+  margin-left: 20px; /* Adjust spacing between calendar and button */
+}
+.card-header {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: #ffffff;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  height: 40px; /* Set a lower height for the header */
+}
+.small-input .ui-inputnumber {
+  width: 100px; /* Adjust as needed */
+}
+
+.table {
+  width: 100%; /* Adjust the width of the table */
+}

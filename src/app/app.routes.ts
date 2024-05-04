@@ -16,6 +16,8 @@ import { ReclamationClientComponent } from './Client/reclamation-client/reclamat
 import { AjoutImpotComponent } from './Admin/ajout-impot/ajout-impot.component';
 import { DetailImpotComponent } from './Admin/detail-impot/detail-impot.component';
 import { AjoutDetailImpotComponent } from './Admin/ajout-detail-impot/ajout-detail-impot.component';
+import { AjoutDeclarationComponent } from './Client/ajout-declaration/ajout-declaration.component';
+import { LayoutclientComponent } from './Client/layoutclient/layoutclient.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -33,6 +35,8 @@ export const routes: Routes = [
   { path: "admin/ajoutdetail/:libelle", component: AjoutDetailImpotComponent },
   { path: "client/homepage", component: HomePageComponent },
   { path: "client/reclamation", component: ReclamationClientComponent },
+  { path: "client/ajout-declaration", component: AjoutDeclarationComponent },
+  { path: "layout", component: LayoutclientComponent }
 
 
 

@@ -32,7 +32,14 @@ export class ClientService {
     return this.http.post(`${BASIC_URL}/api/client/declaration`, declarationdto, { headers });
   }
   getObligationById(id: number) {
-    const url = `${BASIC_URL}/api/client/obligationcontribuable/${id}`;
+    const url = `${BASIC_URL}/api/client/obligationContribuable/${id}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
+  getContribuableBymatricule(matricule: number) {
+    return this.http.get(`${BASIC_URL}/api/client/contribuableMatricule?matriculeFiscale=${matricule}`, { headers: this.createAuthorizationHeader() })
+  }
+  gettypeDeclaration() {
+    const url = `${BASIC_URL}/api/client/typedeclaration`;
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
   }
 

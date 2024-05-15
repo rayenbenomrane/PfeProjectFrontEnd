@@ -53,4 +53,10 @@ export class ClientService {
     return this.http.post(url, calculateRequest, { headers });
 
   }
+  getFormulaByLibelle(libelle: string) {
+    const url = `${BASIC_URL}/api/client/formuledeCalcul?libelle=${libelle}`;
+    return this.http.get<any>(url, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
 }

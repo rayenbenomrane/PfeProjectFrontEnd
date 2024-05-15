@@ -4,6 +4,7 @@
     <div class="p-col-10">
       <div class="title-container">
         <h2>les details {{libelle}}</h2>
+        <button pButton type="button" icon="pi pi-plus" label="Ajout Formule" (click)="showDialog()"></button>
         <button pButton type="button" icon="pi pi-plus" label="Ajout Detail"
           [routerLink]="['/admin/ajoutdetail', libelle]"></button>
       </div>
@@ -33,3 +34,20 @@
     </div>
   </div>
 </div>
+<p-dialog header="{{ impotTitle }}" [(visible)]="displayDialog" [modal]="true" [style]="{ 'width': 'auto' }">
+  <ng-template pTemplate="content">
+    <p>Rules:</p>
+    <ul>
+      <li>Regle 1: Utiliser <b>'p'</b> pour perte et <b>'r'</b> pour revenu.</li>
+      <li>Regle 2:Suivis de chiffres, et les opérateurs * + - ().</li>
+
+
+    </ul>
+
+
+    <input pInputText type="text" [(ngModel)]="formula"  placeholder="Enter your formula here">
+
+
+    <button pButton type="button" label="Submit" (click)="submitFormula()"></button>
+  </ng-template>
+</p-dialog>

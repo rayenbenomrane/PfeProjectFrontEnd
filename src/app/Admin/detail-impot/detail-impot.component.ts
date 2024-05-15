@@ -10,11 +10,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-detail-impot',
   standalone: true,
-  imports: [CardModule, RouterModule, TableModule, CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, ToastModule, AdminSideBarComponent],
+  imports: [CardModule, RouterModule, TableModule, CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, ToastModule, DialogModule, AdminSideBarComponent],
   templateUrl: './detail-impot.component.html',
   styleUrl: './detail-impot.component.css'
 })
@@ -38,4 +39,37 @@ export class DetailImpotComponent implements OnInit {
       this.AdminService.getImpotDetails(this.libelle).subscribe((data) => { this.detail = data })
     });
   }
+  displayDialog: boolean = false;
+  impotTitle: string = "";
+  formula: string = "";
+
+  showDialog() {
+    this.displayDialog = true;
+
+    this.impotTitle = this.libelle;
+  }
+
+  submitFormula() {
+    // Regular expression pattern for a valid formula
+    const formulaPattern = /^([a-zA-Z]+|\d+)\s*[\+\-\*\/]\s*([a-zA-Z]+|\d+)\s*(?:[\+\-\*\/]\s*([a-zA-Z]+|\d+)\s*)*$/;
+
+    if (!formulaPattern.test(this.formula)) {
+      // Formula format is invalid
+      console.error('Invalid formula format:', this.formula);
+      return;
+    }
+
+    // Wrap the formula with {}
+    const wrappedFormula = `{${this.formula}}`;
+
+    console.log('Wrapped formula:', wrappedFormula);
+    const impotdto = {
+      libelle: this.libelle,
+      formule: wrappedFormula
+    }
+    console.log(impotdto)
+    this.AdminService.saveformuleImpot(impotdto).subscribe((data) => console.log(data))
+  }
+
+
 }

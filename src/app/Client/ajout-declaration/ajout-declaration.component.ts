@@ -157,18 +157,23 @@ export class AjoutDeclarationComponent implements OnInit {
         sumPerte += valeur;
       }
     }
-    // console.log(sumRevenus, sumPerte)
+    console.log(this.obligation.impot.libelle)
+    this.clientservice.getFormulaByLibelle(this.obligation.impot.libelle).subscribe((data) => console.log(data))
     values['r'] = sumRevenus;
     values['p'] = sumPerte;
-    console.log(values)
+    //console.log(values)
 
-    const formule = "{r * (2 + 10)}"
+
+
+
+
+    const formule = ""
     const calculateRequest = {
       "formula": formule,
       "values": values
 
     }
-    this.clientservice.calculateEquation(calculateRequest).subscribe((data) => console.log(data))
+    // this.clientservice.calculateEquation(calculateRequest).subscribe((data) => console.log(data))
 
   }
 }

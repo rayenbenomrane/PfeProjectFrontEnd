@@ -86,4 +86,10 @@ export class AdminService {
     const url = BASIC_URL + `/api/admin/typeimpot?libelle=${libelle}`;
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
   }
+  saveformuleImpot(impotDto: any) {
+    return this.http.put(BASIC_URL + "/api/admin/updateimpot", impotDto, {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  
 }

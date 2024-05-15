@@ -34,7 +34,7 @@
     </p-card>
   </div>
 </div>
-<p-dialog header="HashMap Details" [(visible)]="displayPopup" [modal]="true" [responsive]="true" [style]="{ 'width': '800px' }">
+<p-dialog header="Declaration" [(visible)]="displayPopup" [modal]="true" [style]="{ 'width': '800px' }">
   <ng-template pTemplate="content">
     <table class="table">
       <thead>
@@ -48,14 +48,17 @@
           <td>{{ parseEntryKey(entry.key) }}</td>
           <td>
             <ng-container *ngIf="entry.value.valeur !== null; else emptyInput">
-              <p-inputNumber class="small-input" type="number" [(ngModel)]="entry.value.valeur" [style]="{ 'width': '100px' }" />
+              <p-inputNumber class="small-input" type="number" [(ngModel)]="entry.value.valeur"
+                [style]="{ 'width': '100px' }" />
             </ng-container>
             <ng-template #emptyInput>
-              <p-inputNumber class="small-input" type="number" [(ngModel)]="entry.value.valeur" [style]="{ 'width': '100px' }" />
+              <p-inputNumber class="small-input" type="number" [(ngModel)]="entry.value.valeur"
+                [style]="{ 'width': '100px' }" />
             </ng-template>
           </td>
         </tr>
       </tbody>
     </table>
+    <p-button label="Suivant" icon="pi pi-arrow-right" (onClick)="submit1()" iconPos="right"></p-button>
   </ng-template>
 </p-dialog>

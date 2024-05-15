@@ -42,5 +42,15 @@ export class ClientService {
     const url = `${BASIC_URL}/api/client/typedeclaration`;
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
   }
+  updateDetailDeclaration(declarationdto: any) {
+    const url = `${BASIC_URL}/api/client/update`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.put(url, declarationdto, { headers });
+  }
+  calculateEquation(calculateRequest: any) {
+    const url = `${BASIC_URL}/api/client/calculate`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.post(url, calculateRequest, { headers });
 
+  }
 }

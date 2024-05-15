@@ -13,6 +13,7 @@ import { ToastModule } from 'primeng/toast';
 import { LayoutclientComponent } from '../layoutclient/layoutclient.component';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-ajout-declaration',
@@ -46,7 +47,7 @@ export class AjoutDeclarationComponent implements OnInit {
     const matricule = localStorage.getItem('contribuableMatricule');
     this.clientservice.getContribuableBymatricule(Number(matricule)).subscribe((data) => {
       this.contribuable = data;
-      console.log(this.contribuable);
+      // console.log(this.contribuable);
       this.getObligation(); // Call getObligation() after getting the contribuable data
       this.lestypeDeclaration()
     });
@@ -60,7 +61,7 @@ export class AjoutDeclarationComponent implements OnInit {
 
     this.clientservice.getObligationById(this.contribuable.idContribuable).subscribe((data) => {
       this.lesobligations = data;
-      console.log(this.lesobligations);
+      //console.log(this.lesobligations);
     });
   }
   lestypeDeclaration() {
@@ -68,7 +69,7 @@ export class AjoutDeclarationComponent implements OnInit {
       console.error("Contribuable is not defined.");
       return;
     }
-    this.clientservice.gettypeDeclaration().subscribe((data) => { this.lestypes = data, console.log(this.lestypes) })
+    this.clientservice.gettypeDeclaration().subscribe((data) => { this.lestypes = data })
   }
   submit() {
     // Extract month and year from the selected date
@@ -111,6 +112,63 @@ export class AjoutDeclarationComponent implements OnInit {
       return ''; // Return an empty string if ',' is not found after 'libelle='
     }
     return key.substring(startIndex, endIndex);
+
+  }
+  submit1() {
+    //console.log(this.hashMapEntries);
+    const updateRequests = [];
+
+    for (const [key, value] of Object.entries(this.hashMapEntries)) {
+      const declarationDto = {
+        iddetailDeclaration: value.iddetailDeclaration, // Use the correct property names
+        valeur: value.valeur
+      };
+      //console.log(declarationDto)
+      updateRequests.push(this.clientservice.updateDetailDeclaration(declarationDto));
+    }
+
+    forkJoin(updateRequests).subscribe(
+      responses => {
+        console.log('All updates successful', responses);
+        this.getDetailType(this.hashMapEntries);
+      },
+      error => {
+        console.error('An error occurred during updates', error);
+      }
+
+    );
+  }
+  getDetailType(hashMapEntries: any) {
+    let sumRevenus = 0;
+    let sumPerte = 0;
+    const revenus: any[] = [];
+    const perte: any[] = [];
+    const values: { [key: string]: number } = {};
+
+    for (const [key, value] of Object.entries(hashMapEntries)) {
+      const detailImpot = key.split(',')[3].split('=')[1].trim(); // Extracting naturerebrique
+      const entryValue = value as { iddetailDeclaration: number, valeur: string }; // Type assertion
+      const valeur = parseFloat(entryValue.valeur); // Assuming 'valeur' contains the numeric value
+      if (detailImpot === 'REVENUS') {
+        revenus.push(value);
+        sumRevenus += valeur;
+      } else if (detailImpot === 'PERTE') {
+        perte.push(value);
+        sumPerte += valeur;
+      }
+    }
+    // console.log(sumRevenus, sumPerte)
+    values['r'] = sumRevenus;
+    values['p'] = sumPerte;
+    console.log(values)
+
+    const formule = "{r * (2 + 10)}"
+    const calculateRequest = {
+      "formula": formule,
+      "values": values
+
+    }
+    this.clientservice.calculateEquation(calculateRequest).subscribe((data) => console.log(data))
 
   }
 }

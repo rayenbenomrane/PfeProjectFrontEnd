@@ -1,7 +1,9 @@
 <div>
   <app-layoutclient></app-layoutclient>
   <div class="container" style="margin-top: 50px;">
+
     <p-toast></p-toast>
+
     <p-card class="card">
       <div class="card-header">
         <h2>Ajout d'une Declaration</h2>
@@ -34,8 +36,20 @@
     </p-card>
   </div>
 </div>
-<p-dialog header="Declaration" [(visible)]="displayPopup" [modal]="true" [style]="{ 'width': '800px' }">
+<p-dialog header="Declaration" [(visible)]="displayPopup" [modal]="true"
+  [style]="{ 'width': '800px', 'height': 'auto' }">
   <ng-template pTemplate="content">
+    <div class="tooltip">
+      <p-button icon="pi pi-info-circle" [rounded]="true"></p-button>
+      <span class="tooltiptext">
+        <ul style="list-style-type: none; padding: 0; margin: 10px;">
+          <li>La formule de Calcul : {{formule}}</li>
+          <li>r :total des revenues</li>
+          <li>p :total des pertes</li>
+          <li>* :obligation de remplir ce champs</li>
+        </ul>
+      </span>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -44,7 +58,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let entry of hashMapEntries | keyvalue">
+        <tr *ngFor="let entry of hashMapEntries | keyvalue: keepOriginalOrder">
           <td>{{ parseEntryKey(entry.key) }}</td>
           <td>
             <ng-container *ngIf="entry.value.valeur !== null; else emptyInput">

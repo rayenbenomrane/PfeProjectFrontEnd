@@ -1,6 +1,6 @@
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -23,7 +23,9 @@ import { forkJoin } from 'rxjs';
   styleUrl: './ajout-declaration.component.css'
 })
 export class AjoutDeclarationComponent implements OnInit {
+  showDialog: boolean = false;
 
+  @ViewChild('dialog', { static: false }) dialog!: ElementRef;
 
 
   lesobligations: any
@@ -34,6 +36,9 @@ export class AjoutDeclarationComponent implements OnInit {
   date: any;
   displayPopup: any;
   hashMapEntries: Map<string, any> = new Map();
+  iddeclaration: any
+  formule: any
+
   constructor(private clientservice: ClientService, private messageService: MessageService) {
 
   }
@@ -41,15 +46,19 @@ export class AjoutDeclarationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getcontribuable();
+    //this.getFormule();
   }
-
+  toggleDialog(event: MouseEvent) {
+    this.showDialog = !this.showDialog;
+  }
   getcontribuable() {
     const matricule = localStorage.getItem('contribuableMatricule');
     this.clientservice.getContribuableBymatricule(Number(matricule)).subscribe((data) => {
       this.contribuable = data;
       // console.log(this.contribuable);
-      this.getObligation(); // Call getObligation() after getting the contribuable data
-      this.lestypeDeclaration()
+      this.getObligation();
+      this.lestypeDeclaration();
+
     });
   }
 
@@ -72,16 +81,16 @@ export class AjoutDeclarationComponent implements OnInit {
     this.clientservice.gettypeDeclaration().subscribe((data) => { this.lestypes = data })
   }
   submit() {
-    // Extract month and year from the selected date
+
     if (!this.date || !this.obligation || !this.type) {
-      // If any value is null, display a toast message
+
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields.' });
-      return; // Stop further execution of the function
+      return;
     }
-    const moisEffet = this.date.getMonth() + 1; // Adding 1 because months are zero-based
+    const moisEffet = this.date.getMonth() + 1;
     const anneeEffet = this.date.getFullYear();
 
-    // Create an object with the extracted attributes and other predefined attributes
+
     const declarationObject = {
       moisEffet: moisEffet,
       anneeEffet: anneeEffet,
@@ -89,11 +98,23 @@ export class AjoutDeclarationComponent implements OnInit {
       type: this.type
     };
 
-    // Now you can use the declarationObject for further processing, such as sending it to a service
+
     this.clientservice.saveDeclaration(declarationObject).subscribe(
-      (data: any) => { // Add type assertion here
-        this.hashMapEntries = data;
-        console.log(data);
+      (data: any) => {
+
+        const entriesArray = Object.entries(data).sort((a, b) => {
+          const ordreA = this.extractOrdreFromKey(a[0]);
+          const ordreB = this.extractOrdreFromKey(b[0]);
+          console.log("ordre", ordreA)
+          return ordreA - ordreB;
+        });
+
+
+
+        this.hashMapEntries = new Map(entriesArray);
+        this.getFormule()
+        console.log(this.hashMapEntries);
+
         this.displayPopup = true;
       },
       (error) => {
@@ -101,35 +122,70 @@ export class AjoutDeclarationComponent implements OnInit {
       }
     );
   }
+
+
+  extractOrdreFromKey(key: string): number {
+    const ordreMatch = key.match(/ordre=(\d+)/);
+    return ordreMatch ? parseInt(ordreMatch[1], 10) : Number.MAX_SAFE_INTEGER;
+  }
+  keepOriginalOrder = (a: any, b: any): number => {
+    return 0;
+  }
+
   parseEntryKey(key: string): any {
     const libelleIndex = key.indexOf('libelle=');
     if (libelleIndex === -1) {
-      return ''; // Return an empty string if 'libelle=' is not found
+      return '';
     }
+    let libelle = '';
     const startIndex = libelleIndex + 'libelle='.length;
     const endIndex = key.indexOf(',', startIndex);
     if (endIndex === -1) {
-      return ''; // Return an empty string if ',' is not found after 'libelle='
+      libelle = key.substring(startIndex);
+    } else {
+      libelle = key.substring(startIndex, endIndex);
     }
-    return key.substring(startIndex, endIndex);
 
+    const obligatoireIndex = key.indexOf('obligatoire=true');
+    if (obligatoireIndex !== -1) {
+      libelle += ' *';
+    }
+
+    const natureRebriqueIndex = key.indexOf('naturerebrique=');
+    if (natureRebriqueIndex !== -1) {
+      const natureStartIndex = natureRebriqueIndex + 'naturerebrique='.length;
+      const natureEndIndex = key.indexOf(',', natureStartIndex);
+      let natureRebrique = '';
+      if (natureEndIndex === -1) {
+        natureRebrique = key.substring(natureStartIndex);
+      } else {
+        natureRebrique = key.substring(natureStartIndex, natureEndIndex);
+      }
+      if (natureRebrique === 'REVENUS') {
+        libelle += ' (r)';
+      } else if (natureRebrique === 'PERTE') {
+        libelle += ' (p)';
+      }
+    }
+
+    return libelle;
   }
   submit1() {
-    //console.log(this.hashMapEntries);
+
     const updateRequests = [];
 
     for (const [key, value] of Object.entries(this.hashMapEntries)) {
       const declarationDto = {
-        iddetailDeclaration: value.iddetailDeclaration, // Use the correct property names
+        iddetailDeclaration: value.iddetailDeclaration,
         valeur: value.valeur
       };
-      //console.log(declarationDto)
+
       updateRequests.push(this.clientservice.updateDetailDeclaration(declarationDto));
     }
 
     forkJoin(updateRequests).subscribe(
       responses => {
-        console.log('All updates successful', responses);
+
         this.getDetailType(this.hashMapEntries);
       },
       error => {
@@ -146,9 +202,10 @@ export class AjoutDeclarationComponent implements OnInit {
     const values: { [key: string]: number } = {};
 
     for (const [key, value] of Object.entries(hashMapEntries)) {
-      const detailImpot = key.split(',')[3].split('=')[1].trim(); // Extracting naturerebrique
-      const entryValue = value as { iddetailDeclaration: number, valeur: string }; // Type assertion
-      const valeur = parseFloat(entryValue.valeur); // Assuming 'valeur' contains the numeric value
+      const detailImpot = key.split(',')[3].split('=')[1].trim();
+      const entryValue = value as any;
+      const valeur = parseFloat(entryValue.valeur);
+      this.iddeclaration = Number(entryValue.iddeclaration)
       if (detailImpot === 'REVENUS') {
         revenus.push(value);
         sumRevenus += valeur;
@@ -157,23 +214,33 @@ export class AjoutDeclarationComponent implements OnInit {
         sumPerte += valeur;
       }
     }
-    console.log(this.obligation.impot.libelle)
-    this.clientservice.getFormulaByLibelle(this.obligation.impot.libelle).subscribe((data) => console.log(data))
+
     values['r'] = sumRevenus;
     values['p'] = sumPerte;
-    //console.log(values)
+
+    this.clientservice.getFormulaByLibelle(this.obligation.impot.libelle).subscribe((data) => {
+
+      const calculateRequest = {
+        "formula": data.formule,
+        "values": values
+      };
+      this.formule = data.formule
 
 
-
-
-
-    const formule = ""
-    const calculateRequest = {
-      "formula": formule,
-      "values": values
-
-    }
-    // this.clientservice.calculateEquation(calculateRequest).subscribe((data) => console.log(data))
-
+      this.clientservice.calculateEquation(calculateRequest).subscribe((result) => {
+        const saveMontant = {
+          "idDeclaration": this.iddeclaration,
+          "montantApayer": result
+        }
+        this.clientservice.updateMontantDeclaration(saveMontant).subscribe((data) => console.log(data));
+      });
+    });
   }
+  getFormule() {
+    this.clientservice.getFormulaByLibelle(this.obligation.impot.libelle).subscribe((data) => {
+      this.formule = data.formule;
+
+    });
+  }
+
 }

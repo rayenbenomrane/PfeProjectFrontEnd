@@ -4,6 +4,7 @@
   align-items: center;
   height: 80vh;
   margin: -10;
+  flex-direction: column;
 }
 
 .card-container {
@@ -54,4 +55,21 @@
 }
 body{
   margin: -10PX;
+}
+.hover-card {
+  background-color: rgb(214, 214, 214); /* Default background color */
+}
+
+.hover-card:hover {
+  background-color: rgb(214, 214, 214); /* Change to the desired background color */
+}
+
+.hover-card:hover .header {
+  background-color: rgb(214, 214, 214); /* Change to the desired background color for the header */
+}
+
+
+.heading-container {
+  margin-bottom: 20px;
+  position: relative; /* Adjust as needed */
 }

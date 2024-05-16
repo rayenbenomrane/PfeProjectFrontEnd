@@ -59,4 +59,15 @@ export class ClientService {
       headers: this.createAuthorizationHeader()
     });
   }
+  updateMontantDeclaration(declarationdto: any) {
+    const url = `${BASIC_URL}/api/client/updateMontant`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.put(url, declarationdto, { headers });
+  }
+  getDeclarationByContribuable(matriculeFiscale: any) {
+    const url = `${BASIC_URL}/api/client/declarationbycontribuable?matriculeFiscale=${matriculeFiscale}`;
+    return this.http.get<any>(url, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
 }

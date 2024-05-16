@@ -1,0 +1,26 @@
+<div class="navbar-container">
+  <app-layoutclient></app-layoutclient>
+</div>
+<div class="container">
+  <div class="table-container">
+    <p-table [value]="declarations">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Libelle</th>
+          <th>Date de déclaration</th>
+          <th>Mois effet</th>
+          <th>Année effet</th>
+          <th>montant a payer</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-obligation>
+        <tr>
+          <td>{{ obligation.obligationFiscale.typeImpot.libelle }}</td>
+          <td>{{ obligation.dateDeclaration | date:'dd/MM/yyyy' }}</td>
+          <td>{{ obligation.moisEffet }}</td>
+          <td>{{ obligation.anneEffet }}</td>
+          <td>{{ obligation.montantApayer }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>

@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent implements OnInit {
-
+  isHovered: boolean = false;
   userid!: number
   contribuable: any
   constructor(private clientservice: ClientService, private router: Router) {
@@ -63,4 +63,12 @@ export class HomePageComponent implements OnInit {
     this.router.navigate(['/layout'])
   }
 
+
+  onMouseEnter() {
+    this.isHovered = true;
+  }
+
+  onMouseLeave() {
+    this.isHovered = false;
+  }
 }

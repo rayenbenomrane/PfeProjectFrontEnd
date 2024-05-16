@@ -45,3 +45,49 @@
 .table {
   width: 100%; /* Adjust the width of the table */
 }
+
+
+
+.tooltip {
+  position: absolute;
+
+
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #ffffff;
+  color: #376883;
+
+  padding: 5px 0;
+  border-radius: 6px;
+  top: -5px;
+  right: 110%;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 30%;
+  left: 100%;
+  margin-top: -5px;
+
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent  #cad2c5;
+}
+::ng-deep .p-button .pi {
+  padding: 0.5rem 1rem; /* Adjust the padding as needed */
+  font-size: 1.5rem;/* Adjust the size as needed */
+}

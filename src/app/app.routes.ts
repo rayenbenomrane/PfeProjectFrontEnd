@@ -18,6 +18,8 @@ import { DetailImpotComponent } from './Admin/detail-impot/detail-impot.componen
 import { AjoutDetailImpotComponent } from './Admin/ajout-detail-impot/ajout-detail-impot.component';
 import { AjoutDeclarationComponent } from './Client/ajout-declaration/ajout-declaration.component';
 import { LayoutclientComponent } from './Client/layoutclient/layoutclient.component';
+import { MesObligationsComponent } from './Client/mes-obligations/mes-obligations.component';
+import { MesDeclarationsComponent } from './Client/mes-declarations/mes-declarations.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -36,7 +38,9 @@ export const routes: Routes = [
   { path: "client/homepage", component: HomePageComponent },
   { path: "client/reclamation", component: ReclamationClientComponent },
   { path: "client/ajout-declaration", component: AjoutDeclarationComponent },
-  { path: "layout", component: LayoutclientComponent }
+  { path: "layout", component: LayoutclientComponent },
+  { path: "client/mesobligations", component: MesObligationsComponent },
+  { path: "client/mes-declarations", component: MesDeclarationsComponent }
 
 
 

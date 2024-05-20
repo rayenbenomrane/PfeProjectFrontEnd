@@ -70,4 +70,15 @@ export class ClientService {
       headers: this.createAuthorizationHeader()
     });
   }
+  initPaiement(paymentRequest: any) {
+    const url = `${BASIC_URL}/api/client/init`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.post(url, paymentRequest, { headers });
+  }
+  getCompteByid(idcompte: any) {
+    const url = `${BASIC_URL}/api/client/getCompte?idcompte=${idcompte}`;
+    return this.http.get<any>(url, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
 }

@@ -6,11 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { ClientService } from '../../service/client.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { LayoutclientComponent } from '../layoutclient/layoutclient.component';
 
 @Component({
   selector: 'app-reclamation-client',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, InputTextareaModule, ButtonModule],
+  imports: [CommonModule, FormsModule, InputTextModule, InputTextareaModule, ButtonModule, DropdownModule, RadioButtonModule, LayoutclientComponent],
   templateUrl: './reclamation-client.component.html',
   styleUrl: './reclamation-client.component.css'
 })
@@ -19,12 +22,27 @@ export class ReclamationClientComponent implements OnInit {
   reclamationDescription!: string;
   showRequiredError: boolean = false;
   contribuable: any
+  declarations: any
+  selectedDeclaration: any
+  selectedChoice: string = 'no'; // Default choice is "No"
+
   constructor(private authservice: AuthServiceService, private clientservice: ClientService) {
 
   }
 
   ngOnInit(): void {
-
+    const contribuableMatricule = localStorage.getItem('contribuableMatricule');
+    this.authservice.getContribuableByMatriculeFiscale(Number(contribuableMatricule)).subscribe((data) => {
+      this.contribuable = data;
+      this.clientservice.getDeclarationByContribuable(this.contribuable.matriculeFiscale).subscribe(
+        (data) => {
+          // Filtrer les déclarations avec un montant à payer > 0
+          //console.log(data)
+          this.declarations = data
+          console.log(this.declarations);
+        }
+      )
+    })
   }
 
   submitForm() {
@@ -36,14 +54,31 @@ export class ReclamationClientComponent implements OnInit {
       this.authservice.getContribuableByMatriculeFiscale(Number(contribuableMatricule)).subscribe((data) => {
         this.contribuable = data;
         //console.log(this.contribuable)
-        const reclamation: any = {
 
-          titre: this.reclamationTitle,
-          contenu: this.reclamationDescription,
+        if (this.selectedDeclaration == null) {
+          const reclamation: any = {
 
-          contribuable: this.contribuable
-        };
-        this.clientservice.savereclamation(reclamation).subscribe((data) => console.log(data))
+            titre: this.reclamationTitle,
+            contenu: this.reclamationDescription,
+
+
+
+          }
+          this.clientservice.savereclamation(reclamation).subscribe((data) => console.log(data))
+        } else {
+          const reclamation: any = {
+
+            titre: this.reclamationTitle,
+            contenu: this.reclamationDescription,
+            idDeclaration: this.selectedDeclaration
+
+
+          }
+          //console.log(reclamation)
+          this.clientservice.savereclamation(reclamation).subscribe((data) => console.log(data))
+        }
+
+
       })
       // console.log("Form submitted successfully!");
       this.showRequiredError = false;

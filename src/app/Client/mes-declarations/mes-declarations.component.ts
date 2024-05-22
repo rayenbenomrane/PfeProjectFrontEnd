@@ -72,6 +72,9 @@ export class MesDeclarationsComponent {
 
   }
   submit(declaration: any) {
+    const baseUrl = window.location.origin;
+    const successUrl = `${baseUrl}/client/paiement?idDeclaration=${declaration.idDeclaration}`;
+    const failUrl = `${baseUrl}/client/paimenterror`
     const paymentRequest = {
       "receiverWalletId": MesDeclarationsComponent.receiverWalletId,
       "token": "TND",
@@ -84,7 +87,7 @@ export class MesDeclarationsComponent {
         "e-DINAR"
       ],
       "lifespan": 30,
-      "checkoutForm": true,
+      "checkoutForm": false,
       "addPaymentFeesToAmount": true,
       "firstName": this.compte.firstName,
       "lastName": this.compte.lastName,
@@ -93,12 +96,12 @@ export class MesDeclarationsComponent {
       "orderId": "1234657",
       "webhook": "https://merchant.tech/api/notification_payment",
       "silentWebhook": true,
-      "successUrl": "https://dev.konnect.network/gateway/payment-success",
-      "failUrl": "https://dev.konnect.network/gateway/payment-failure",
+      "successUrl": successUrl,
+      "failUrl": failUrl,
       "theme": "light"
     };
     this.clientservice.initPaiement(paymentRequest).subscribe((data: any) => {
-      console.log(data);
+
       this.payment = data;
 
       // Extract the payUrl from the response

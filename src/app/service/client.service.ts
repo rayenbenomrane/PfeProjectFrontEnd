@@ -81,4 +81,9 @@ export class ClientService {
       headers: this.createAuthorizationHeader()
     });
   }
+  savePaiement(paymentRequest: any) {
+    const url = `${BASIC_URL}/api/client/savePaiement`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.post(url, paymentRequest, { headers });
+  }
 }

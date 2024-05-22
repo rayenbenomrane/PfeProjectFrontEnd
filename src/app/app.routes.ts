@@ -20,6 +20,8 @@ import { AjoutDeclarationComponent } from './Client/ajout-declaration/ajout-decl
 import { LayoutclientComponent } from './Client/layoutclient/layoutclient.component';
 import { MesObligationsComponent } from './Client/mes-obligations/mes-obligations.component';
 import { MesDeclarationsComponent } from './Client/mes-declarations/mes-declarations.component';
+import { PaymentSuccessComponent } from './Client/payment-success/payment-success.component';
+import { PaymentFailureComponent } from './Client/payment-failure/payment-failure.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -40,7 +42,9 @@ export const routes: Routes = [
   { path: "client/ajout-declaration", component: AjoutDeclarationComponent },
   { path: "layout", component: LayoutclientComponent },
   { path: "client/mesobligations", component: MesObligationsComponent },
-  { path: "client/mes-declarations", component: MesDeclarationsComponent }
+  { path: "client/mes-declarations", component: MesDeclarationsComponent },
+  { path: "client/paiement", component: PaymentSuccessComponent },
+  { path: "client/paimenterror", component: PaymentFailureComponent }
 
 
 

@@ -1,0 +1,111 @@
+<div>
+  <app-layout-responsable></app-layout-responsable>
+</div>
+<p-table [value]="lesreclamations" styleClass="centered-table">
+  <ng-template pTemplate="header">
+    <tr>
+
+      <th>Titre</th>
+      <th>Contenu</th>
+      <th>Date de Réclamation</th>
+      <th>État</th>
+      <th>Contribuable</th>
+      <th *ngIf="hasDeclarations()">Déclaration</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-reclamation>
+    <tr>
+
+      <td>{{ reclamation.titre }}</td>
+      <td>{{ reclamation.contenu }}</td>
+      <td>{{ reclamation.dateReclamation | date:'short' }}</td>
+      <td>{{ reclamation.etat }}</td>
+      <td>
+        <p-button icon="pi pi-eye" [rounded]="true" (click)="showContribuableDialog(reclamation)" [text]="true"
+          [raised]="true" />
+
+      </td>
+      <td *ngIf="reclamation.declaration">
+        <p-button icon="pi pi-eye" [rounded]="true" (click)="showDeclarationDialog(reclamation)" [text]="true"
+          [raised]="true" />
+      </td>
+      <td *ngIf="!reclamation.declaration">
+        <div>vide</div>
+      </td>
+      <td>
+        <p-button icon="pi pi-pencil" label="Add Solution" (click)="openDialog(reclamation)"
+          [rounded]="true"></p-button>
+      </td>
+      <td *ngIf="reclamation.etat!='REFUSEE'">
+        <p-button icon="pi pi-times" [rounded]="true" severity="danger" (click)="updatereclamation(reclamation)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-dialog header="Add Solution" [(visible)]="displayDialog" [closable]="false" [draggable]="false">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="solution">Solution</label>
+      <input id="solution" type="text" pInputText [(ngModel)]="solution" />
+    </div>
+  </div>
+  <p-footer>
+    <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="displayDialog=false"></button>
+    <button pButton type="button" label="Save" icon="pi pi-check" (click)="saveSolution()"></button>
+  </p-footer>
+</p-dialog>
+<p-dialog header="Contribuable Information" [(visible)]="displayContribuableDialog" [modal]="true" [responsive]="true">
+  <div>
+    <p>
+      ID Contribuable: {{ selectedReclamation?.contribuable.idContribuable }}
+    </p>
+    <p>
+      Matricule Fiscale: {{ selectedReclamation?.contribuable.matriculeFiscale }}
+    </p>
+    <p>
+      Nom Commercial: {{ selectedReclamation?.contribuable.nomCommercial }}
+    </p>
+    <p>
+      Email: {{ selectedReclamation?.contribuable.email }}
+    </p>
+    <p>
+      Adresse: {{ selectedReclamation?.contribuable.adress }}
+    </p>
+    <!-- Add other contribuable information as needed -->
+  </div>
+</p-dialog>
+<p-dialog header="Declaration Information" [(visible)]="displayDeclarationDialog" [modal]="true" [responsive]="true">
+  <div *ngIf="selectedReclamation && selectedReclamation.declaration">
+    <p>
+      Declaration ID: {{ selectedReclamation.declaration.idDeclaration }}
+    </p>
+    <p>
+      Date Declaration: {{ selectedReclamation.declaration.dateDeclaration | date:'short' }}
+    </p>
+    <p>
+      type Declaration:{{typedetail}}
+    </p>
+  </div>
+
+  <div *ngIf="lesdetails && lesdetails.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Detail Impot Libelle</th>
+          <th>Valeur</th>
+          <!-- Add other table headers for additional properties if needed -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of lesdetails">
+          <td>{{ detail.detailImpot.libelle }}</td>
+          <td>{{ detail.valeur }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="!lesdetails || lesdetails.length === 0">
+    No details found.
+  </div>
+</p-dialog>

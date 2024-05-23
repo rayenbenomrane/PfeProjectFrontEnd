@@ -22,6 +22,9 @@ import { MesObligationsComponent } from './Client/mes-obligations/mes-obligation
 import { MesDeclarationsComponent } from './Client/mes-declarations/mes-declarations.component';
 import { PaymentSuccessComponent } from './Client/payment-success/payment-success.component';
 import { PaymentFailureComponent } from './Client/payment-failure/payment-failure.component';
+import { DashboardResposnableComponent } from './Responsable/dashboard-resposnable/dashboard-resposnable.component';
+import { TousLesReclamationsComponent } from './Responsable/tous-les-reclamations/tous-les-reclamations.component';
+import { LayoutResponsableComponent } from './Responsable/layout-responsable/layout-responsable.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -44,7 +47,10 @@ export const routes: Routes = [
   { path: "client/mesobligations", component: MesObligationsComponent },
   { path: "client/mes-declarations", component: MesDeclarationsComponent },
   { path: "client/paiement", component: PaymentSuccessComponent },
-  { path: "client/paimenterror", component: PaymentFailureComponent }
+  { path: "client/paimenterror", component: PaymentFailureComponent },
+  { path: "responsable/dashboard-responsable", component: DashboardResposnableComponent },
+  { path: "responsable/tous-les-reclamations", component: TousLesReclamationsComponent },
+
 
 
 

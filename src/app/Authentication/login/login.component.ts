@@ -32,49 +32,65 @@ export class LoginComponent {
 
 
   onSubmit() {
-    this.authserve.login(this.formData).subscribe((data: any) => {
-      if (data.userId != null) {
-        const user = {
-          id: data.userId,
-          role: data.userRole
-        };
-        StorageService.saveToken(data.jwt);
-        StorageService.saveUser(user);
+    this.authserve.login(this.formData).subscribe(
+      (data: any) => {
+        if (data.userId != null) {
+          const user = {
+            id: data.userId,
+            role: data.userRole
+          };
+          StorageService.saveToken(data.jwt);
+          StorageService.saveUser(user);
 
-        // Redirect based on user role
-        if (user.role === 'Admin') {
-          this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: 'welcome Admin' });
+          // Redirect based on user role
+          let redirectPath = '';
+          switch (user.role) {
+            case 'Admin':
+              this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: 'Welcome Admin' });
+              redirectPath = '/admin/dashboard';
+              break;
+            case 'Client':
+              this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: 'Welcome Client' });
+              redirectPath = '/client/homepage';
+              break;
+            case 'Responsable':
+              this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: 'Welcome Responsable' });
+              redirectPath = '/responsable/dashboard-resposnable';
+              break;
+            default:
+              console.log('Error saving user data');
+              // Handle error saving user data, maybe display an error message
+              return;
+          }
+
           setTimeout(() => {
-            this.router.navigate(['/admin/dashboard']);
+            this.router.navigate([redirectPath]);
           }, 1500);
-
-        } else if (user.role === 'Client') {
-          this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: this.errorMessage });
-          setTimeout(() => {
-            this.router.navigate(['/client/homepage']);
-          }, 1500);
-
-
         }
-      } else {
-        console.log('Error saving user data');
-        // Handle error saving user data, maybe display an error message
+      },
+      (errorResponse: HttpErrorResponse) => {
+        // Handle error responses from the server
+        let errorMessage = '';
+        switch (errorResponse.status) {
+          case 401:
+            errorMessage = 'Incorrect username or password';
+            break;
+          case 403:
+            errorMessage = 'Account is disabled';
+            break;
+          case 404:
+            errorMessage = 'User not found';
+            break;
+          default:
+            errorMessage = 'An unexpected error occurred';
+            break;
+        }
+        // Display error message
+        this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: errorMessage });
       }
-    }, (errorResponse: HttpErrorResponse) => {
-      // Handle error responses from the server
-      if (errorResponse.status === 401) {
-        this.errorMessage = 'Incorrect username or password';
-      } else if (errorResponse.status === 403) {
-        this.errorMessage = 'Account is disabled';
-      } else if (errorResponse.status === 404) {
-        this.errorMessage = 'User not found';
-      } else {
-        this.errorMessage = 'An unexpected error occurred';
-      }
-      // Display error message
-      this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: this.errorMessage });
-    });
+    );
   }
+
   gotosignup() {
     this.router.navigate(['/signup'])
   }

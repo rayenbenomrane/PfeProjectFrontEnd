@@ -60,14 +60,14 @@ export class ReclamationClientComponent implements OnInit {
 
             titre: this.reclamationTitle,
             contenu: this.reclamationDescription,
-
+            contribuable: this.contribuable
 
 
           }
           this.clientservice.savereclamation(reclamation).subscribe((data) => console.log(data))
         } else {
           const reclamation: any = {
-
+            contribuable: this.contribuable,
             titre: this.reclamationTitle,
             contenu: this.reclamationDescription,
             idDeclaration: this.selectedDeclaration

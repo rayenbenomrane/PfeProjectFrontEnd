@@ -25,6 +25,8 @@ import { PaymentFailureComponent } from './Client/payment-failure/payment-failur
 import { DashboardResposnableComponent } from './Responsable/dashboard-resposnable/dashboard-resposnable.component';
 import { TousLesReclamationsComponent } from './Responsable/tous-les-reclamations/tous-les-reclamations.component';
 import { LayoutResponsableComponent } from './Responsable/layout-responsable/layout-responsable.component';
+import { ReclamationEnAttenteComponent } from './Responsable/reclamation-en-attente/reclamation-en-attente.component';
+import { ReclamationEnCoursComponent } from './Responsable/reclamation-en-cours/reclamation-en-cours.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -50,7 +52,8 @@ export const routes: Routes = [
   { path: "client/paimenterror", component: PaymentFailureComponent },
   { path: "responsable/dashboard-responsable", component: DashboardResposnableComponent },
   { path: "responsable/tous-les-reclamations", component: TousLesReclamationsComponent },
-
+  { path: "responsable/lesReclamationEnAttente", component: ReclamationEnAttenteComponent },
+  { path: "responsable/lesReclamationEnCours", component: ReclamationEnCoursComponent },
 
 
 

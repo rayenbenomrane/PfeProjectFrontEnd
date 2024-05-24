@@ -1,24 +1,24 @@
-import { TableModule } from 'primeng/table';
-import { LayoutResponsableComponent } from '../layout-responsable/layout-responsable.component';
-import { ResponsableService } from './../../service/responsable.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ResponsableService } from '../../service/responsable.service';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { LayoutResponsableComponent } from '../layout-responsable/layout-responsable.component';
 
 @Component({
-  selector: 'app-tous-les-reclamations',
+  selector: 'app-reclamation-en-cours',
   standalone: true,
   imports: [LayoutResponsableComponent, TagModule, TableModule, CommonModule, ButtonModule, DialogModule, InputTextModule, FormsModule, CalendarModule, DropdownModule],
-  templateUrl: './tous-les-reclamations.component.html',
-  styleUrl: './tous-les-reclamations.component.css'
+  templateUrl: './reclamation-en-cours.component.html',
+  styleUrl: './reclamation-en-cours.component.css'
 })
-export class TousLesReclamationsComponent implements OnInit {
+export class ReclamationEnCoursComponent {
   showFilterMenu: boolean = false;
   selectedFilter: string | null = null;
   placeholderText: string = "Recherche Global";
@@ -44,7 +44,6 @@ export class TousLesReclamationsComponent implements OnInit {
   solution: string = '';
 
   constructor(private responsableService: ResponsableService) { }
-
   ngOnInit(): void {
     this.getAllreclamation();
   }
@@ -52,10 +51,9 @@ export class TousLesReclamationsComponent implements OnInit {
   getAllreclamation() {
     this.responsableService.getReclamations().subscribe((data) => {
       this.lesreclamations = data;
-      this.filteredReclamations = this.lesreclamations;
+      this.filteredReclamations = this.lesreclamations.filter((reclamation: { etat: string; }) => reclamation.etat === 'EN_COURS');
     });
   }
-
   hasDeclarations(): boolean {
     return this.lesreclamations && this.lesreclamations.some((reclamation: { declaration: any; }) => reclamation.declaration);
   }

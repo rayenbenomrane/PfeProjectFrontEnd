@@ -54,14 +54,15 @@
   background-color: #780000;
   color: white;
 }
-
+.topnav .split1 {
+  float: right;
+  margin-right: 70px;
+}
 .topnav a.split:hover {
   background-color: #c1121f; /* Change background color to pink on hover */
 }
 
-body {
-  margin: -10px;
-}
+
 
 .dropdown {
   float: left;
@@ -107,4 +108,26 @@ body {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+.notification-container {
+  max-height: 300px; /* adjust as needed */
+  overflow-y: auto;
+}
+
+.notification-item {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+.notification-item h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.notification-item p {
+  margin: 5px 0;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
 }

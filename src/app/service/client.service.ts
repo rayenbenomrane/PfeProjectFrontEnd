@@ -86,4 +86,9 @@ export class ClientService {
     const headers: HttpHeaders = this.createAuthorizationHeader();
     return this.http.post(url, paymentRequest, { headers });
   }
+  getNotification(matricule: number) {
+    const url = `${BASIC_URL}/api/client/notification?matricule=${matricule}`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.get(url, { headers })
+  }
 }

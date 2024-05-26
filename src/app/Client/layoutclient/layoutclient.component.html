@@ -29,7 +29,22 @@
 
       </div>
     </div>
+     <button class="split1" (click)="op.toggle($event)">notification</button>
 
+    <p-overlayPanel #op>
+      <ng-container *ngIf="lesnotifications && lesnotifications.length > 0; else noNotifications">
+        <div class="notification-container">
+          <div *ngFor="let notification of lesnotifications" class="notification-item">
+            <h3>{{ notification.titre }}</h3>
+            <p><strong>Date:</strong> {{ notification.dateReponse | date:'short' }}</p>
+            <p><strong>Solution:</strong> {{ notification.solution }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noNotifications>
+        <p>No notifications available.</p>
+      </ng-template>
+    </p-overlayPanel>
     <a href="/login" class="split" (click)="logout()"><i class="pi pi-sign-out"></i> Logout</a>
   </div>
 

@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 
 
 import { routes } from './app.routes';
@@ -8,5 +8,5 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(), provideAnimations(), MessageService, ConfirmationService]
+  providers: [provideRouter(routes, withViewTransitions()), provideHttpClient(), provideAnimations(), MessageService, ConfirmationService]
 };

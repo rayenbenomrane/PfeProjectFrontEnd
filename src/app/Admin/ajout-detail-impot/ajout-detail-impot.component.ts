@@ -23,13 +23,24 @@ import { DialogModule } from 'primeng/dialog';
   styleUrl: './ajout-detail-impot.component.css'
 })
 export class AjoutDetailImpotComponent implements OnInit {
-
+  typeDetailKeys = Object.keys(TypeDetail);
+  NatureRebriqueKeys = Object.keys(NatureRebrique)
+  selectedType: any;
+  selectedType1: any;
+  trueValue: boolean = false;
+  libelle!: string
+  value!: number
+  typeimpot: any
   value1!: number;
   isCalculable: boolean = false;
   displayDialog: boolean = false;
   selectedDetail: any;
   formula: string = '';
-  selectedOperation!: string;
+  selectedOperation: any;
+  lesDetails: any[] = []
+  selectedDetails: string[] = [];
+  selectedOperations: string[] = [];
+  formulaElements: string[] = [];
 
   openDialog() {
     if (this.isCalculable) {
@@ -50,17 +61,8 @@ export class AjoutDetailImpotComponent implements OnInit {
     this.getlibelle()
     this.getdetail()
   }
-  typeDetailKeys = Object.keys(TypeDetail);
-  NatureRebriqueKeys = Object.keys(NatureRebrique)
-  selectedType: any;
-  selectedType1: any;
-  trueValue: boolean = false;
-  libelle!: string
-  value!: number
-  typeimpot: any
-  lesDetails: any[] = []
-  selectedOperations: string[] = [];
-  selectedDetails: any[] = [];
+
+
   operationOptions: any[] = [
     { label: 'Addition', value: ' + ' },
     { label: 'Subtraction', value: ' - ' },
@@ -116,23 +118,31 @@ export class AjoutDetailImpotComponent implements OnInit {
     const selectedDetail = event.value.libelle;
     if (selectedDetail) {
       this.selectedDetails.push(selectedDetail);
-      this.selectedDetail=null
-      this.updateFormula();
-    }
-}
+      this.formulaElements.push(selectedDetail);
 
-onOperationChange(event: any) {
+      this.updateFormula();
+      // Refresh the dropdown by setting selectedDetail to null
+      this.selectedDetail = null;
+      this.lesDetails = [];
+      this.getdetail();
+
+    }
+  }
+
+  onOperationChange(event: any) {
     const selectedOperation = event.value.value;
     if (selectedOperation) {
       this.selectedOperations.push(selectedOperation);
+      this.formulaElements.push(selectedOperation);
+      this.selectedOperation = null; // Reset the selected operation after adding
       this.updateFormula();
     }
-}
+  }
 
-updateFormula() {
-    // Concatenate selected details and operations to form the formula
-    this.formula = this.selectedDetails.join('') + this.selectedOperations.join('');
-}
+  updateFormula() {
+    // Concatenate formula elements to form the formula
+    this.formula = this.formulaElements.join(' ');
+  }
 
 
 

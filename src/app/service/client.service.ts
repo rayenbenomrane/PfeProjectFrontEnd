@@ -91,4 +91,17 @@ export class ClientService {
     const headers: HttpHeaders = this.createAuthorizationHeader();
     return this.http.get(url, { headers })
   }
+  updateNotification(id: number) {
+    const url = `${BASIC_URL}/api/client/updatechecked?id=${id}`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.put(url, null, { headers });
+  }
+
+  updatedeleted(id: number) {
+    const url = `${BASIC_URL}/api/client/updatedeleted?id=${id}`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    const options = { headers: headers }; // Create options object with headers
+    return this.http.put(url, null, options); // Pass options as the third argument
+  }
+
 }

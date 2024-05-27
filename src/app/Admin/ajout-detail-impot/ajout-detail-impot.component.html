@@ -7,12 +7,14 @@
 
         <div class="input-container">
           <label for="detailLibelle" class="section-heading">Libelle du Detail D'impot:</label>
-          <input type="text" id="detailLibelle" pInputText [(ngModel)]="value" placeholder="Libelle du Detail" />
+          <input type="text" id="detailLibelle" pInputText [(ngModel)]="value" placeholder="Libelle du Detail"
+            style="width: 250px;" />
 
         </div>
         <div class="input-container">
           <label for="integeronly" class="section-heading">ordre du Detail D'impot:</label>
-          <p-inputNumber inputId="integeronly" [(ngModel)]="value1" placeholder="numero d'ordre"></p-inputNumber>
+          <p-inputNumber inputId="integeronly" [(ngModel)]="value1" placeholder="numero d'ordre"
+            [style]="{'width': '250px'}"></p-inputNumber>
         </div>
         <!-- Type de champs de detail d'impot -->
         <div class="section-container">
@@ -23,16 +25,7 @@
           </div>
         </div>
 
-        <!-- Nature de rebrique du Detail dImpot -->
-        <div class="section-container">
-          <div class="section-heading">Nature de rebrique du Detail d'Impot:</div>
-          <div *ngFor="let key1 of NatureRebriqueKeys" class="field-checkbox">
-            <p-radioButton [inputId]="key1" name="category1" [value]="key1" [(ngModel)]="selectedType1"></p-radioButton>
-            <label [for]="key1" class="ml-2">{{ key1 }}</label>
-          </div>
-        </div>
 
-        <!-- L'obligation du Champs de Detail -->
         <div class="section-container">
           <div class="section-heading">L'obligation du Champs de Detail:</div>
           <div class="field-radio">
@@ -44,9 +37,43 @@
             <label for="nonObligatoireRadio" class="ml-2">non obligatoire</label>
           </div>
         </div>
+        <div class="section-container">
+          <div class="section-heading">Champs Calculable:</div>
+          <div class="field-radio">
+            <p-radioButton type="radio" id="calculableOui" name="calculableRadio" [value]="true"
+              [(ngModel)]="isCalculable" (onClick)="openDialog()"></p-radioButton>
+            <label for="calculableOui" class="ml-2">Oui</label>
+            <p-radioButton type="radio" id="calculableNon" name="calculableRadio" [value]="false"
+              [(ngModel)]="isCalculable"></p-radioButton>
+            <label for="calculableNon" class="ml-2">Non</label>
+          </div>
+        </div>
         <p-button label="Submit" (onClick)="submit()"></p-button>
       </p-card>
 
     </div>
   </div>
 </div>
+<p-dialog header="Details Calculables" [(visible)]="displayDialog" [modal]="true" [closable]="false"
+[style]="{height: '500px', width: '500px'}">
+  <ng-container *ngIf="lesDetails.length === 0">
+    <p>Impossible de créer une formule, veuillez donner au minimum un champ non calculable</p>
+  </ng-container>
+  <ng-container *ngIf="lesDetails.length > 0">
+    <p-dropdown [options]="lesDetails" [(ngModel)]="selectedDetail" (onChange)="onDetailChange($event)" placeholder="Select a detail"
+      optionLabel="libelle"></p-dropdown>
+    <div class="input-container" style="margin-top: 10px;">
+      <label for="operation" class="section-heading">Operation:</label>
+      <p-dropdown [options]="operationOptions" [(ngModel)]="selectedOperation" (onChange)="onOperationChange($event)" placeholder="Select an operation"
+        optionLabel="label"></p-dropdown>
+    </div>
+    <div class="input-container" style="margin-top: 10px;">
+      <label for="formula" class="section-heading">Formule de Calcul:</label>
+      <input type="text" id="formula" pInputText [(ngModel)]="formula" placeholder="Entrez la formule de calcul"
+        style="width: 100%;" />
+    </div>
+  </ng-container>
+  <p-footer>
+    <p-button label="Close" icon="pi pi-check" (onClick)="closeDialog()"></p-button>
+  </p-footer>
+</p-dialog>

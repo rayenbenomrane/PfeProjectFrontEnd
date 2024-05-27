@@ -53,9 +53,7 @@
 .topnav a.split:hover {
   background-color: #c1121f; /* Change background color to pink on hover */
 }
-body{
-  margin: -10PX;
-}
+
 .hover-card {
   background-color: rgb(214, 214, 214); /* Default background color */
 }

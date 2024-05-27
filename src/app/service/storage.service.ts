@@ -52,4 +52,16 @@ export class StorageService {
   static clearFromLocalStorage(): void {
     window.localStorage.clear();
   }
+  setSnapop(s: boolean): void {
+    localStorage.setItem('spanpop', JSON.stringify(s));
+
+  }
+
+  getSpanpop(): boolean {
+    const storedValue = localStorage.getItem('spanpop');
+    if (storedValue) {
+      return JSON.parse(storedValue);
+    }
+    return false;
+  }
 }

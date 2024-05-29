@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <p-toast></p-toast>
   <div class="topnav">
     <a href="/acceuil">Home</a>
     <div class="dropdown">
@@ -29,7 +30,11 @@
 
       </div>
     </div>
-    <div class="notif"> <p-button icon="pi pi-bell" [rounded]="true" (click)="toggleBellAndSpan($event)"
+    <div class="notif">
+      <p-button icon="pi pi-user" [rounded]="true"
+        [style]="{ 'background-color': '#003049', 'color': '#ffffff','margin-right':'5px' }"
+        (click)="showChangePasswordDialog()"></p-button>
+      <p-button icon="pi pi-bell" [rounded]="true" (click)="toggleBellAndSpan($event)"
         [style]="{ 'background-color': '#003049', 'color': '#ffffff' }" [text]="true"></p-button>
 
       <span class="notification-dot" *ngIf="spanpop == true "></span>
@@ -69,6 +74,37 @@
       <p>No notifications available.</p>
     </ng-template>
   </p-overlayPanel>
+  <p-dialog header="Modifier le Mot de Passe" [(visible)]="changePasswordDialogVisible" [modal]="true"
+    [style]="{ 'max-width': '400px', 'background-color': '#8ecae6' }">
+    <ng-template pTemplate="content">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="username" class="p-d-block">ancien Password</label>
+          <p-password [(ngModel)]=" oldPassword"></p-password>
+        </div>
+        <div class="p-field">
+          <label for="username" class="p-d-block">New Password</label>
+          <p-password [(ngModel)]="newPassword"></p-password>
+        </div>
+        <div class="p-field">
+          <label for="password" class="p-d-block">Confirme Password</label>
+          <p-password [(ngModel)]="confirmPassword" [feedback]="false"></p-password>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-justify-between">
+        <div class="p-col">
+          <button pButton type="button" label="Cancel" class="p-button-text p-button-outlined p-button-sm"
+            (click)="changePasswordDialogVisible = false"></button>
+        </div>
+        <div class="p-col">
+          <button pButton (click)="handleChangePassword()" type="button" label="Valider"
+            class="p-button-primary p-button-sm"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
 
 </body>
 

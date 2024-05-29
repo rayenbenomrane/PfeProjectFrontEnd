@@ -55,7 +55,7 @@ export class LoginComponent {
               break;
             case 'Responsable':
               this.messageService.add({ key: 'step1', severity: 'success', summary: 'Connecte', detail: 'Welcome Responsable' });
-              redirectPath = '/responsable/dashboard-resposnable';
+              redirectPath = '/responsable/tous-les-reclamations';
               break;
             default:
               console.log('Error saving user data');

@@ -14,6 +14,7 @@ import { LayoutclientComponent } from '../layoutclient/layoutclient.component';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { forkJoin } from 'rxjs';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-ajout-declaration',
@@ -218,4 +219,5 @@ export class AjoutDeclarationComponent implements OnInit {
     let end = key.indexOf(', ordre');
     return key.substring(start, end);
   }
+
 }

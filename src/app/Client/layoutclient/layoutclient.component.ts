@@ -3,21 +3,31 @@ import { WebSocketService } from './../../service/web-socket.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { MenubarModule } from 'primeng/menubar';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { PasswordModule } from 'primeng/password';
+import { FormsModule } from '@angular/forms';
+import { Toast, ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-layoutclient',
   standalone: true,
-  imports: [CommonModule, MenubarModule, OverlayPanelModule, ButtonModule],
+  imports: [CommonModule, MenubarModule, OverlayPanelModule, ToastModule, PasswordModule, ButtonModule, DialogModule, FormsModule],
   templateUrl: './layoutclient.component.html',
   styleUrl: './layoutclient.component.css'
 })
 export class LayoutclientComponent implements OnInit {
+  changePasswordDialogVisible: boolean = false;
   spanpop!: boolean
   popup: boolean = false;
   lesnotifications: any;
+  oldPassword!: string;
+  newPassword!: string;
+  confirmPassword!: string;
+  objectuser: any; // Assuming objectuser is stored in localStorage
+  idCompte: number;
   @ViewChild('op')
   op!: OverlayPanel;
   ngOnInit(): void {
@@ -48,8 +58,10 @@ export class LayoutclientComponent implements OnInit {
     });
   }
 
-  constructor(private WebSocketService: WebSocketService, private clientService: ClientService) {
-
+  constructor(private WebSocketService: WebSocketService, private clientService: ClientService, private messageservice: MessageService) {
+    const objectuserString = localStorage.getItem('user');
+    this.objectuser = objectuserString ? JSON.parse(objectuserString) : null;
+    this.idCompte = this.objectuser ? this.objectuser.id : null;
   }
 
   getnotification(): void {
@@ -94,7 +106,45 @@ export class LayoutclientComponent implements OnInit {
       // Handle error if needed
     });
   }
+  showChangePasswordDialog() {
+    this.changePasswordDialogVisible = true;
+  }
 
+  hideChangePasswordDialog() {
+    this.changePasswordDialogVisible = false;
+  }
+
+  handleChangePassword(): void {
+    console.log("hello")
+    if (this.newPassword !== this.confirmPassword) {
+      this.messageservice.add({ severity: 'error', summary: 'Error', detail: 'Le nouveau mot de passe et la confirmation ne correspondent pas' });
+      return;
+    }
+
+    const passwordData = {
+      idCompte: this.idCompte,
+      motDePass: this.newPassword,
+      AncienMotDePass: this.oldPassword
+    };
+    console.log(passwordData)
+    // console.log(passwordData)
+     this.clientService.updatePassword(passwordData).subscribe(
+       (response) => {
+         this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Mot de passe mis à jour avec succès' });
+         this.clearForm();
+       },
+       (error) => {
+         this.messageservice.add({ severity: 'error', summary: 'Error', detail: 'Erreur lors de la mise à jour du mot de passe' });
+         console.error('Error updating password:', error);
+       }
+     );
+  }
+
+  clearForm(): void {
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+  }
   logout(): void {
     StorageService.clearFromLocalStorage();
   }

@@ -35,7 +35,8 @@ export const routes: Routes = [
   , { path: "createpassword/:code", component: CreatePasswordComponent }
   , { path: "admin/lescomptes", component: LesComptesComponent },
   { path: "admin/lescontribuables", component: LescontribuablesComponent }
-  , { path: "admin/lesadmins", component: TableAdminsComponent },
+  ,
+  { path: "admin/lesadmins", component: TableAdminsComponent },
   { path: "admin/dashboard", component: AdminHomePageComponent },
   { path: "error", component: ErrorPageComponent },
   { path: "admin/ajoutlesimpots", component: AjoutImpotComponent },

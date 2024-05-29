@@ -103,5 +103,9 @@ export class ClientService {
     const options = { headers: headers }; // Create options object with headers
     return this.http.put(url, null, options); // Pass options as the third argument
   }
-
+  updatePassword(password: any) {
+    const url = `${BASIC_URL}/api/client/updatepassword`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.put(url, password, { headers });
+  }
 }

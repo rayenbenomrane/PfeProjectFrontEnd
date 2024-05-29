@@ -68,9 +68,9 @@
     </table>
 
 
-    <p-button label="calcul" icon="pi pi-arrow-right" (onClick)="calculateValues()" iconPos="right"
-      styleClass="small-button"></p-button>
-    <p-button label="Suivant" icon="pi pi-arrow-right" iconPos="right" styleClass="small-button"></p-button>
 
+    <p-button label="Suivant" icon="pi pi-arrow-right" iconPos="right" styleClass="small-button"></p-button>
+    <p-button icon="pi pi-calculator" (onClick)="calculateValues()" severity="success" [raised]="true" [outlined]="true"
+      styleClass="small-button" [style]="{'margin-left': '350px'}"></p-button>
   </ng-template>
 </p-dialog>

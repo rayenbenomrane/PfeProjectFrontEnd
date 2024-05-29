@@ -36,20 +36,10 @@
     </p-card>
   </div>
 </div>
-<p-dialog header="Declaration" [(visible)]="displayPopup" [modal]="true"
+<p-dialog header="Declaration" [(visible)]="displayPopup" [draggable]="false"
   [style]="{ 'width': '800px', 'height': 'auto' }">
   <ng-template pTemplate="content">
-    <div class="tooltip">
-      <p-button icon="pi pi-info-circle" [rounded]="true"></p-button>
-      <span class="tooltiptext">
-        <ul style="list-style-type: none; padding: 0; margin: 10px;">
-          <li>La formule de Calcul : {{formule}}</li>
-          <li>r :total des revenues</li>
-          <li>p :total des pertes</li>
-          <li>* :obligation de remplir ce champs</li>
-        </ul>
-      </span>
-    </div>
+
     <table class="table">
       <thead>
         <tr>
@@ -59,20 +49,28 @@
       </thead>
       <tbody>
         <tr *ngFor="let entry of hashMapEntries | keyvalue: keepOriginalOrder">
-          <td>{{ parseEntryKey(entry.key) }}</td>
-          <td>
-            <ng-container *ngIf="entry.value.valeur !== null; else emptyInput">
+          <ng-container *ngIf="!extractCalculable(entry.key)">
+            <td>{{ parseEntryKey(entry.key) }}</td>
+            <td>
               <p-inputNumber class="small-input" type="number" [(ngModel)]="entry.value.valeur"
-                [style]="{ 'width': '100px' }" />
-            </ng-container>
-            <ng-template #emptyInput>
-              <p-inputNumber class="small-input" type="number" [(ngModel)]="entry.value.valeur"
-                [style]="{ 'width': '100px' }" />
-            </ng-template>
-          </td>
+                [style]="{ 'width': '100px' }"></p-inputNumber>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="extractCalculable(entry.key)">
+            <td>{{ parseEntryKey(entry.key) }}</td>
+            <td>
+              <p-inputNumber type="number" [readonly]="true" [ngModel]="entry.value.valeur" [disabled]="true"
+                [style]="{'width': '100px'}"></p-inputNumber>
+            </td>
+          </ng-container>
         </tr>
       </tbody>
     </table>
-    <p-button label="Suivant" icon="pi pi-arrow-right" (onClick)="submit1()" iconPos="right"></p-button>
+
+
+    <p-button label="calcul" icon="pi pi-arrow-right" (onClick)="calculateValues()" iconPos="right"
+      styleClass="small-button"></p-button>
+    <p-button label="Suivant" icon="pi pi-arrow-right" iconPos="right" styleClass="small-button"></p-button>
+
   </ng-template>
 </p-dialog>

@@ -35,10 +35,12 @@ export class AjoutDeclarationComponent implements OnInit {
   type: any;
   date: any;
   displayPopup: any;
-  hashMapEntries: Map<string, any> = new Map();
+  hashMapEntries: Map<string, any> = new Map<string, any>();
   iddeclaration: any
   formule: any
-
+  formule1: string = ''
+  result!: number
+  nonCalculableEntries: { [key: string]: any } = {}
   constructor(private clientservice: ClientService, private messageService: MessageService) {
 
   }
@@ -46,6 +48,7 @@ export class AjoutDeclarationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getcontribuable();
+
     //this.getFormule();
   }
   toggleDialog(event: MouseEvent) {
@@ -105,15 +108,15 @@ export class AjoutDeclarationComponent implements OnInit {
         const entriesArray = Object.entries(data).sort((a, b) => {
           const ordreA = this.extractOrdreFromKey(a[0]);
           const ordreB = this.extractOrdreFromKey(b[0]);
-          console.log("ordre", ordreA)
+          // console.log("ordre", ordreA)
           return ordreA - ordreB;
         });
 
 
 
         this.hashMapEntries = new Map(entriesArray);
-        this.getFormule()
-        console.log(this.hashMapEntries);
+        //this.getFormule()
+        //console.log(this.hashMapEntries);
 
         this.displayPopup = true;
       },
@@ -122,7 +125,10 @@ export class AjoutDeclarationComponent implements OnInit {
       }
     );
   }
-
+  extractCalculable(key: string): boolean {
+    const calculableIndex = key.indexOf('calculable=true');
+    return calculableIndex !== -1;
+  }
 
   extractOrdreFromKey(key: string): number {
     const ordreMatch = key.match(/ordre=(\d+)/);
@@ -151,96 +157,65 @@ export class AjoutDeclarationComponent implements OnInit {
       libelle += ' *';
     }
 
-    const natureRebriqueIndex = key.indexOf('naturerebrique=');
-    if (natureRebriqueIndex !== -1) {
-      const natureStartIndex = natureRebriqueIndex + 'naturerebrique='.length;
-      const natureEndIndex = key.indexOf(',', natureStartIndex);
-      let natureRebrique = '';
-      if (natureEndIndex === -1) {
-        natureRebrique = key.substring(natureStartIndex);
-      } else {
-        natureRebrique = key.substring(natureStartIndex, natureEndIndex);
-      }
-      if (natureRebrique === 'REVENUS') {
-        libelle += ' (r)';
-      } else if (natureRebrique === 'PERTE') {
-        libelle += ' (p)';
-      }
-    }
+
 
     return libelle;
   }
-  submit1() {
-
-    const updateRequests = [];
-
-    for (const [key, value] of Object.entries(this.hashMapEntries)) {
-      const declarationDto = {
-        iddetailDeclaration: value.iddetailDeclaration,
-        valeur: value.valeur
-      };
-
-      updateRequests.push(this.clientservice.updateDetailDeclaration(declarationDto));
-    }
-
-    forkJoin(updateRequests).subscribe(
-      responses => {
-
-        this.getDetailType(this.hashMapEntries);
-      },
-      error => {
-        console.error('An error occurred during updates', error);
+  identifyNonCalculableEntries() {
+    console.log("Identifying non-calculable entries...");
+    this.hashMapEntries.forEach((value, key) => {
+      if (key.includes('calculable=false')) {
+        let libelle = this.extractLibelle(key);
+        this.nonCalculableEntries[libelle] = value.valeur;
       }
-
-    );
-  }
-  getDetailType(hashMapEntries: any) {
-    let sumRevenus = 0;
-    let sumPerte = 0;
-    const revenus: any[] = [];
-    const perte: any[] = [];
-    const values: { [key: string]: number } = {};
-
-    for (const [key, value] of Object.entries(hashMapEntries)) {
-      const detailImpot = key.split(',')[3].split('=')[1].trim();
-      const entryValue = value as any;
-      const valeur = parseFloat(entryValue.valeur);
-      this.iddeclaration = Number(entryValue.iddeclaration)
-      if (detailImpot === 'REVENUS') {
-        revenus.push(value);
-        sumRevenus += valeur;
-      } else if (detailImpot === 'PERTE') {
-        perte.push(value);
-        sumPerte += valeur;
-      }
-    }
-
-    values['r'] = sumRevenus;
-    values['p'] = sumPerte;
-
-    this.clientservice.getFormulaByLibelle(this.obligation.impot.libelle).subscribe((data) => {
-
-      const calculateRequest = {
-        "formula": data.formule,
-        "values": values
-      };
-      this.formule = data.formule
-
-
-      this.clientservice.calculateEquation(calculateRequest).subscribe((result) => {
-        const saveMontant = {
-          "idDeclaration": this.iddeclaration,
-          "montantApayer": result
-        }
-        this.clientservice.updateMontantDeclaration(saveMontant).subscribe((data) => console.log(data));
-      });
     });
+    console.log("Non-calculable entries identified:", this.nonCalculableEntries);
   }
-  getFormule() {
-    this.clientservice.getFormulaByLibelle(this.obligation.impot.libelle).subscribe((data) => {
-      this.formule = data.formule;
+  extractLibelle(key: string): string {
+    let start = key.indexOf('libelle=') + 8;
+    let end = key.indexOf(', typeDetail');
+    return key.substring(start, end);
+  }
+  calculateValues() {
+
+    this.identifyNonCalculableEntries()
+    this.hashMapEntries.forEach((value, key) => {
+      //console.log("hello");
+      if (key.includes('calculable=true')) {
+
+        let formula = `{${this.extractFormula(key)}}`; // Add {} around the formula
+        let values = this.nonCalculableEntries;
+        // console.log(formula);
+        //console.log(values);
+        this.clientservice.calculateEquation({ formula, values }).subscribe(
+          (result: any) => {
+            //console.log(result);
+            this.hashMapEntries.set(key, { ...value, valeur: result });
+            this.updateDetailDeclaration(value, result)
+          },
+          (error) => {
+            console.error('Error calculating value', error);
+          }
+        );
+      } else { this.updateDetailDeclaration(value, value.valeur) }
 
     });
-  }
 
+    console.log("Finished calculateValues.");
+  }
+  updateDetailDeclaration(value: any, result: any) {
+    const detailDeclarationDto = {
+      iddetailDeclaration: value.iddetailDeclaration,
+      valeur: result,
+      iddeclaration: value.iddeclaration,
+      naturerebrique: value.naturerebrique
+    };
+    this.clientservice.updateDetailDeclaration(detailDeclarationDto).subscribe((data) => console.log("succeful update"))
+
+  }
+  extractFormula(key: string): string {
+    let start = key.indexOf('formule=') + 8;
+    let end = key.indexOf(', ordre');
+    return key.substring(start, end);
+  }
 }

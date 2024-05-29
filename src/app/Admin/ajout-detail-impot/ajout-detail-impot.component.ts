@@ -15,6 +15,7 @@ import { AdminService } from '../../service/admin.service';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+
 @Component({
   selector: 'app-ajout-detail-impot',
   standalone: true,
@@ -41,17 +42,13 @@ export class AjoutDetailImpotComponent implements OnInit {
   selectedDetails: string[] = [];
   selectedOperations: string[] = [];
   formulaElements: string[] = [];
-
+  expectingDetail: boolean = true;
   openDialog() {
     if (this.isCalculable) {
       this.displayDialog = true;
     }
   }
 
-  closeDialog() {
-
-    this.displayDialog = false;
-  }
 
 
 
@@ -76,66 +73,84 @@ export class AjoutDetailImpotComponent implements OnInit {
       // Retrieve the impot object using the libelle parameter
       this.libelle = params['libelle'];
       //console.log("C'est le paramètre libelle:", libelle);
-      this.adminservice.gettypeimpot(this.libelle).subscribe((data) => { this.typeimpot = data, console.log(data) })
+      this.adminservice.gettypeimpot(this.libelle).subscribe((data) => { this.typeimpot = data })
     });
   }
   submit() {
-
     if (!this.selectedType || this.trueValue === null || this.libelle === null || this.value === null || this.typeimpot === null) {
-      // Add the class to elements or perform any other action
+      // One or more fields are null
       this.messageService.add({ key: 'step1', severity: 'error', summary: 'error', detail: "Un ou plusieur champs sont null" });
-
+    } else if (this.isCalculable && this.formula === '') {
+      // Calculable is true and formula is null
+      this.messageService.add({ key: 'step1', severity: 'error', summary: 'error', detail: "Formule est requis car calculable est vrai" });
     } else {
-      // All fields are not null, proceed with the submission
-      console.log("All fields are not null. Proceeding with submission.");
+      // All fields are valid, proceed with the submission
       const detail = {
         libelle: this.value,
         typeDetail: this.selectedType,
-
+        formule: this.formula,
         ordre: this.value1,
         obligatoire: this.trueValue,
         typeImpot: this.typeimpot,
         calculable: this.isCalculable
       };
+
       this.adminservice.savedetailImpot(detail).subscribe((data) => {
         this.messageService.add({ key: 'step1', severity: 'success', summary: 'valide', detail: "detail Ajouté" });
         setTimeout(() => {
           this.router1.navigate(['/admin/detail-impot', this.libelle]);
         }, 1500);
-
-      })
+      });
     }
-
   }
+
 
   getdetail() {
     this.adminservice.getImpotDetails(this.libelle).subscribe((data) => {
       this.lesDetails = data;
-      console.log(data)
+      // console.log(data)
     })
   }
   onDetailChange(event: any) {
-    const selectedDetail = event.value.libelle;
-    if (selectedDetail) {
-      this.selectedDetails.push(selectedDetail);
-      this.formulaElements.push(selectedDetail);
 
-      this.updateFormula();
-      // Refresh the dropdown by setting selectedDetail to null
-      this.selectedDetail = null;
+    const selectedDetail = event.value.libelle;
+    if (!this.expectingDetail) {
       this.lesDetails = [];
       this.getdetail();
 
+      this.selectedDetail = null;
+      this.messageService.add({ key: 'step1', severity: 'error', summary: 'error', detail: "erreur de creation de formule" });
+
+      return;
+    }
+
+
+    if (selectedDetail) {
+      this.selectedDetails.push(selectedDetail);
+      this.formulaElements.push(selectedDetail);
+      this.updateFormula();
+      this.selectedDetail = null;
+      this.lesDetails = [];
+      this.getdetail();
+      this.expectingDetail = false; // Next should be an operation
     }
   }
 
   onOperationChange(event: any) {
+    if (this.expectingDetail) {
+      console.error('Expected a detail, not an operation');
+      return;
+    }
+
     const selectedOperation = event.value.value;
     if (selectedOperation) {
       this.selectedOperations.push(selectedOperation);
       this.formulaElements.push(selectedOperation);
-      this.selectedOperation = null; // Reset the selected operation after adding
       this.updateFormula();
+      this.selectedOperation = null;
+      this.expectingDetail = true; // Next should be a detail
+      this.lesDetails = [];
+      this.getdetail();
     }
   }
 
@@ -145,8 +160,28 @@ export class AjoutDetailImpotComponent implements OnInit {
   }
 
 
+  close() {
+    this.expectingDetail = true
+    this.formulaElements.length = 0;
 
+    this.formula = ''
+  }
+  closeDialog() {
+    if (this.formulaElements.length === 0) {
+      console.log("The formula is empty.");
+      return;
+    }
+    const lastElement = this.formulaElements[this.formulaElements.length - 1];
+    const isLastElementOperation = this.operationOptions.some(op => op.value === lastElement);
+    if (isLastElementOperation) {
+      console.log("The last element is an operation.");
+      // Show an alert or handle the case where the last element is an operation
+      alert("The last element cannot be an operation. Please add a detail.");
+    } else {
 
+      this.displayDialog = true
+    }
+  }
 
 
 

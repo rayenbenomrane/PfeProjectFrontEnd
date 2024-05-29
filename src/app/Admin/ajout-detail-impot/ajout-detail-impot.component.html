@@ -54,26 +54,27 @@
     </div>
   </div>
 </div>
-<p-dialog header="Details Calculables" [(visible)]="displayDialog" [modal]="true" [closable]="false"
-[style]="{height: '500px', width: '500px'}">
+<p-dialog header="Details Calculables" [(visible)]="displayDialog" [modal]="true" [closable]="true"
+  [style]="{height: '500px', width: '500px'}" [draggable]="false">
   <ng-container *ngIf="lesDetails.length === 0">
     <p>Impossible de créer une formule, veuillez donner au minimum un champ non calculable</p>
   </ng-container>
   <ng-container *ngIf="lesDetails.length > 0">
-    <p-dropdown [options]="lesDetails" [(ngModel)]="selectedDetail" (onChange)="onDetailChange($event)" placeholder="Select a detail"
-      optionLabel="libelle"></p-dropdown>
+    <p-dropdown [options]="lesDetails" [(ngModel)]="selectedDetail" (onChange)="onDetailChange($event)"
+      placeholder="Select a detail" optionLabel="libelle"></p-dropdown>
     <div class="input-container" style="margin-top: 10px;">
       <label for="operation" class="section-heading">Operation:</label>
-      <p-dropdown [options]="operationOptions" [(ngModel)]="selectedOperation" (onChange)="onOperationChange($event)" placeholder="Select an operation"
-        optionLabel="label"></p-dropdown>
+      <p-dropdown [options]="operationOptions" [(ngModel)]="selectedOperation" (onChange)="onOperationChange($event)"
+        placeholder="Select an operation" optionLabel="label"></p-dropdown>
     </div>
     <div class="input-container" style="margin-top: 10px;">
       <label for="formula" class="section-heading">Formule de Calcul:</label>
-      <input type="text" id="formula" pInputText [(ngModel)]="formula" placeholder="Entrez la formule de calcul"
-        style="width: 100%;" />
+      <textarea type="text" id="formula" readonly pInputText [(ngModel)]="formula"
+        placeholder="Entrez la formule de calcul" style="width: 100%;"></textarea>
     </div>
   </ng-container>
   <p-footer>
-    <p-button label="Close" icon="pi pi-check" (onClick)="closeDialog()"></p-button>
+    <p-button label="Valider" icon="pi pi-check" (onClick)="closeDialog()"></p-button>
+    <p-button label="Supprimer" icon="pi pi-trash" severity="danger" (onClick)="close()"></p-button>
   </p-footer>
 </p-dialog>

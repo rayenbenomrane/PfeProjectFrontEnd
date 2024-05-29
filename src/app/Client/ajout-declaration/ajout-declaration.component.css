@@ -91,3 +91,25 @@
   padding: 0.5rem 1rem; /* Adjust the padding as needed */
   font-size: 1.5rem;/* Adjust the size as needed */
 }
+.input-container {
+  position: relative; /* Position the icon relative to the input field */
+}
+
+.info-icon {
+  position: absolute; /* Position the icon absolutely */
+  top:60%;
+  right: 12px; /* Adjust the distance from the input field */
+  transform: translateY(-50%); /* Center the icon vertically */
+  cursor: pointer; /* Change cursor to pointer when hovering over the icon */
+}
+.small-button {
+  font-size: 12px;
+  padding: 4px 8px;
+  height: 30px;
+  line-height: 1.2;
+}
+.calculable-entry {
+  background-color: #f2f2f2; /* Light gray background */
+  border: 1px solid #ccc; /* Gray border */
+  color: #333; /* Dark gray text color */
+}

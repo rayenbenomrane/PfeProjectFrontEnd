@@ -3,10 +3,34 @@
 </div>
 <div class="container">
   <div class="table-container">
-    <p-table [value]="lesreclamations">
+    <p-table #dt [filterDelay]="0" [value]="filteredReclamations" [rows]="10" [rowsPerPageOptions]="[5, 10, 25]"
+      [paginator]="true" [globalFilterFields]="['titre','declaration.idDeclaration']">
+      <ng-template pTemplate="caption">
+        <div class="table-header">
+          <div class="right-container">
+            <p-dropdown [options]="dateOptions" [(ngModel)]="selectedDateFilter" placeholder="Select Date Filter"
+              (onChange)="onDateFilterChange($event)">
+            </p-dropdown>
+            <p-calendar *ngIf="selectedDateFilter === 'custom'" [showIcon]="true" inputId="icon"
+              [(ngModel)]="customDate" placeholder="Select Date" [showButtonBar]="true" [readonlyInput]="true"
+              (onSelect)="applyCustomDateFilter()">
+            </p-calendar>
+
+          </div>
+          <div class="left-container">
+            <span class="p-input-icon-left">
+              <input pInputText type="text" (input)="dt.filterGlobal(getInputValue($event), 'contains')"
+                [placeholder]="placeholderText" />
+
+              <i class="pi pi-search"></i>
+            </span>
+          </div>
+
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th>Titre</th>
+          <th pSortableColumn="titre">Titre <p-sortIcon field="titre"></p-sortIcon></th>
           <th>Contenu</th>
           <th>Date de réclamation</th>
           <th>État</th>

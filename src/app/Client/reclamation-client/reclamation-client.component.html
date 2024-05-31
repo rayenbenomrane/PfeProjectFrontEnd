@@ -2,50 +2,58 @@
   <app-layoutclient></app-layoutclient>
 </div>
 
-<div class="container" style="margin-top: 50px;">
+<div class="container"
+  style="margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-start;">
+  <!-- Form Container -->
+  <div class="form-container" style="width: 60%;">
 
-  <!-- Titre de la réclamation -->
-  <div style="display: block; margin-bottom: 20px;">
-    <label for="reclamationTitle" style="display: block; margin-bottom: 5px;">Titre de la réclamation</label>
-    <input type="text" pInputText placeholder="Entrez le titre de la réclamation" style="width: 300px;"
-      [(ngModel)]="reclamationTitle" />
+    <!-- Titre de la réclamation -->
+    <div style="display: block; margin-bottom: 20px;">
+      <label for="reclamationTitle" style="display: block; margin-bottom: 5px;">Titre de la réclamation</label>
+      <input type="text" pInputText placeholder="Entrez le titre de la réclamation" style="width: 300px;"
+        [(ngModel)]="reclamationTitle" />
+    </div>
+
+    <!-- Description de la réclamation -->
+    <div style="display: block; margin-bottom: 20px;">
+      <label for="reclamationDescription" style="display: block; margin-bottom: 5px;">Description de la
+        réclamation</label>
+      <textarea pKeyFilter="int" rows="5" cols="30" pInputTextarea
+        placeholder="Entrez une description de la réclamation" [(ngModel)]="reclamationDescription"></textarea>
+    </div>
+
+    <!-- Dropdown list for Declarations -->
+    <div class="radio-button-container">
+      <label for="reclamationDescription" style="display: block; margin-bottom: 5px;">Souhaitez-vous ajouter une
+        déclaration a cette Reclamation?</label>
+      <p-radioButton name="choice" value="yes" [(ngModel)]="selectedChoice" label="Yes"></p-radioButton>
+      <p-radioButton name="choice" value="no" [(ngModel)]="selectedChoice" label="No"></p-radioButton>
+    </div>
+
+    <div class="dropdown-container" *ngIf="selectedChoice === 'yes'">
+      <label for="reclamationDescription" style="display: block; margin-bottom: 5px;">Choisir une Declaration</label>
+      <p-dropdown id="declaration" class="dropdown" [options]="declarations" [(ngModel)]="selectedDeclaration"
+        optionValue="idDeclaration" optionLabel="idDeclaration" [showClear]="true"
+        placeholder="choisir une declaration">
+        <ng-template let-declaration pTemplate="item">
+          <span>{{ declaration.idDeclaration }} - {{ declaration.obligation.impot.libelle }}</span>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <!-- Submit Button -->
+    <div style="display: block; margin-top: 20px;">
+      <button pButton pRipple label="Submit" class="p-button-success" (click)="submitForm()"></button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="showRequiredError" style="color: red; margin-top: 20px;">
+      Les Deux Champs sont requis.
+    </div>
   </div>
 
-  <!-- Description de la réclamation -->
-  <div style="display: block; margin-bottom: 20px;">
-    <label for="reclamationDescription" style="display: block; margin-bottom: 5px;">Description de la
-      réclamation</label>
-    <textarea pKeyFilter="int" rows="5" cols="30" pInputTextarea placeholder="Entrez une description de la réclamation"
-      [(ngModel)]="reclamationDescription"></textarea>
+  <!-- Image Container -->
+  <div class="image-container" style="width: 35%;">
+    <img src="assets/reclamation.jpg" alt="Image Description" style="width: 100%; height: auto;" />
   </div>
-
-  <!-- Dropdown list for Declarations -->
-  <div class="radio-button-container">
-    <label for="reclamationDescription" style="display: block; margin-bottom: 5px;">Souhaitez-vous ajouter une
-      déclaration a cette Reclamation?</label>
-    <p-radioButton name="choice" value="yes" [(ngModel)]="selectedChoice" label="Yes"></p-radioButton>
-    <p-radioButton name="choice" value="no" [(ngModel)]="selectedChoice" label="No"></p-radioButton>
-  </div>
-
-  <div class="dropdown-container" *ngIf="selectedChoice === 'yes'">
-    <label for="reclamationDescription" style="display: block; margin-bottom: 5px;">Choisir une Declaration</label>
-    <p-dropdown id="declaration" class="dropdown" [options]="declarations" [(ngModel)]="selectedDeclaration"
-      optionValue="idDeclaration" optionLabel="idDeclaration" [showClear]="true" placeholder="choisir une declaration">
-      <ng-template let-declaration pTemplate="item">
-        <span>{{ declaration.idDeclaration }} - {{ declaration.obligation.impot.libelle }}</span>
-      </ng-template>
-    </p-dropdown>
-  </div>
-
-
-  <!-- Submit Button -->
-  <div style="display: block; margin-top: 20px;">
-    <button pButton pRipple label="Submit" class="p-button-success" (click)="submitForm()"></button>
-  </div>
-
-  <!-- Error Message -->
-  <div *ngIf="showRequiredError" style="color: red; margin-top: 20px;">
-    Les Deux Champs sont requis.
-  </div>
-
 </div>

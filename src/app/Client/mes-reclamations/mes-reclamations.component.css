@@ -32,3 +32,22 @@
   display: flex;
   gap: 0.5rem; /* Espace entre les boutons */
 }
+.centered-table {
+  text-align: center;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-container {
+  display: flex;
+}
+
+.right-container {
+  display: flex;
+}
+
+.right-container input {
+  margin-left: auto; /* Push the input to the extreme right */
+}

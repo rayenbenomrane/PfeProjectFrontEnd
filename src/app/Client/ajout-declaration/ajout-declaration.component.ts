@@ -94,15 +94,20 @@ export class AjoutDeclarationComponent implements OnInit {
     const moisEffet = this.date.getMonth() + 1;
     const anneeEffet = this.date.getFullYear();
 
+    const type1 = {
+      idTypeDeclaration: this.type.idTypeDeclaration,
+      libelle: this.type.type
+    }
+
 
     const declarationObject = {
       moisEffet: moisEffet,
       anneeEffet: anneeEffet,
       idObligation: this.obligation.idObligation,
-      type: this.type
+      type: type1
     };
 
-
+    console.log(declarationObject)
     this.clientservice.saveDeclaration(declarationObject).subscribe(
       (data: any) => {
 
@@ -117,12 +122,18 @@ export class AjoutDeclarationComponent implements OnInit {
 
         this.hashMapEntries = new Map(entriesArray);
         //this.getFormule()
-        //console.log(this.hashMapEntries);
+        console.log(this.hashMapEntries);
 
         this.displayPopup = true;
       },
       (error) => {
-        console.error('Error saving declaration:', error);
+
+        if (error.status === 400 && error.error === 'declaration deja existante!') {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Declaration deja existante.' });
+        } else {
+          console.error('Error saving declaration:', error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Problem de creation de declaration.' });
+        }
       }
     );
   }

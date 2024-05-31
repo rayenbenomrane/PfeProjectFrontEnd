@@ -1,0 +1,50 @@
+<div>
+  <app-layoutclient></app-layoutclient>
+  <div class="card-container">
+    <p-card class="custom-card">
+      <ng-template pTemplate="header">
+        <img src="assets/dec.jpg" alt="Ajout Déclaration">
+      </ng-template>
+      <ng-template pTemplate="title">
+        Ajout Déclaration
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p>Effectuez une nouvelle déclaration en quelques clics.</p>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <button pButton type="button" label="Accéder" class="ui-button-success"
+          onclick="window.location.href='/client/ajout-declaration'"></button>
+      </ng-template>
+    </p-card>
+    <p-card class="custom-card">
+      <ng-template pTemplate="header">
+        <img src="assets/rec.jpg" alt="Ajout Réclamations">
+      </ng-template>
+      <ng-template pTemplate="title">
+        Ajout Réclamations
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p>Soumettez une nouvelle réclamation rapidement et facilement.</p>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <button pButton type="button" label="Accéder" class="ui-button-warning"
+          onclick="window.location.href='/client/reclamation'"></button>
+      </ng-template>
+    </p-card>
+    <p-card class="custom-card">
+      <ng-template pTemplate="header">
+        <img src="assets/paiement.jpg" alt="Paiement de Déclaration">
+      </ng-template>
+      <ng-template pTemplate="title">
+        Paiement de Déclaration
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p>Réalisez le paiement de vos déclaration en toute sécurité.</p>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <button pButton type="button" label="Accéder" class="ui-button-primary"
+          onclick="window.location.href='client/mes-declarations'"></button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

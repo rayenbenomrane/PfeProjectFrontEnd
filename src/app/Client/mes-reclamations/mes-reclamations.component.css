@@ -1,0 +1,34 @@
+.navbar-container {
+  margin-bottom: 0;
+}
+
+.container {
+  padding-top: 0;
+  margin-top: 0;
+}
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.table-container {
+  margin-top: 50px;
+}
+.p-button-rounded {
+  margin-right: 1px;
+}
+.pending-solution {
+  background-color: grey;
+  color: white
+}
+.refusee-solution {
+  background-color: #f8d7da;
+  color: #000;
+}
+.action-buttons {
+  display: flex;
+  gap: 0.5rem; /* Espace entre les boutons */
+}

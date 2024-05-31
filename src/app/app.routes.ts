@@ -24,9 +24,13 @@ import { PaymentSuccessComponent } from './Client/payment-success/payment-succes
 import { PaymentFailureComponent } from './Client/payment-failure/payment-failure.component';
 import { DashboardResposnableComponent } from './Responsable/dashboard-resposnable/dashboard-resposnable.component';
 import { TousLesReclamationsComponent } from './Responsable/tous-les-reclamations/tous-les-reclamations.component';
-import { LayoutResponsableComponent } from './Responsable/layout-responsable/layout-responsable.component';
+
 import { ReclamationEnAttenteComponent } from './Responsable/reclamation-en-attente/reclamation-en-attente.component';
 import { ReclamationEnCoursComponent } from './Responsable/reclamation-en-cours/reclamation-en-cours.component';
+import { AuthHomePageComponent } from './Authentication/auth-home-page/auth-home-page.component';
+import { ContribuablePageComponent } from './Client/contribuable-page/contribuable-page.component';
+import { ResetPasswordComponent } from './Authentication/reset-password/reset-password.component';
+import { MesReclamationsComponent } from './Client/mes-reclamations/mes-reclamations.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -34,8 +38,8 @@ export const routes: Routes = [
   , { path: "admin/inscription", component: AdminDashbordComponent }
   , { path: "createpassword/:code", component: CreatePasswordComponent }
   , { path: "admin/lescomptes", component: LesComptesComponent },
-  { path: "admin/lescontribuables", component: LescontribuablesComponent }
-  ,
+  { path: "admin/lescontribuables", component: LescontribuablesComponent },
+  { path: "", component: AuthHomePageComponent },
   { path: "admin/lesadmins", component: TableAdminsComponent },
   { path: "admin/dashboard", component: AdminHomePageComponent },
   { path: "error", component: ErrorPageComponent },
@@ -55,6 +59,9 @@ export const routes: Routes = [
   { path: "responsable/tous-les-reclamations", component: TousLesReclamationsComponent },
   { path: "responsable/lesReclamationEnAttente", component: ReclamationEnAttenteComponent },
   { path: "responsable/lesReclamationEnCours", component: ReclamationEnCoursComponent },
+  { path: "client/ContribuablePage", component: ContribuablePageComponent },
+  { path: "client/mesreclamations", component: MesReclamationsComponent },
+  { path: "admin/resetpassword/:email", component: ResetPasswordComponent }
 
 
 

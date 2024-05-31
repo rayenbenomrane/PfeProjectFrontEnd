@@ -8,10 +8,22 @@
       </div>
 
 
-      <p-table [value]="lesimpots">
+      <p-table #dt2 [value]="lesimpots" dataKey="id" [rows]="10" [rowsPerPageOptions]="[5, 10, 25]" [paginator]="true"
+        [globalFilterFields]="['libelle', 'periodicite.periode']">
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <p-iconField iconPosition="left" class="ml-auto">
+              <p-inputIcon>
+                <i class="pi pi-search"></i>
+              </p-inputIcon>
+              <input pInputText type="text" (input)="dt2.filterGlobal(getInputValue($event), 'contains')"
+                placeholder="Chercher" />
+            </p-iconField>
+          </div>
+        </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th>Libelle</th>
+            <th pSortableColumn="libelle">Libellé <p-sortIcon field="libelle"></p-sortIcon></th>
             <th>Periode</th>
           </tr>
         </ng-template>

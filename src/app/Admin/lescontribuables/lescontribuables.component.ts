@@ -8,11 +8,14 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
 import { StorageService } from '../../service/storage.service';
 import { Router } from '@angular/router';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-lescontribuables',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, TagModule, SidebarModule, AdminSideBarComponent],
+  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, TagModule, SidebarModule, AdminSideBarComponent, IconFieldModule, InputIconModule],
   templateUrl: './lescontribuables.component.html',
   styleUrl: './lescontribuables.component.css'
 })
@@ -26,7 +29,7 @@ export class LescontribuablesComponent implements OnInit {
   ngOnInit(): void {
     if (!StorageService.isAdminLoggedIn()) {
       this.router.navigate(['/error'])
-    }else{ this.getAllContribuable();}
+    } else { this.getAllContribuable(); }
 
 
   }
@@ -37,6 +40,8 @@ export class LescontribuablesComponent implements OnInit {
       console.log(this.lesContribuables)
     })
   }
-
+  getInputValue(event: any): string {
+    return (event.target as HTMLInputElement).value;
+  }
 
 }

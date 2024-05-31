@@ -33,6 +33,13 @@ export class AuthServiceService {
   createpassword(signupRequest: any): Observable<any> {
     return this.http.post(`${BASIC_URL}/api/auth/savepassword`, signupRequest);
   }
-  
+
+  sendOublierPassword(email:string):Observable<any>{
+    return this.http.get<any>(`${BASIC_URL}/api/auth/passwordoublier?email=${email}`);
+
+  }
+  resetPassword(passworddto:any):Observable<any>{
+    return this.http.put(`${BASIC_URL}/api/auth/resetpassword`,passworddto)
+  }
 
 }

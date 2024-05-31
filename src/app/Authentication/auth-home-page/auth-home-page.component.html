@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+
+</head>
+
+<body>
+  <div class="main-content">
+    <div class="container">
+      <div class="left-half">
+        <h1>Bienvenue sur notre espace en ligne</h1>
+        <p>Notre site vous permet de déclarer vos réclamations et d'effectuer vos paiements en ligne en toute simplicité
+          et sécurité.</p>
+
+
+        <div class="buttons">
+          <p-button onclick="window.location.href='/login'" class="sign-in">Se Connecter</p-button>
+          <p-button onclick="window.location.href='/signup'" [text]="true" label="S'inscrire" class="sign-up"
+            severity="info">
+          </p-button>
+
+        </div>
+      </div>
+      <div class="right-half">
+        <img src="assets/home2.jpg" alt="Right Half Image">
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2024 Your Company. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>

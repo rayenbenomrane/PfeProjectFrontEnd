@@ -60,7 +60,7 @@ export class HomePageComponent implements OnInit {
 
 
     localStorage.setItem('contribuableMatricule', contribuableMatricule);
-    this.router.navigate(['/layout'])
+    this.router.navigate(['/client/ContribuablePage'])
   }
 
 

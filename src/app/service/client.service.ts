@@ -108,4 +108,23 @@ export class ClientService {
     const headers: HttpHeaders = this.createAuthorizationHeader();
     return this.http.put(url, password, { headers });
   }
+  LesreclamationsByContribuable(matricule: number) {
+    const url = `${BASIC_URL}/api/client/reclamationsByContribuable?matriculeFiscale=${matricule}`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    return this.http.get(url, { headers })
+  }
+  acceptreclamation(id: number) {
+    const url = `${BASIC_URL}/api/client/acceptreclamation?id=${id}`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    const options = { headers: headers };
+    return this.http.put(url, null, options);
+  }
+  refusreclamation(id: number) {
+    const url = `${BASIC_URL}/api/client/refusreclamation?id=${id}`;
+    const headers: HttpHeaders = this.createAuthorizationHeader();
+    const options = { headers: headers };
+    return this.http.put(url, null, options);
+  }
+
+
 }

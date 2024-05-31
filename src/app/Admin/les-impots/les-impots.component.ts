@@ -10,12 +10,13 @@ import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.componen
 import { AdminService } from '../../service/admin.service';
 import { TableModule } from 'primeng/table';
 import { Route, Router, RouterModule } from '@angular/router';
-
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-les-impots',
   standalone: true,
-  imports: [CardModule, RouterModule, TableModule, CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, ToastModule, AdminSideBarComponent],
+  imports: [CardModule, RouterModule, TableModule, IconFieldModule, InputIconModule, CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, ToastModule, AdminSideBarComponent],
   templateUrl: './les-impots.component.html',
   styleUrl: './les-impots.component.css'
 })
@@ -33,6 +34,9 @@ export class LesImpotsComponent implements OnInit {
   }
   submit() {
     this.router.navigate(["/admin/ajoutlesimpots"])
+  }
+  getInputValue(event: any): string {
+    return (event.target as HTMLInputElement).value;
   }
 
 }

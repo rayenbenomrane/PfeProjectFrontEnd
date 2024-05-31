@@ -12,10 +12,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, CardModule, ButtonModule, DividerModule, InputTextModule, PasswordModule, ToastModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, DialogModule, CardModule, ButtonModule, DividerModule, InputTextModule, PasswordModule, ToastModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -25,6 +26,8 @@ export class LoginComponent {
     email: '',
     password: ''
   };
+  displayForgotPassword: boolean = false;
+  forgotPasswordEmail: string = '';
   constructor(private authserve: AuthServiceService, private router: Router, private messageService: MessageService) { }
   ngOnInit(): void {
     //console.log(this.formData)
@@ -91,8 +94,30 @@ export class LoginComponent {
     );
   }
 
+
   gotosignup() {
     this.router.navigate(['/signup'])
   }
+  showForgotPasswordDialog() {
+    this.displayForgotPassword = true;
+  }
 
+    sendForgotPasswordEmail() {
+      if (!this.forgotPasswordEmail) {
+        this.messageService.add({key: 'step1',severity:'error', summary: 'Error', detail: 'Veuillez entrer une adresse email valide'});
+        return;
+      }
+
+      this.authserve.sendOublierPassword(this.forgotPasswordEmail).subscribe(
+        (response: any) => {
+
+
+          this.displayForgotPassword = false;
+          this.messageService.add({key: 'step1',severity:'success', summary: 'Success', detail: 'Un email a été envoyé'});
+        },
+        (error) => {
+          this.messageService.add({key: 'step1',severity:'error', summary: 'Error', detail: 'email introuvable'});
+        }
+      );
+    }
 }

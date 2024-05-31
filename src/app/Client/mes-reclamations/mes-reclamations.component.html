@@ -1,0 +1,41 @@
+<div class="navbar-container">
+  <app-layoutclient></app-layoutclient>
+</div>
+<div class="container">
+  <div class="table-container">
+    <p-table [value]="lesreclamations">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Titre</th>
+          <th>Contenu</th>
+          <th>Date de réclamation</th>
+          <th>État</th>
+          <th>Solution</th>
+          <th *ngIf="showActionsColumn">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-reclamation>
+        <tr>
+          <td>{{ reclamation.titre }}</td>
+          <td>{{ reclamation.contenu }}</td>
+          <td>{{ reclamation.dateReclamation | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <p-tag [value]="reclamation.etat" [severity]="getSeverity(reclamation.etat)">
+            </p-tag>
+          </td>
+          <td
+            [ngClass]="{'pending-solution': reclamation.etat === 'EN_ATTENTE', 'refusee-solution': reclamation.etat === 'REFUSEE'}">
+            <span *ngIf="reclamation.etat==='EN_ATTENTE'">Votre solution n'est pas encore traitée</span>
+            <span *ngIf=" reclamation.etat !=='EN_ATTENTE'">{{ reclamation.solution }}</span>
+          </td>
+          <td *ngIf=" reclamation.etat !=='EN_ATTENTE' && reclamation.etat !=='REFUSEE'" class=" action-buttons">
+            <button type="button" pButton icon="pi pi-check" class="p-button-success p-button-rounded"
+              (click)="accepterReclamation(reclamation.idReclamation)"></button>
+            <button type="button" pButton icon="pi pi-times" class="p-button-danger p-button-rounded"
+              (click)="refuserReclamation(reclamation.idReclamation)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

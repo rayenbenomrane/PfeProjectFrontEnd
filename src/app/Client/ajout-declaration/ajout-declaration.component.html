@@ -3,8 +3,33 @@
   <div class="container" style="margin-top: 50px;">
 
     <p-toast></p-toast>
-
-    <p-card class="card">
+    <div *ngIf="!afficherDropdown">
+      <p-card [style]="{ 'width': '500px', 'height': '400px' }">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <h2>Votre Déclaration</h2>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <table class="declaration-table">
+            <tr>
+              <th>Impot:</th>
+              <td>{{ typeimpot }}</td>
+            </tr>
+            <tr>
+              <th>Type de déclaration:</th>
+              <td>{{ type.type }}</td>
+            </tr>
+            <tr>
+              <th>Date:</th>
+              <td>{{ moisEffet }}/{{anneeEffet}}</td>
+            </tr>
+          </table>
+          <p-button label="Suivant" icon="pi pi-arrow-right" (onClick)="submit()" iconPos="right"></p-button>
+        </ng-template>
+      </p-card>
+    </div>
+    <p-card class="card" *ngIf="afficherDropdown">
       <div class="card-header">
         <h2>Ajout d'une Declaration</h2>
       </div>
@@ -12,25 +37,60 @@
         <label for="impot">Choisissez un impôt:</label>
         <div class="dropdown-container">
           <p-dropdown id="impot" class="dropdown" [options]="lesobligations" [(ngModel)]="obligation"
-            optionLabel="impot.libelle" [showClear]="true" placeholder="Choisissez un impôt"></p-dropdown>
+            (onChange)="checkAndSetPeriodicite($event)" optionLabel="typeImpot.libelle" [showClear]="true"
+            placeholder="Choisissez un impôt"></p-dropdown>
         </div>
       </div>
 
       <div class="form-group">
         <label for="type">Type de déclaration:</label>
         <div class="dropdown-container">
-          <p-dropdown id="type" class="dropdown" [options]="lestypes" [(ngModel)]="type" optionLabel="type"
+          <p-dropdown id="type" class="dropdown" [options]="lestypes" [(ngModel)]="type" optionLabel="libelle"
             [showClear]="true" placeholder="Choisissez un type de déclaration"></p-dropdown>
         </div>
       </div>
+      <div class="form-group" *ngIf="periodeSelectionnee === 'TRIMESTRE'">
+        <label for="trimestre">Trimestre:</label>
+        <div class="dropdown-container">
+          <p-dropdown id="trimestre" class="dropdown" [options]="Lestrimestre" [(ngModel)]="date" [showClear]="true"
+            placeholder="Choisissez un trimestre"></p-dropdown>
+        </div>
+        <div class="calendar-container">
+          <p-calendar id="annee" class="calendar" [(ngModel)]="date1" view="year" dateFormat="yy" [readonlyInput]="true"
+            [yearNavigator]="true" yearRange="yyyy:yyyy" placeholder="Choisissez une Année"></p-calendar>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="periodeSelectionnee === 'SEMESTRE'">
+        <label for="trimestre">Semestre:</label>
+        <div class="dropdown-container">
+          <p-dropdown id="trimestre" class="dropdown" [options]="LesSemestre" [(ngModel)]="date" [showClear]="true"
+            placeholder="Choisissez un trimestre"></p-dropdown>
+        </div>
+        <label for="annee">Sélectionnez une année :</label>
+        <div class="calendar-container">
+          <p-calendar id="annee" class="calendar" [(ngModel)]="date1" view="year" dateFormat="yy" [readonlyInput]="true"
+            [yearNavigator]="true" yearRange="yyyy:yyyy" placeholder="Choisissez une Année"></p-calendar>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="periodeSelectionnee === 'ANNUELLE'">
+        <label for="annee">Sélectionnez une année :</label>
+        <div class="calendar-container">
+          <p-calendar id="annee" class="calendar" [(ngModel)]="date" view="year" dateFormat="yy" [readonlyInput]="true"
+            [yearNavigator]="true" yearRange="yyyy:yyyy" placeholder="Choisissez une Année"></p-calendar>
+        </div>
+      </div>
 
-      <div class="form-group">
+
+      <div class="form-group" *ngIf="periodeSelectionnee === 'MENSUELLE'">
         <label for="date">Date:</label>
         <div class="calendar-container">
           <p-calendar id="date" class="calendar" [(ngModel)]="date" view="month" dateFormat="mm/yy"
             [readonlyInput]="true" [showIcon]="true" placeholder="Choisissez une Date"></p-calendar>
         </div>
       </div>
+
+
+
       <p-button label="Suivant" icon="pi pi-arrow-right" (onClick)="submit()" iconPos="right"></p-button>
 
     </p-card>

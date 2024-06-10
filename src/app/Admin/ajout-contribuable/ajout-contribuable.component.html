@@ -1,0 +1,93 @@
+<div class="fullcontainer">
+  <p-toast key="step1"></p-toast>
+  <div>
+    <app-admin-side-bar></app-admin-side-bar>
+  </div>
+  <div class="dashboard-content">
+    <h1>Ajout de Contribuable</h1>
+    <form (ngSubmit)="onSubmit()" #contribuableForm="ngForm">
+      <div class="p-field">
+        <label for="matriculeFiscale">Matricule Fiscale</label>
+        <input id="matriculeFiscale" type="text" pInputText [(ngModel)]="contribuable.matriculeFiscale"
+          name="matriculeFiscale" maxlength="10" required>
+      </div>
+
+      <div class="p-field">
+        <label for="nomCommercial">Nom Commercial</label>
+        <input id="nomCommercial" type="text" pInputText [(ngModel)]="contribuable.nomCommercial" name="nomCommercial"
+          required>
+      </div>
+
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText [(ngModel)]="contribuable.email" name="email" required>
+      </div>
+
+      <div class="p-field">
+        <label for="adress">Adresse</label>
+        <input id="adress" type="text" pInputText [(ngModel)]="contribuable.adress" name="adress" required>
+      </div>
+
+      <div class="p-field">
+        <label for="dateDeMatriculation">Date de Matriculation</label>
+        <p-calendar id="dateDeMatriculation" [(ngModel)]="contribuable.dateDeMatriculation" name="dateDeMatriculation"
+          dateFormat="yy-mm-dd" [maxDate]="maxDate"></p-calendar>
+      </div>
+
+      <div class="p-field">
+        <label for="raisonSocial">Raison Sociale</label>
+        <input id="raisonSocial" type="text" pInputText [(ngModel)]="contribuable.raisonSocial" name="raisonSocial"
+          required>
+      </div>
+
+      <div class="p-field">
+        <label for="formeJuridique">Forme Juridique</label>
+        <p-dropdown [options]="lesformesjuridiques" [(ngModel)]="selectedFormeJuridique" optionLabel="libelle"
+          [filter]="true" filterBy="libelle" [showClear]="true" placeholder="Selectionner une forme juridique"
+          [style.width.px]="150" name="formeJuridique" (onChange)="onFormeJuridiqueChange($event)">
+          <ng-template let-form pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ form.libelle }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field">
+        <label for="pays">Pays</label>
+        <p-dropdown [options]="lespays" [(ngModel)]="selectedPays" optionLabel="name_fr" [filter]="true"
+          filterBy="name_fr" [showClear]="true" placeholder="Selectionner un pays" [style.width.px]="150" name="pays"
+          (onChange)="onPaysChange($event)">
+          <ng-template let-country pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ country.name_fr }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field">
+        <label for="activite">Activité</label>
+        <p-dropdown [options]="lesactivite" [(ngModel)]="selectedActivite" optionLabel="label" [filter]="true"
+          filterBy="label" [showClear]="true" placeholder="Selectionner une activite" [style.width.px]="150"
+          name="activite" (onChange)="onActiviteChange($event)">
+          <ng-template let-activity pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ activity.label }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field">
+        <label for="directeur">Directeur</label>
+        <input id="directeur" type="text" pInputText [(ngModel)]="contribuable.directeur" name="directeur" required>
+      </div>
+
+      <div class="p-field">
+        <button type="submit" pButton label="Save" [disabled]="!contribuableForm.form.valid"></button>
+      </div>
+    </form>
+
+  </div>
+</div>

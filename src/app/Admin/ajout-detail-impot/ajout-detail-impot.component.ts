@@ -94,6 +94,7 @@ export class AjoutDetailImpotComponent implements OnInit {
         typeImpot: this.typeimpot,
         calculable: this.isCalculable
       };
+      console.log(detail)
 
       this.adminservice.savedetailImpot(detail).subscribe((data) => {
         this.messageService.add({ key: 'step1', severity: 'success', summary: 'valide', detail: "detail Ajouté" });
@@ -179,7 +180,7 @@ export class AjoutDetailImpotComponent implements OnInit {
       alert("The last element cannot be an operation. Please add a detail.");
     } else {
 
-      this.displayDialog = true
+      this.displayDialog = false
     }
   }
 

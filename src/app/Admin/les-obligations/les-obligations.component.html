@@ -1,0 +1,29 @@
+<div class="full-w">
+  <div class="dashboard-content">
+    <app-admin-side-bar></app-admin-side-bar>
+    <div class="title-container">
+
+      <button pButton type="button" icon="pi pi-plus" label="Ajout obligation"
+        [routerLink]="['/admin/ajoutobligation/', contribuable.matriculeFiscale]"></button>
+    </div>
+    <div class="container">
+      <div class="table-container">
+        <p-table [value]="lesobligations">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Libelle</th>
+              <th>Periode</th>
+              <th>Date de début</th>
+              <th>Date de fin</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-obligation>
+            <tr>
+              <td>{{ obligation.impot.libelle }}</td>
+              <td>{{ obligation.impot.periodicite.periode }}</td>
+              <td>{{ obligation.dateDebut }}</td>
+              <td>{{ obligation.dateFin }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>

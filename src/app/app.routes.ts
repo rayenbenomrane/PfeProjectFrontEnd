@@ -31,6 +31,11 @@ import { AuthHomePageComponent } from './Authentication/auth-home-page/auth-home
 import { ContribuablePageComponent } from './Client/contribuable-page/contribuable-page.component';
 import { ResetPasswordComponent } from './Authentication/reset-password/reset-password.component';
 import { MesReclamationsComponent } from './Client/mes-reclamations/mes-reclamations.component';
+import { MespaiementsComponent } from './Client/mespaiements/mespaiements.component';
+import { AjoutContribuableComponent } from './Admin/ajout-contribuable/ajout-contribuable.component';
+import { DeclarationByContribuableComponent } from './Admin/declaration-by-contribuable/declaration-by-contribuable.component';
+import { LesObligationsComponent } from './Admin/les-obligations/les-obligations.component';
+import { AjoutobligationComponent } from './Admin/ajoutobligation/ajoutobligation.component';
 
 export const routes: Routes = [
   { path: "signup", component: SignUpComponent }
@@ -61,7 +66,12 @@ export const routes: Routes = [
   { path: "responsable/lesReclamationEnCours", component: ReclamationEnCoursComponent },
   { path: "client/ContribuablePage", component: ContribuablePageComponent },
   { path: "client/mesreclamations", component: MesReclamationsComponent },
-  { path: "admin/resetpassword/:email", component: ResetPasswordComponent }
+  { path: "client/mespaiements", component: MespaiementsComponent },
+  { path: "admin/resetpassword/:email", component: ResetPasswordComponent },
+  { path: "admin/ajoutcontribuable", component: AjoutContribuableComponent },
+  { path: "admin/declaration", component: DeclarationByContribuableComponent },
+  { path: "admin/obligations/:matricule", component: LesObligationsComponent },
+  {path:"admin/ajoutobligation/:matricule",component:AjoutobligationComponent}
 
 
 

@@ -2,10 +2,13 @@
   <div class="dashboard-content">
     <app-admin-side-bar></app-admin-side-bar>
     <div class="p-col-10">
-      <h2>Les Contribuables</h2>
+      <div class="title-container">
+        <h2>Tous les Contribuables</h2>
+        <button pButton type="button" icon="pi pi-plus" (click)="submit()" label="Ajout contribuable"></button>
+      </div>
       <p-table #dt2 [value]="lesContribuables" dataKey="id" [rows]="10" [rowsPerPageOptions]="[5, 10, 25]"
         [paginator]="true"
-        [globalFilterFields]="['email', 'nomCommercial','formeJuridique.libelle','activite.libelle','matriculeFiscale']">
+        [globalFilterFields]="['email', 'nomCommercial','formeJuridique','activite','pays','matriculeFiscale']">
         <ng-template pTemplate="caption">
           <div class="flex">
             <p-iconField iconPosition="left" class="ml-auto">
@@ -31,15 +34,15 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-compte let-expanded="expanded">
-          <tr *ngIf="compte.userRole!='Admin'">
+          <tr [routerLink]="['/admin/obligations', compte.matriculeFiscale]">
 
             <td>{{ compte.email }}</td>
             <td>{{ compte.raisonSocial}}</td>
             <td>{{ compte.nomCommercial }}</td>
             <td>{{ compte.matriculeFiscale}}</td>
-            <td>{{ compte.formeJuridique.libelle }}</td>
-            <td>{{ compte.pays.libelle}}</td>
-            <td>{{ compte.activite.libelle }}</td>
+            <td>{{ compte.formeJuridique }}</td>
+            <td>{{ compte.pays}}</td>
+            <td>{{ compte.activite }}</td>
 
 
           </tr>

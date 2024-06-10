@@ -1,0 +1,64 @@
+<p-toast key="step1"></p-toast>
+<div class="fullcontainer">
+  <div class="dashboard-container">
+    <app-admin-side-bar></app-admin-side-bar>
+  </div>
+
+
+  <div class="dashboard-content">
+
+
+    <p-dialog header="Entrer Matricule Fiscale" [(visible)]="displayDialog" [modal]="true" [closable]="false">
+      <div class="p-field">
+        <label for="matricule">Matricule Fiscale</label>
+        <input id="matricule" type="text" pInputText [(ngModel)]="matriculeFiscale" />
+      </div>
+      <p-footer>
+        <button pButton type="button" label="OK" icon="pi pi-check" (click)="getDeclarations()"
+          class="p-button-success"></button>
+        <button pButton type="button" label="Annuler" icon="pi pi-times" (click)="cancel()"
+          ngClass="cancel-button"></button>
+
+
+      </p-footer>
+    </p-dialog>
+
+    <div *ngIf="!displayDialog">
+      <h3>Matricule Fiscale: {{ matriculeFiscale }}</h3>
+      <button pButton type="button" label="Chercher une autre matricule fiscale" icon="pi pi-plus"
+        (click)="openPopup()"></button>
+      <p-table *ngIf="declarations && declarations.length > 0" [value]="declarations" [style]="{'width': '100%'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Impot</th>
+            <th>Periode</th>
+            <th>Type déclaration</th>
+            <th>Date déclaration</th>
+            <th>Montant</th>
+            <th>Payé</th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-declaration>
+          <tr>
+            <td>{{ declaration.idDeclaration }}</td>
+            <td>{{declaration.obligation.impot.libelle}}</td>
+            <td>{{ declaration.moisEffet }}/{{declaration.anneeEffet}}</td>
+            <td>{{ declaration.type.libelle }}</td>
+            <td>{{ declaration.dateDeclaration | date:'dd/MM/yyyy' }}</td>
+            <td>{{declaration.montantaCalculer}}</td>
+            <td>
+              <p-tag [value]="declaration.paiement ? 'payé' : 'non'" [severity]="getSeverity(declaration.paiement)">
+              </p-tag>
+            </td>
+
+            <!-- Ajoutez d'autres colonnes selon vos besoins -->
+          </tr>
+        </ng-template>
+      </p-table>
+      <div *ngIf="!declarations || declarations.length === 0" class="message-container">
+        <p class="message-text">Aucune déclaration pour ce matricule.</p>
+      </div>
+
+    </div>

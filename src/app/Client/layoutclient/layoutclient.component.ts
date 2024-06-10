@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ClientService } from './../../service/client.service';
 import { WebSocketService } from './../../service/web-socket.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -58,7 +59,7 @@ export class LayoutclientComponent implements OnInit {
     });
   }
 
-  constructor(private WebSocketService: WebSocketService, private clientService: ClientService, private messageservice: MessageService) {
+  constructor(private Router: Router, private WebSocketService: WebSocketService, private clientService: ClientService, private messageservice: MessageService) {
     const objectuserString = localStorage.getItem('user');
     this.objectuser = objectuserString ? JSON.parse(objectuserString) : null;
     this.idCompte = this.objectuser ? this.objectuser.id : null;
@@ -128,22 +129,25 @@ export class LayoutclientComponent implements OnInit {
     };
     console.log(passwordData)
     // console.log(passwordData)
-     this.clientService.updatePassword(passwordData).subscribe(
-       (response) => {
-         this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Mot de passe mis à jour avec succès' });
-         this.clearForm();
-       },
-       (error) => {
-         this.messageservice.add({ severity: 'error', summary: 'Error', detail: 'Erreur lors de la mise à jour du mot de passe' });
-         console.error('Error updating password:', error);
-       }
-     );
+    this.clientService.updatePassword(passwordData).subscribe(
+      (response) => {
+        this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Mot de passe mis à jour avec succès' });
+        this.clearForm();
+      },
+      (error) => {
+        this.messageservice.add({ severity: 'error', summary: 'Error', detail: 'Erreur lors de la mise à jour du mot de passe' });
+        console.error('Error updating password:', error);
+      }
+    );
   }
 
   clearForm(): void {
     this.oldPassword = '';
     this.newPassword = '';
     this.confirmPassword = '';
+  }
+  redirect() {
+    this.Router.navigate(['/client/mespaiements'])
   }
   logout(): void {
     StorageService.clearFromLocalStorage();

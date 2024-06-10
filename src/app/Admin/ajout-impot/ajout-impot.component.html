@@ -10,8 +10,8 @@
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <input type="text" pInputText placeholder="Entrez le titre d'impot" style="flex: 1; margin-right: 10px;"
               [(ngModel)]="titreImpot" style="width:500px;margin-right: 15px;" />
-            <p-dropdown [options]="lesPeriodes" [(ngModel)]="periode1" optionLabel="periode" [showClear]="true"
-              placeholder="Choisissez une periode"></p-dropdown>
+            <p-dropdown [options]="lesPeriodes" [(ngModel)]="periode1" optionLabel="label" [showClear]="true"
+              placeholder="Choisissez une période"></p-dropdown>
           </div>
           <div style="display: flex; justify-content: flex-end; margin-top: 30px;">
             <button pButton type="button" icon="pi pi-check" (click)="submit()" label="Accepter"

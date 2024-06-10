@@ -8,11 +8,12 @@ import { Dialog, DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StorageService } from '../../service/storage.service';
 import { Route, Router } from '@angular/router';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-mes-declarations',
   standalone: true,
-  imports: [CommonModule, TableModule, LayoutclientComponent, ButtonModule, DialogModule, ConfirmDialogModule],
+  imports: [CommonModule, TableModule, LayoutclientComponent, ButtonModule, DialogModule, ConfirmDialogModule,TagModule],
   templateUrl: './mes-declarations.component.html',
   styleUrl: './mes-declarations.component.css'
 })
@@ -26,6 +27,7 @@ export class MesDeclarationsComponent {
   selectedObligation: any = null;
   confirmationVisible: boolean = false;
   payment: any
+
   constructor(private clientservice: ClientService, private router: Router) { }
 
   ngOnInit() {
@@ -50,9 +52,9 @@ export class MesDeclarationsComponent {
       (data) => {
         // Filtrer les déclarations avec un montant à payer > 0
         console.log(data)
-        this.declarations = data.filter((declaration: any) => declaration.montantaCalculer
+        this.declarations = data/*.filter((declaration: any) => declaration.montantaCalculer
           && declaration.montantaCalculer
-          > 0);
+          > 0);*/
         console.log(this.declarations);
       }
     )
@@ -111,4 +113,9 @@ export class MesDeclarationsComponent {
       window.location.href = payUrl;
     });
   }
+  poursuivreDeclaration(obligation: any) {
+    this.clientservice.setSelectedDeclaration(obligation);
+    this.router.navigate(['/client/ajout-declaration']);
+  }
+
 }

@@ -48,8 +48,8 @@ export class AdminDashbordComponent implements OnInit {
   }
   accepterUtilisateur(inscription: any) {
 
-    this.admineService.validerCompte(inscription).subscribe(() => console.log("utilisateur valider!!!"))
-    this.ngOnInit();
+    this.admineService.validerCompte(inscription).subscribe(() => { console.log("utilisateur valider!!!", this.ngOnInit()) })
+
 
   }
   getSeverity(enabled: boolean): string {

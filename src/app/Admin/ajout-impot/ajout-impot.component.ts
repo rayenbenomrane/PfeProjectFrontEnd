@@ -33,8 +33,12 @@ export class AjoutImpotComponent implements OnInit {
   valide: any
 
   allPeriodes() {
-    this.AdminService.getAllPeriodes().subscribe((data) => { this.lesPeriodes = data })
+    this.AdminService.getAllPeriodes().subscribe((data) => {
+      this.lesPeriodes = data.map((periode: any) => ({ label: periode, value: periode }))
+        , console.log(this.lesPeriodes)
+    })
   }
+
   submit() {
     const inputElement = document.querySelector('input[type="text"]');
     const dropdownElement = document.querySelector('p-dropdown');
@@ -65,28 +69,37 @@ export class AjoutImpotComponent implements OnInit {
     if (isInputValid && isDropdownValid) {
       const impotDto = {
         libelle: this.titreImpot,
-        periodicite: this.periode1
+        periodicite: this.periode1.value
       };
-      this.AdminService.gettypeimpot(impotDto.libelle).subscribe((data) => this.valide = data)
-      if (typeof this.valide !== 'undefined') {
-        this.AdminService.saveImpot(impotDto).subscribe(() => {
+
+      // Saving impot DTO
+      this.AdminService.saveImpot(impotDto).subscribe(
+        () => {
+          // Success message
           this.messageService.add({ key: 'step1', severity: 'success', summary: 'Validé', detail: "Impot Ajouté Avec Success" });
 
+          // Navigate to another page after a delay
           setTimeout(() => {
             this.router.navigate(['/admin/lesimpots']);
           }, 1500);
-
-
-        });
-
-      } else {
-        this.messageService.add({ key: 'step1', severity: 'error', summary: 'Invalid', detail: "Impot deja trouvé" });
-      }
-
-
+        },
+        (error) => {
+          // Handle error response from backend
+          //console.error('Error saving impot:', error);
+          if (error.status === 400) {
+            this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: "Problème de création de l'impot: Libelle déjà existant" });
+          } else {
+            this.messageService.add({ key: 'step1', severity: 'error', summary: 'Error', detail: "Une erreur s'est produite lors de la sauvegarde de l'impot" });
+          }
+        }
+      );
+    } else {
+      // Display error message for invalid input or dropdown
+      this.messageService.add({ key: 'step1', severity: 'error', summary: 'Invalid', detail: "probleme" });
     }
-
   }
+
+
   annuler() {
     this.titreImpot = ''
     this.periode1 = ''

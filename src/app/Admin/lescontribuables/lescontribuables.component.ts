@@ -7,7 +7,7 @@ import { TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { AdminSideBarComponent } from '../admin-side-bar/admin-side-bar.component';
 import { StorageService } from '../../service/storage.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,7 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-lescontribuables',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, TagModule, SidebarModule, AdminSideBarComponent, IconFieldModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, TagModule, SidebarModule, AdminSideBarComponent, IconFieldModule, InputIconModule, RouterModule],
   templateUrl: './lescontribuables.component.html',
   styleUrl: './lescontribuables.component.css'
 })
@@ -42,6 +42,9 @@ export class LescontribuablesComponent implements OnInit {
   }
   getInputValue(event: any): string {
     return (event.target as HTMLInputElement).value;
+  }
+  submit() {
+    this.router.navigate(['admin/ajoutcontribuable'])
   }
 
 }

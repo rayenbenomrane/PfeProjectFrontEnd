@@ -6,7 +6,7 @@ const BASIC_URL = "http://localhost:8095";
   providedIn: 'root'
 })
 export class ClientService {
-
+  private selectedDeclaration: any;
   constructor(private http: HttpClient) { }
   createAuthorizationHeader(): HttpHeaders {
     let authHeaders: HttpHeaders = new HttpHeaders();
@@ -126,5 +126,16 @@ export class ClientService {
     return this.http.put(url, null, options);
   }
 
+  setSelectedDeclaration(declaration: any) {
+    this.selectedDeclaration = declaration;
+  }
+
+  getSelectedDeclaration() {
+    return this.selectedDeclaration;
+  }
+  getPaiementsByMatriculeFiscale(matriculeFiscale: number) {
+    const url = `${BASIC_URL}/api/client/mespaiements?matriculeFiscale=${matriculeFiscale}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
 
 }

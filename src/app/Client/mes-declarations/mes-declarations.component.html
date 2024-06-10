@@ -6,23 +6,52 @@
     <p-table [value]="declarations">
       <ng-template pTemplate="header">
         <tr>
-          <th>Libelle</th>
+          <th>Num decalaration</th>
+          <th>impot</th>
           <th>Date de déclaration</th>
-          <th>Mois effet</th>
-          <th>Année effet</th>
+          <th>Periode effet</th>
+
           <th>montant a payer</th>
           <th>Action</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-obligation>
         <tr>
+          <td>{{obligation.idDeclaration}}</td>
           <td>{{ obligation.obligation.impot.libelle }}</td>
           <td>{{ obligation.dateDeclaration | date:'dd/MM/yyyy' }}</td>
-          <td>{{ obligation.moisEffet }}</td>
-          <td>{{ obligation.anneeEffet }}</td>
-          <td>{{ obligation.montantaCalculer}}</td>
+          <td>{{ obligation.moisEffet }}-{{ obligation.anneeEffet }}</td>
+
+          <td> <ng-container *ngIf="obligation.montantaCalculer !== null">
+              {{obligation.montantaCalculer}}
+
+            </ng-container>
+            <ng-container *ngIf="obligation.montantaCalculer === null">
+              <!-- New button to complete the declaration -->
+              0
+            </ng-container>
+          </td>
+
           <td>
-            <p-button icon="pi pi-credit-card" [rounded]="true" severity="success" (onClick)="showDialog(obligation)" />
+            <!-- Check if 'montantaCalculer' is not null -->
+            <ng-container *ngIf="obligation.montantaCalculer !== null && obligation.paiement === null ">
+              <!-- Button for 'Complete Declaration' -->
+              <p-button icon="pi pi-credit-card" label="Complete Declaration" [rounded]="true" severity="success"
+                (onClick)="showDialog(obligation)" />
+            </ng-container>
+
+            <!-- Check if 'montantaCalculer' is null or zero -->
+            <ng-container *ngIf="obligation.montantaCalculer === null || obligation.montantaCalculer === 0">
+              <!-- Button for 'Complementaire' -->
+              <p-button icon="pi pi-check" label="Complementaire" (onClick)="poursuivreDeclaration(obligation)"
+                [rounded]="true" severity="primary" />
+            </ng-container>
+
+            <!-- Check if 'paiement' is not null -->
+            <ng-container *ngIf="obligation.paiement !== null">
+              <!-- Tag component with value 'payé' and severity 'success' -->
+              <p-tag value="payé" severity="success"></p-tag>
+            </ng-container>
           </td>
         </tr>
       </ng-template>

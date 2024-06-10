@@ -73,18 +73,7 @@ body {
   color: #fff;
   border-radius: 50%;
 }
-.container .forms-container .form-control .socials .fa-facebook-f {
-  padding: 5px 8px;
-  background-color: #3b5998;
-}
-.container .forms-container .form-control .socials .fa-google-plus-g {
-  padding: 5px 4px;
-  background-color: #db4a39;
-}
-.container .forms-container .form-control .socials .fa-linkedin-in {
-  padding: 5px 6px;
-  background-color: #0e76a8;
-}
+
 .container .forms-container .form-control.signup-form {
   opacity: 0;
   z-index: 1;

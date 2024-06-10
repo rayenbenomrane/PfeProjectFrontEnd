@@ -91,5 +91,40 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     })
   }
-  
+  loadData(): Observable<any> {
+    return this.http.get<any>('assets/forme-juridique.json');
+  }
+  loadpays(): Observable<any> {
+    return this.http.get<any>('assets/pays.json');
+  }
+  loadactivité(): Observable<any> {
+    return this.http.get<any>('assets/index.json');
+  }
+  savecontribuable(contribuable: any) {
+    return this.http.post(BASIC_URL + "/api/admin/contribuable", contribuable, {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  getDeclarationByContribuable(matriculeFiscale: any) {
+    const url = BASIC_URL + `/api/admin/declarationbycontribuable?matriculeFiscale=${matriculeFiscale}`;
+    return this.http.get<any>(url, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+  updateImpot(impotDto: any) {
+    return this.http.put(BASIC_URL + "/api/admin/updateimpot", impotDto, {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+  getContribuableById(id: number) {
+    const url = `${BASIC_URL}/api/admin/contribuable/${id}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
+  getContribuableBymatricule(matricule: number) {
+    return this.http.get(`${BASIC_URL}/api/client/contribuableMatricule?matriculeFiscale=${matricule}`, { headers: this.createAuthorizationHeader() })
+  }
+  getObligationById(id: number) {
+    const url = `${BASIC_URL}/api/client/obligationContribuable/${id}`;
+    return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
 }

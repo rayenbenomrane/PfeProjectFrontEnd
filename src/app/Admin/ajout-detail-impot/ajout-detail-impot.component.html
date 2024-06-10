@@ -17,13 +17,6 @@
             [style]="{'width': '250px'}"></p-inputNumber>
         </div>
         <!-- Type de champs de detail d'impot -->
-        <div class="section-container">
-          <div class="section-heading">Type de champs de detail d'impot:</div>
-          <div *ngFor="let key of typeDetailKeys" class="field-checkbox">
-            <p-radioButton [inputId]="key" name="category" [value]="key" [(ngModel)]="selectedType"></p-radioButton>
-            <label [for]="key" class="ml-2">{{ key }}</label>
-          </div>
-        </div>
 
 
         <div class="section-container">

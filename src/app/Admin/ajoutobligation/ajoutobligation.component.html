@@ -1,0 +1,27 @@
+
+
+
+
+<p-dialog header="Obligation Form" [modal]="true" [responsive]="true"
+  [style]="{ 'max-width': '400px', 'height': '500px', 'background-color': '#8ecae6','overflow-y': 'auto' }">
+  <div class="p-fluid">
+
+    <div class="p-field">
+      <label for="dateDebut">Date Debut</label>
+      <p-calendar id="dateDebut" formControlName="dateDebut" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+    <div class="p-field">
+      <label for="dateFin">Date Fin</label>
+      <p-calendar id="dateFin" formControlName="dateFin" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+    <div class="p-field">
+      <label for="impot">Impot</label>
+      <p-dropdown [options]="lesimpots" formControlName="impot" optionLabel="label"
+        placeholder="Select Impot"></p-dropdown>
+    </div>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" (click)="onSubmit()" label="Submit"></button>
+
+    </p-footer>
+  </div>
+</p-dialog>

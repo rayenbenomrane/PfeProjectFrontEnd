@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { forkJoin } from 'rxjs';
 import { PasswordModule } from 'primeng/password';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ajout-declaration',
@@ -24,9 +25,12 @@ import { PasswordModule } from 'primeng/password';
   styleUrl: './ajout-declaration.component.css'
 })
 export class AjoutDeclarationComponent implements OnInit {
-  showDialog: boolean = false;
 
+  total: any
+  showDialog: boolean = false;
+  display: boolean = false
   @ViewChild('dialog', { static: false }) dialog!: ElementRef;
+  maxDate: Date = new Date();
   Lestrimestre: any[] = [
     { label: 'TRIMESTRE 1', value: '1' },
     { label: 'TRIMESTRE 2', value: '4' },
@@ -57,8 +61,9 @@ export class AjoutDeclarationComponent implements OnInit {
   result!: number
   nonCalculableEntries: { [key: string]: any } = {}
   date1: any;
+  clicked: boolean = true
 
-  constructor(private clientservice: ClientService, private messageService: MessageService) {
+  constructor(private clientservice: ClientService, private messageService: MessageService, private route: Router) {
 
   }
 
@@ -69,7 +74,7 @@ export class AjoutDeclarationComponent implements OnInit {
     //this.getFormule();
   }
   checkPeriodicite(impot: any): string {
-    return impot.typeImpot.periodicite;
+    return impot.impot.periodicite;
   }
   checkAndSetPeriodicite(event: any) {
     const impotSelectionne = event.value;
@@ -89,13 +94,13 @@ export class AjoutDeclarationComponent implements OnInit {
     }
   }
   populateForm(declaration: any) {
-    this.obligation = declaration.obligationFiscale;
+    this.obligation = declaration.obligation;
     console.log(this.obligation)
     this.type = declaration.type;
     this.moisEffet = declaration.moisEffet;
-    this.anneeEffet = declaration.anneEffet;
+    this.anneeEffet = declaration.anneeEffet;
     this.date = new Date(this.anneeEffet, this.moisEffet);
-    this.periodeSelectionnee = declaration.obligationFiscale.typeImpot.periodicite;
+    this.periodeSelectionnee = declaration.obligation.impot.periodicite;
   }
 
   toggleDialog(event: MouseEvent) {
@@ -153,6 +158,7 @@ export class AjoutDeclarationComponent implements OnInit {
     }
   }
   submit() {
+
     if (this.periodeSelectionnee == "ANNUELLE" || this.periodeSelectionnee == "MENSUELLE") {
 
 
@@ -161,13 +167,29 @@ export class AjoutDeclarationComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields.' });
         return;
       }
+      const dateChoisie = this.date;
+      if (dateChoisie < new Date(this.obligation.dateDebut) || dateChoisie > new Date(this.obligation.dateFin)) {
+        this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'La date choisie dépasse la date de début ou de fin de lobligation.' });
+        return;
+      }
     } else {
       if (!this.date || !this.date1 || !this.obligation || !this.type) {
 
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields.' });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields 1.' });
+        return;
+      }
+      const dateChoisie = new Date(this.date1.getFullYear(), this.date - 1); // Mois est 0-indexé
+      const dateDebut = new Date(this.obligation.dateDebut);
+      const dateFin = new Date(this.obligation.dateFin);
+      //console.log(dateChoisie)
+      //console.log(dateDebut)
+      //console.log(dateFin)
+      if (dateChoisie < dateDebut || dateChoisie > dateFin) {
+        this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Les dates choisies dépassent la date de début ou de fin de lobligation.' });
         return;
       }
     }
+
 
 
     if (this.afficherDropdown == false) {
@@ -175,7 +197,7 @@ export class AjoutDeclarationComponent implements OnInit {
       const complementaireType = this.lestypes.find((type: any) => type.value === 'COMPLEMENTAIRE');
       if (complementaireType) {
         this.type = complementaireType;
-        console.log(this.type)
+        //console.log(this.type)
       }
     } else {
       this.idObligation = this.obligation.idObligation;
@@ -290,18 +312,23 @@ export class AjoutDeclarationComponent implements OnInit {
             //console.log(result);
             this.hashMapEntries.set(key, { ...value, valeur: result });
             this.updateDetailDeclaration(value, result)
+            this.clicked = false;
           },
           (error) => {
             console.error('Error calculating value', error);
           }
         );
-      } else { this.updateDetailDeclaration(value, value.valeur) }
+      } else {
+        this.updateDetailDeclaration(value, value.valeur),
+        this.clicked = false;
+      }
 
     });
 
     console.log("Finished calculateValues.");
   }
   updateDetailDeclaration(value: any, result: any) {
+
     const detailDeclarationDto = {
       iddetailDeclaration: value.iddetailDeclaration,
       valeur: result,
@@ -316,5 +343,52 @@ export class AjoutDeclarationComponent implements OnInit {
     let end = key.indexOf(', ordre');
     return key.substring(start, end);
   }
+  showDialog1() {
 
+    //console.log(this.hashMapEntries);
+    let values: { [key: string]: number } = {};
+
+    this.hashMapEntries.forEach((detail, key) => {
+      const libelleMatch = key.match(/libelle=([^,]*)/);
+      const libelle = libelleMatch ? libelleMatch[1].trim() : key;
+      values[libelle] = parseFloat(detail.valeur);
+      //console.log(values);
+    });
+    const request = {
+      formula: this.obligation.impot.formule,
+      values: values
+    };
+    this.clientservice.calculateEquation(request).subscribe(
+      (result: any) => {
+        //console.log("resultat", result)
+        this.total = result;
+        console.log(this.display)
+        this.display = true;
+        console.log(this.display)
+      })
+
+
+  }
+  confirmdeclaration() {
+    const declaration = {
+      idDeclaration: this.iddeclaration,
+      montantApayer: this.total
+    };
+    //console.log(this.hashMapEntries)
+    // Iterate over the entries of hashMapEntries
+    this.hashMapEntries.forEach((value: any) => {
+      //console.log(value);
+      if (typeof value === 'object' && 'iddeclaration' in value) {
+        declaration.idDeclaration = value.iddeclaration;
+        return; // Exit the loop since we found the idDeclaration
+      }
+    });
+
+    // Perform any further operations with the declaration object
+    console.log(declaration);
+    this.clientservice.updateMontantDeclaration(declaration).subscribe((data) => { this.messageService.add({ severity: 'success', summary: 'Erreur', detail: 'Montant à payer enregistré.' }), this.route.navigate(['/client/mes-declarations']) })
+  }
+  cancel() {
+    this.display = false
+  }
 }

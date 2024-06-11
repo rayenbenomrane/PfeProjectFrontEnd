@@ -24,6 +24,7 @@ export class LesObligationsComponent implements OnInit {
   lesobligations: any
   contribuable: any
   matricule: any
+  matriculefiscale: any = 0
 
 
   constructor(private adminservice: AdminService, private router: ActivatedRoute) { }
@@ -39,7 +40,7 @@ export class LesObligationsComponent implements OnInit {
       //console.log("C'est le paramètre libelle:", libelle);
       //this.adminservice.getContribuableById(this.matricule)
       //console.log("hedhi lamtricule", this.matricule)
-      this.adminservice.getContribuableBymatricule(this.matricule).subscribe((data) => { this.contribuable = data, this.getObligation(); })
+      this.adminservice.getContribuableBymatricule(this.matricule).subscribe((data) => { this.contribuable = data, this.getObligation() })
     });
   }
   getObligation() {
@@ -52,7 +53,7 @@ export class LesObligationsComponent implements OnInit {
 
     this.adminservice.getObligationById(this.contribuable.idContribuable).subscribe((data) => {
       this.lesobligations = data;
-      //console.log(this.lesobligations);
+      console.log(this.lesobligations);
     });
   }
 }

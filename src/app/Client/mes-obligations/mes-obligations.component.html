@@ -15,7 +15,7 @@
       <ng-template pTemplate="body" let-obligation>
         <tr>
           <td>{{ obligation.impot.libelle }}</td>
-          <td>{{ obligation.impot.periodicite.periode }}</td>
+          <td>{{ obligation.impot.periodicite }}</td>
           <td>{{ obligation.dateDebut | date:'dd/MM/yyyy' }}</td>
           <td>{{ obligation.dateFin | date:'dd/MM/yyyy' }}</td>
         </tr>

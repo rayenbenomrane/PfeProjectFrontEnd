@@ -57,6 +57,7 @@ export class AjoutDetailImpotComponent implements OnInit {
   ngOnInit(): void {
     this.getlibelle()
     this.getdetail()
+
   }
 
 
@@ -77,7 +78,7 @@ export class AjoutDetailImpotComponent implements OnInit {
     });
   }
   submit() {
-    if (!this.selectedType || this.trueValue === null || this.libelle === null || this.value === null || this.typeimpot === null) {
+    if (this.trueValue === null || this.libelle === null || this.value === null) {
       // One or more fields are null
       this.messageService.add({ key: 'step1', severity: 'error', summary: 'error', detail: "Un ou plusieur champs sont null" });
     } else if (this.isCalculable && this.formula === '') {

@@ -13,7 +13,7 @@ import { TagModule } from 'primeng/tag';
 @Component({
   selector: 'app-mes-declarations',
   standalone: true,
-  imports: [CommonModule, TableModule, LayoutclientComponent, ButtonModule, DialogModule, ConfirmDialogModule,TagModule],
+  imports: [CommonModule, TableModule, LayoutclientComponent, ButtonModule, DialogModule, ConfirmDialogModule, TagModule],
   templateUrl: './mes-declarations.component.html',
   styleUrl: './mes-declarations.component.css'
 })
@@ -80,7 +80,7 @@ export class MesDeclarationsComponent {
     const paymentRequest = {
       "receiverWalletId": MesDeclarationsComponent.receiverWalletId,
       "token": "TND",
-      "amount": declaration.montantaCalculer,
+      "amount": declaration.montantaCalculer * 10,
       "type": "immediate",
       "description": "payment description",
       "acceptedPaymentMethods": [

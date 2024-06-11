@@ -34,20 +34,40 @@
     </div>
   </div>
 </div>
-<p-dialog header="{{ impotTitle }}" [(visible)]="displayDialog" [modal]="true" [style]="{ 'width': 'auto' }">
-  <ng-template pTemplate="content">
-    <p>Rules:</p>
-    <ul>
-      <li>Regle 1: Utiliser <b>'p'</b> pour perte et <b>'r'</b> pour revenu.</li>
-      <li>Regle 2:Suivis de chiffres, et les opérateurs * + - ().</li>
+<p-dialog header="Details Calculables" [(visible)]="displayDialog" [modal]="true" [closable]="true"
+  [style]="{height: '500px', width: '500px'}">
+  <ng-container *ngIf="lesDetails.length === 0">
+    <p>Impossible de créer une formule, veuillez donner au minimum un champ detail impot</p>
+  </ng-container>
+  <ng-container *ngIf="lesDetails.length > 0">
+    <ng-container *ngIf="typeImpot.formule !=null">
+      <p>Formule actuelle : {{typeImpot.formule}}</p>
+    </ng-container>
+    <p-dropdown [options]="lesDetails" [(ngModel)]="selectedDetail" (onChange)="onDetailChange($event)"
+      placeholder="Select a detail" optionLabel="libelle">
+    </p-dropdown>
+
+    <!-- Dropdown for operations -->
+    <div class="input-container" style="margin-top: 10px;">
+      <label for="operation" class="section-heading">Operation:</label>
+      <p-dropdown [options]="operationOptions" [(ngModel)]="selectedOperation" (onChange)="onOperationChange($event)"
+        placeholder="Select an operation" optionLabel="label">
+      </p-dropdown>
+    </div>
+    <div class="input-container" style="margin-top: 10px; display: flex; align-items: center;">
+      <label for="formula" class="section-heading" style="margin-right: 10px;">Formule de Calcul:</label>
+      <div style="display: flex; align-items: center; flex-grow: 1;">
+        <textarea id="formula" [(ngModel)]="formula" placeholder="Entrez la formule de calcul"
+          style="flex-grow: 1; height: 100px; width:400px;margin-right: 10px;" readonly>
+        </textarea>
+
+      </div>
+    </div>
 
 
-    </ul>
-
-
-    <input pInputText type="text" [(ngModel)]="formula" placeholder="Enter your formula here">
-
-
-    <button pButton type="button" label="Submit" (click)="submitFormula()"></button>
-  </ng-template>
+  </ng-container>
+  <p-footer>
+    <p-button label="valider" icon="pi pi-check" (onClick)="verif()"></p-button>
+    <p-button label="Clear" severity="danger" icon="pi pi-check" (onClick)="clearFormula()"></p-button>
+  </p-footer>
 </p-dialog>

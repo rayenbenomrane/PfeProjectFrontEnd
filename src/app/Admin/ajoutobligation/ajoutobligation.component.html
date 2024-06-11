@@ -1,27 +1,34 @@
-
-
-
-
-<p-dialog header="Obligation Form" [modal]="true" [responsive]="true"
-  [style]="{ 'max-width': '400px', 'height': '500px', 'background-color': '#8ecae6','overflow-y': 'auto' }">
-  <div class="p-fluid">
-
-    <div class="p-field">
-      <label for="dateDebut">Date Debut</label>
-      <p-calendar id="dateDebut" formControlName="dateDebut" dateFormat="yy-mm-dd"></p-calendar>
-    </div>
-    <div class="p-field">
-      <label for="dateFin">Date Fin</label>
-      <p-calendar id="dateFin" formControlName="dateFin" dateFormat="yy-mm-dd"></p-calendar>
-    </div>
-    <div class="p-field">
-      <label for="impot">Impot</label>
-      <p-dropdown [options]="lesimpots" formControlName="impot" optionLabel="label"
-        placeholder="Select Impot"></p-dropdown>
-    </div>
-    <p-footer>
-      <button type="button" pButton icon="pi pi-check" (click)="onSubmit()" label="Submit"></button>
-
-    </p-footer>
+<p-toast></p-toast>
+<div class="fullcontainer">
+  <div class="dashboard-container">
+    <app-admin-side-bar></app-admin-side-bar>
   </div>
-</p-dialog>
+  <div class="dashboard-content">
+    <p-card header="Formulaire les details d'une obligation" subheader="Veuillez remplir les informations suivantes">
+      <div class="form-group">
+        <label for="dateDebut">Date de début :</label>
+        <p-calendar [(ngModel)]="dateDebut" [maxDate]="maxDate" [readonlyInput]="true" [showIcon]="true"
+          [showOnFocus]="false" inputId="dateDebut"></p-calendar>
+      </div>
+
+      <div class="form-group">
+        <label for="datefin">Date de fin :</label>
+        <p-calendar [(ngModel)]="datefin" [minDate]="dateDebut" [readonlyInput]="true" [showIcon]="true"
+          [showOnFocus]="false" inputId="datefin"></p-calendar>
+      </div>
+
+      <div class="form-group">
+        <label for="selectedimpot">Choisir un impôt :</label>
+        <p-dropdown [options]="lesimpots" [(ngModel)]="selectedimpot" optionLabel="libelle" [filter]="true"
+          filterBy="libelle" [showClear]="true" placeholder="Choisir un impôt" inputId="selectedimpot">
+          <ng-template let-impot pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ impot.libelle }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="form-group">
+        <button pButton type="button" label="valider" (click)="onSubmit()"></button>
+      </div>
+    </p-card>

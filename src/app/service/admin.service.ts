@@ -87,7 +87,7 @@ export class AdminService {
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
   }
   saveformuleImpot(impotDto: any) {
-    return this.http.put(BASIC_URL + "/api/admin/updateimpot", impotDto, {
+    return this.http.put(BASIC_URL + "/api/admin/updateimpot1", impotDto, {
       headers: this.createAuthorizationHeader()
     })
   }
@@ -126,5 +126,10 @@ export class AdminService {
   getObligationById(id: number) {
     const url = `${BASIC_URL}/api/client/obligationContribuable/${id}`;
     return this.http.get<any>(url, { headers: this.createAuthorizationHeader() });
+  }
+  saveObligation(obligation: any) {
+    return this.http.post(BASIC_URL + "/api/admin/obligation", obligation, {
+      headers: this.createAuthorizationHeader()
+    })
   }
 }

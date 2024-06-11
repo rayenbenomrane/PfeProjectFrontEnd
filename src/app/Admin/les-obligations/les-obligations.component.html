@@ -4,7 +4,7 @@
     <div class="title-container">
 
       <button pButton type="button" icon="pi pi-plus" label="Ajout obligation"
-        [routerLink]="['/admin/ajoutobligation/', contribuable.matriculeFiscale]"></button>
+        [routerLink]="['/admin/ajoutobligation/',matricule]"></button>
     </div>
     <div class="container">
       <div class="table-container">
@@ -20,9 +20,9 @@
           <ng-template pTemplate="body" let-obligation>
             <tr>
               <td>{{ obligation.impot.libelle }}</td>
-              <td>{{ obligation.impot.periodicite.periode }}</td>
-              <td>{{ obligation.dateDebut }}</td>
-              <td>{{ obligation.dateFin }}</td>
+              <td>{{ obligation.impot.periodicite }}</td>
+              <td>{{ obligation.dateDebut | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ obligation.dateFin | date: 'yyyy-MM-dd' }}</td>
             </tr>
           </ng-template>
         </p-table>

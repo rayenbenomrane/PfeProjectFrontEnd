@@ -197,7 +197,7 @@ export class AjoutDeclarationComponent implements OnInit {
       const complementaireType = this.lestypes.find((type: any) => type.value === 'COMPLEMENTAIRE');
       if (complementaireType) {
         this.type = complementaireType;
-        //console.log(this.type)
+        console.log(this.type)
       }
     } else {
       this.idObligation = this.obligation.idObligation;
@@ -215,7 +215,7 @@ export class AjoutDeclarationComponent implements OnInit {
       moisEffet: this.moisEffet,
       anneeEffet: this.anneeEffet,
       idObligation: this.idObligation,
-      type: this.type.value
+      type: "Complementaire"
     };
     console.log(declarationObject)
 
@@ -305,11 +305,11 @@ export class AjoutDeclarationComponent implements OnInit {
 
         let formula = `{${this.extractFormula(key)}}`; // Add {} around the formula
         let values = this.nonCalculableEntries;
-        // console.log(formula);
-        //console.log(values);
+        console.log(formula);
+        console.log(values);
         this.clientservice.calculateEquation({ formula, values }).subscribe(
           (result: any) => {
-            //console.log(result);
+            console.log(result);
             this.hashMapEntries.set(key, { ...value, valeur: result });
             this.updateDetailDeclaration(value, result)
             this.clicked = false;
@@ -320,7 +320,7 @@ export class AjoutDeclarationComponent implements OnInit {
         );
       } else {
         this.updateDetailDeclaration(value, value.valeur),
-        this.clicked = false;
+          this.clicked = false;
       }
 
     });
@@ -352,7 +352,7 @@ export class AjoutDeclarationComponent implements OnInit {
       const libelleMatch = key.match(/libelle=([^,]*)/);
       const libelle = libelleMatch ? libelleMatch[1].trim() : key;
       values[libelle] = parseFloat(detail.valeur);
-      //console.log(values);
+      console.log("values", values);
     });
     const request = {
       formula: this.obligation.impot.formule,

@@ -32,24 +32,28 @@ export class LayoutclientComponent implements OnInit {
   @ViewChild('op')
   op!: OverlayPanel;
   ngOnInit(): void {
-    // Retrieve the value of spanpop from localStorage when the component initializes
-    const storedSpanpop = localStorage.getItem('spanpop');
-    this.spanpop = storedSpanpop ? JSON.parse(storedSpanpop) : false;
+    if (!StorageService.isClientLoggedIn()) {
+      this.Router.navigate(['/error'])
+    } else {
+      // Retrieve the value of spanpop from localStorage when the component initializes
+      const storedSpanpop = localStorage.getItem('spanpop');
+      this.spanpop = storedSpanpop ? JSON.parse(storedSpanpop) : false;
 
-    this.getnotification();
-    const connexion = this.WebSocketService.connect();
-    const id = localStorage.getItem("contribuableMatricule");
-    connexion.connect({ userId: id }, () => {
-      connexion.subscribe('/user/queue/notification', (data: any) => {
-        // Add the new notification to the list
-        const newNotification = JSON.parse(data.body);
-        this.spanpop = true; // Set spanpop to true
-        this.lesnotifications.unshift(newNotification);
-        // Add new notification to the beginning of the array
-        // Store the updated value of spanpop in localStorage
-        localStorage.setItem('spanpop', JSON.stringify(true));
+      this.getnotification();
+      const connexion = this.WebSocketService.connect();
+      const id = localStorage.getItem("contribuableMatricule");
+      connexion.connect({ userId: id }, () => {
+        connexion.subscribe('/user/queue/notification', (data: any) => {
+          // Add the new notification to the list
+          const newNotification = JSON.parse(data.body);
+          this.spanpop = true; // Set spanpop to true
+          this.lesnotifications.unshift(newNotification);
+          // Add new notification to the beginning of the array
+          // Store the updated value of spanpop in localStorage
+          localStorage.setItem('spanpop', JSON.stringify(true));
+        });
       });
-    });
+    }
   }
   sortNotificationsByDate(): void {
     this.lesnotifications.sort((a: { dateReponse: string; }, b: { dateReponse: string; }) => {

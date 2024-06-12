@@ -142,6 +142,7 @@ export class ReclamationEnAttenteComponent {
       };
       this.responsableService.updateSolution(solutiondto).subscribe(() => {
         this.displayDialog = false;
+        this.ngOnInit();
       });
     }
   }

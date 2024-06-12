@@ -13,8 +13,8 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Libelle</th>
-            <th>Type de Détail Impot</th>
 
+            <th>calculable</th>
             <th>Ordre</th>
             <th>Obligatoire</th>
 
@@ -23,8 +23,8 @@
         <ng-template pTemplate="body" let-detail>
           <tr>
             <td>{{ detail.libelle }}</td>
-            <td>{{ detail.typeDetail }}</td>
 
+            <td>{{detail.calculable}}</td>
             <td>{{ detail.ordre }}</td>
             <td>{{ detail.obligatoire }}</td>
 

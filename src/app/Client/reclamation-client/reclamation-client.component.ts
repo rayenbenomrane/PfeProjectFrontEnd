@@ -9,11 +9,13 @@ import { ClientService } from '../../service/client.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { LayoutclientComponent } from '../layoutclient/layoutclient.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-reclamation-client',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, InputTextareaModule, ButtonModule, DropdownModule, RadioButtonModule, LayoutclientComponent],
+  imports: [CommonModule, FormsModule, ToastModule, InputTextModule, InputTextareaModule, ButtonModule, DropdownModule, RadioButtonModule, LayoutclientComponent],
   templateUrl: './reclamation-client.component.html',
   styleUrl: './reclamation-client.component.css'
 })
@@ -26,7 +28,7 @@ export class ReclamationClientComponent implements OnInit {
   selectedDeclaration: any
   selectedChoice: string = 'no'; // Default choice is "No"
 
-  constructor(private authservice: AuthServiceService, private clientservice: ClientService) {
+  constructor(private authservice: AuthServiceService, private clientservice: ClientService, private messageservice: MessageService) {
 
   }
 
@@ -64,7 +66,7 @@ export class ReclamationClientComponent implements OnInit {
 
 
           }
-          this.clientservice.savereclamation(reclamation).subscribe((data) => console.log(data))
+          this.clientservice.savereclamation(reclamation).subscribe((data) => { console.log(data), this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Reclamation confirmé. ' }) })
         } else {
           const reclamation: any = {
             contribuable: this.contribuable,
@@ -75,7 +77,10 @@ export class ReclamationClientComponent implements OnInit {
 
           }
           //console.log(reclamation)
-          this.clientservice.savereclamation(reclamation).subscribe((data) => console.log(data))
+          this.clientservice.savereclamation(reclamation).subscribe((data) => {
+            console.log(data),
+              this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Reclamation confirmé. ' })
+          })
         }
 
 

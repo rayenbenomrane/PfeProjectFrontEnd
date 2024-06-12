@@ -173,6 +173,7 @@ export class TousLesReclamationsComponent implements OnInit {
       this.responsableService.updateSolution(solutiondto).subscribe(() => {
         this.ngOnInit();
       });
+      this.ngOnInit();
     }
   }
   getInputValue(event: any): string {

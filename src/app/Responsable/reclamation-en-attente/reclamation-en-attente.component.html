@@ -48,7 +48,7 @@
       <td>{{ reclamation.contenu }}</td>
       <td>{{ reclamation.dateReclamation | date:'short' }}</td>
       <td>
-        <p-tag [value]="reclamation.etat === 'REFUSEE' ? 'Refusee' : 'EnCours'"
+        <p-tag [value]="reclamation.etat === 'REFUSEE' ? 'Refusee' : 'EnAttente'"
           [severity]="getSeverity(reclamation.etat)">
         </p-tag>
       </td>

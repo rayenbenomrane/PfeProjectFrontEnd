@@ -39,8 +39,7 @@ export class DetailImpotComponent implements OnInit {
     { label: 'Subtraction', value: ' - ' },
     { label: 'Multiplication', value: ' * ' },
     { label: 'Division', value: ' / ' },
-    { label: 'Max', value: 'max(' },
-    { label: 'Min', value: 'min(' }
+    
   ];
   typeImpot: any;
   constructor(private AdminService: AdminService, private router: ActivatedRoute, private messageservice: MessageService) {

@@ -27,7 +27,9 @@ export class AdminSideBarComponent implements OnInit {
 
   }
   ngOnInit() {
-
+    if (!StorageService.isAdminLoggedIn()) {
+      this.router.navigate(['/error'])
+    }
   }
 
   display: boolean = false;

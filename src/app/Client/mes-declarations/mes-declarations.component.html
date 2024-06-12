@@ -34,7 +34,7 @@
 
           <td>
             <!-- Check if 'montantaCalculer' is not null -->
-            <ng-container *ngIf="obligation.montantaCalculer !== null && obligation.paiement === null ">
+            <ng-container *ngIf="obligation.montantaCalculer !== null && obligation.paiement === null  ">
               <!-- Button for 'Complete Declaration' -->
               <p-button icon="pi pi-credit-card" label="Complete Declaration" [rounded]="true" severity="success"
                 (onClick)="showDialog(obligation)" />

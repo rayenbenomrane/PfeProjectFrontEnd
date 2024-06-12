@@ -66,8 +66,7 @@ export class AjoutDetailImpotComponent implements OnInit {
     { label: 'Subtraction', value: ' - ' },
     { label: 'Multiplication', value: ' * ' },
     { label: 'Division', value: ' / ' },
-    { label: 'Max', value: 'max(' },
-    { label: 'Min', value: 'min(' }
+
   ];;
   getlibelle() {
     this.router.params.subscribe(params => {
@@ -109,7 +108,7 @@ export class AjoutDetailImpotComponent implements OnInit {
 
   getdetail() {
     this.adminservice.getImpotDetails(this.libelle).subscribe((data) => {
-      this.lesDetails = data;
+      this.lesDetails = data.filter((detail: { calculable: any; }) => !detail.calculable);
       // console.log(data)
     })
   }

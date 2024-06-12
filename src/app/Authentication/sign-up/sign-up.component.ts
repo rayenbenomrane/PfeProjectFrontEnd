@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
 
   siteKey: string;
   lesinscriptions: any = []
-  activeIndex = 3;
+  activeIndex = 0;
   valid: boolean = false;
   date!: Date | null;
   date2!: Date | null;
@@ -197,14 +197,16 @@ export class SignUpComponent implements OnInit {
     this.submitted = true;
     const iddecalaration = this.formData.numerodequittance;
     const dateDeQuittance = this.date2 ? formatDate(this.date2, 'yyyy-MM-dd', 'en-US') : null;
-    //console.log("contribuable", this.contribuable)
-    //console.log("iddeclarartion", iddecalaration)
-    //console.log("datequittance", dateDeQuittance)
+    console.log("contribuable", this.contribuable)
+    console.log("iddeclarartion", iddecalaration)
+    console.log("datequittance", dateDeQuittance)
     const request = {
       cd: this.contribuable,
       iddecalaration: iddecalaration
 
     }
+
+    console.log(request)
     if (this.validateForm1()) {
       this.authserve.checkDeclaration(request).subscribe(
         (response) => {
